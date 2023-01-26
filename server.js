@@ -2,12 +2,14 @@
 var express = require("express")
 var exhbs = require("express-handlebars")
 var path = require("path")
+var dotenv = require('dotenv').config()
 
 //create express server
 var app = express()
 
 //define PORT
-var PORT = process.env.PORT || 8080
+var PORT = 8080
+//var PORT = process.env.PORT
 
 //require models
 var db = require("./models")
@@ -20,16 +22,16 @@ app.use(express.json())
 app.use(express.static("public"))
 
 // setup handelbars
-app.engine("handlebars", exphbs({
+app.engine("handlebars", exhbs.engine({
     defaultLayout: "main"
 }));
 app.set("view engine", "handlebars");
 
 //routes
-const initRoutes = require("./routes/api-routes");
-//api routes for handling data exchanges
-initRoutes(app);
-require("./routes/api-routes.js")(app);
+// const initRoutes = require("./routes/api-routes");
+// //api routes for handling data exchanges
+// initRoutes(app);
+// require("./routes/api-routes.js")(app);
 
 // start the server. {force:true} drops the tables from exisiting db. {force:false} keeps the existing db and tables and data in place
 db.sequelize.sync({
