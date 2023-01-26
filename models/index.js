@@ -21,5 +21,12 @@ db.sequelize = sequelize;
 
 db.materialSampleManager = require("./Projects.js")(sequelize, Sequelize);
 db.materialSampleManager = require("./Events.js")(sequelize, Sequelize);
+db.materialSampleManager = require("./Occurrences.js")(sequelize, Sequelize);
+db.materialSampleManager = require("./MaterialSamples.js")(sequelize, Sequelize);
+db.materialSampleManager = require("./PreservedSpecimens.js")(sequelize, Sequelize);
+db.materialSampleManager = require("./Transfers.js")(sequelize, Sequelize);
+db.materialSampleManager = require("./GermplasmViabilityTests.js")(sequelize, Sequelize);
+
+
 
 module.exports = db;
