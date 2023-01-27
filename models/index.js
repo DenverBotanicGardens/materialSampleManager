@@ -26,6 +26,7 @@ db.materialSampleManager = require("./MaterialSamples.js")(sequelize, Sequelize)
 db.materialSampleManager = require("./PreservedSpecimens.js")(sequelize, Sequelize);
 db.materialSampleManager = require("./Transfers.js")(sequelize, Sequelize);
 db.materialSampleManager = require("./GermplasmViabilityTests.js")(sequelize, Sequelize);
+db.materialSampleManager = require("./ViabilityTracking.js")(sequelize, Sequelize);
 
 
 
