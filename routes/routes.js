@@ -18,7 +18,7 @@ let routes = (app) => {
   //POST /api/projects
   router.post("/projects", projectsController.addProject);
 
-  //app.use("/api/csv", router);
+  app.use("/api", router);
 };
 
 module.exports = routes;
