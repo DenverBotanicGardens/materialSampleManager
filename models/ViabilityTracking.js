@@ -20,6 +20,9 @@ module.exports = (sequelize, Sequelize) => {
                 key : "id"
             }
         }
+    },
+    {
+        freezeTableName: true
     });
 
     return ViabilityTracking;
