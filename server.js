@@ -14,7 +14,7 @@ var PORT = 8080
 //require models
 var db = require("./models")
 
-//set up express app to handle data aprsing
+//set up express app to handle data parsing
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 

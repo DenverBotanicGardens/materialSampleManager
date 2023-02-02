@@ -2,7 +2,7 @@ module.exports = (sequelize, Sequelize) => {
     const Project = sequelize.define("project", {
         project : {
             type : Sequelize.STRING,
-            allowNull : false
+            allowNull : true
         },
         principalInvestigator : {
             type : Sequelize.STRING,
