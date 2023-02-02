@@ -19,7 +19,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.materialSampleManager = require("./Project.js")(sequelize, Sequelize);
+db.project = require("./Project.js")(sequelize, Sequelize);
 db.materialSampleManager = require("./Events.js")(sequelize, Sequelize);
 db.materialSampleManager = require("./Occurrences.js")(sequelize, Sequelize);
 db.materialSampleManager = require("./MaterialSamples.js")(sequelize, Sequelize);

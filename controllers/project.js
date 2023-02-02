@@ -1,6 +1,6 @@
 //dependencies
-const models = require("../models/index");
-const Project = models.Project;
+const models = require("../models");
+const Project = models.project;
 //const fs = require("fs");
 //const { Op } = require("sequelize");
 //const Sequelize = require('sequelize');
@@ -35,6 +35,7 @@ const getAllProjects = (req,res) => {
         })
     })
 }
+
 
 
 
