@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const projectsController = require("../controllers/projects");
+const projectController = require("../controllers/project");
 //const upload = require("../middlewares/upload");
 //const { auth, requiresAuth } = require('express-openid-connect');
 
@@ -16,7 +16,10 @@ let routes = (app) => {
   
   
   //POST /api/projects
-  router.post("/projects", projectsController.addProject);
+  router.post("/project", projectController.addProject);
+
+  //GET /api/projects
+  router.get("/project", projectController.getAllProjects);
 
   app.use("/api", router);
 };
