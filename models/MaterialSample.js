@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const MaterialSamples = sequelize.define("materialSamples", {
+    const MaterialSample = sequelize.define("materialSample", {
         materialSampleID : {
             type : Sequelize.STRING,
             allowNull : true
@@ -74,5 +74,5 @@ module.exports = (sequelize, Sequelize) => {
         }                
     });
 
-    return MaterialSamples;
+    return MaterialSample;
 };

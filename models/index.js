@@ -20,13 +20,13 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.project = require("./Project.js")(sequelize, Sequelize);
-db.materialSampleManager = require("./Events.js")(sequelize, Sequelize);
-db.materialSampleManager = require("./Occurrences.js")(sequelize, Sequelize);
-db.materialSampleManager = require("./MaterialSamples.js")(sequelize, Sequelize);
-db.materialSampleManager = require("./PreservedSpecimens.js")(sequelize, Sequelize);
-db.materialSampleManager = require("./Transfers.js")(sequelize, Sequelize);
-db.materialSampleManager = require("./GermplasmViabilityTests.js")(sequelize, Sequelize);
-db.materialSampleManager = require("./ViabilityTracking.js")(sequelize, Sequelize);
+db.event = require("./Event.js")(sequelize, Sequelize);
+db.occurrence = require("./Occurrence.js")(sequelize, Sequelize);
+db.materialSample = require("./MaterialSample.js")(sequelize, Sequelize);
+db.preservedSpecimen = require("./PreservedSpecimen.js")(sequelize, Sequelize);
+db.transfer = require("./Transfer.js")(sequelize, Sequelize);
+db.germplasmViabilityTest = require("./GermplasmViabilityTest.js")(sequelize, Sequelize);
+db.viabilityTracking = require("./ViabilityTracking.js")(sequelize, Sequelize);
 
 
 

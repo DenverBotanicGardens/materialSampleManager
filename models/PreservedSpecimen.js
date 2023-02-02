@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const PreservedSpecimens = sequelize.define("preservedSpecimens", {
+    const PreservedSpecimen = sequelize.define("preservedSpecimen", {
         catalogNumber : {
             type : Sequelize.STRING,
             allowNull : true
@@ -18,5 +18,5 @@ module.exports = (sequelize, Sequelize) => {
             }
     });
 
-    return PreservedSpecimens;
+    return PreservedSpecimen;
 };

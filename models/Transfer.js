@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Transfers = sequelize.define("transfers", {
+    const Transfer = sequelize.define("transfer", {
         materialSample_catalogNumber : {
             type : Sequelize.STRING,
             allowNull : true
@@ -46,5 +46,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    return Transfers;
+    return Transfer;
 };

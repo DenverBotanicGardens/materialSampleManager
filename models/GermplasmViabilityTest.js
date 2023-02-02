@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const GermplasmViabilityTests = sequelize.define("germplasmViabilityTests", {
+    const GermplasmViabilityTest = sequelize.define("germplasmViabilityTest", {
         materialSampleCatalogNumber : {
             type : Sequelize.STRING,
             allowNull : true
@@ -78,5 +78,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    return GermplasmViabilityTests;
+    return GermplasmViabilityTest;
 };

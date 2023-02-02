@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Occurences = sequelize.define("occurrences", {
+    const Occurrence = sequelize.define("occurrence", {
         occurrenceID : {
             type : Sequelize.STRING,
             allowNull : true
@@ -98,5 +98,5 @@ module.exports = (sequelize, Sequelize) => {
             }
     });
 
-    return Occurences;
+    return Occurrence;
 };
