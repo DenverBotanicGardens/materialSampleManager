@@ -7,15 +7,15 @@ module.exports = (sequelize, Sequelize) => {
         recordNumber : {
             type : Sequelize.STRING,
             allowNull : true
-            },
-        occurrenceTableID : {
-            type : Sequelize.INTEGER,
-            allowNull : true,
-            references : {
-                model : "occurrences",
-                key : "id"
-                }
             }
+        // occurrenceTableID : {
+        //     type : Sequelize.INTEGER,
+        //     allowNull : true,
+        //     references : {
+        //         model : "occurrences",
+        //         key : "id"
+        //         }
+        //     }
     });
 
     return PreservedSpecimen;

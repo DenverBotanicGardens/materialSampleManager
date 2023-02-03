@@ -104,5 +104,11 @@ module.exports = (sequelize, Sequelize) => {
         })
     }
 
+    Occurrence.associate = (models) => {
+        Occurrence.hasMany(models.preservedSpecimen, {
+            foreignKey: 'occurrenceTableID'
+        })
+    }
+
     return Occurrence;
 };
