@@ -21,8 +21,14 @@ module.exports = (sequelize, Sequelize) => {
         }
     
     })
-    Project.associate = (models) =>{
+    Project.associate = (models) => {
         Project.hasMany(models.occurrence, {
+            foreignKey: 'projectTableID'
+        })
+    }
+
+    Project.associate = (models) => {
+        Project.hasMany(models.event, {
             foreignKey: 'projectTableID'
         })
     }
