@@ -19,7 +19,13 @@ module.exports = (sequelize, Sequelize) => {
                 isEmail: true
                 }
         }
-    });
-
+    
+    })
+    Project.associate = (models) =>{
+        Project.hasMany(models.occurrence, {
+            foreignKey: 'projectTableID'
+        })
+    }
+    
     return Project;
 };

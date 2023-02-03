@@ -29,5 +29,12 @@ db.germplasmViabilityTest = require("./GermplasmViabilityTest.js")(sequelize, Se
 db.viabilityTracking = require("./ViabilityTracking.js")(sequelize, Sequelize);
 
 
+//set up table associations
+Object.keys(db).forEach((modelName) => {
+  if ('associate' in db[modelName]){
+    //call the associate function and pass reference to all other models
+    db[modelName].associate(db)
+  }
+})
 
 module.exports = db;

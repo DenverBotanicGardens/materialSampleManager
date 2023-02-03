@@ -80,14 +80,14 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.STRING,
             allowNull : true
             },
-        projectTableID : {
-            type : Sequelize.INTEGER,
-            allowNull : true,
-            references : {
-                model : "projects",
-                key : "id"
-                }
-            },
+        // projectTableID : {
+        //     type : Sequelize.INTEGER,
+        //     allowNull : true,
+        //     references : {
+        //         model : "projects",
+        //         key : "id"
+        //         }
+        //     },
         eventTableID : {
             type : Sequelize.INTEGER,
             allowNull : true,
@@ -97,6 +97,8 @@ module.exports = (sequelize, Sequelize) => {
                 }
             }
     });
+
+
 
     return Occurrence;
 };
