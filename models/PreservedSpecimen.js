@@ -18,5 +18,11 @@ module.exports = (sequelize, Sequelize) => {
         //     }
     });
 
+    PreservedSpecimen.associate = (models) => {
+        PreservedSpecimen.hasMany(models.materialSample, {
+            foreignKey: 'preservedSpecimenTableID'
+        })
+    }
+
     return PreservedSpecimen;
 };
