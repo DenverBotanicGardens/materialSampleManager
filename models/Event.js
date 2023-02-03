@@ -3,16 +3,17 @@ module.exports = (sequelize, Sequelize) => {
         eventID : {
             type : Sequelize.STRING,
             allowNull : true
-        },
-        // projectTableID : {
-        //     type : Sequelize.INTEGER,
-        //     allowNull : true,
-        //     references : {
-        //         model : "projects",
-        //         key : "id"
-        //     }
-        // }
+        }
     });
+
+    Event.associate = (models) => {
+        Event.hasMany(models.occurrence, {
+            foreignKey: 'eventTableID'
+        })
+        Event.hasMany(models.event, {
+            foreignKey: 'parentEventTableID'
+        })
+    }
 
     return Event;
 };

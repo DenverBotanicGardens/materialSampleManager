@@ -79,22 +79,6 @@ module.exports = (sequelize, Sequelize) => {
         permitURI : {
             type : Sequelize.STRING,
             allowNull : true
-            },
-        // projectTableID : {
-        //     type : Sequelize.INTEGER,
-        //     allowNull : true,
-        //     references : {
-        //         model : "projects",
-        //         key : "id"
-        //         }
-        //     },
-        eventTableID : {
-            type : Sequelize.INTEGER,
-            allowNull : true,
-            references : {
-                model : "events",
-                key : "id"
-                }
             }
     });
 
@@ -102,13 +86,10 @@ module.exports = (sequelize, Sequelize) => {
         Occurrence.hasMany(models.materialSample, {
             foreignKey: 'occurrenceTableID'
         })
-    }
-
-    Occurrence.associate = (models) => {
         Occurrence.hasMany(models.preservedSpecimen, {
             foreignKey: 'occurrenceTableID'
         })
     }
-
+    
     return Occurrence;
 };

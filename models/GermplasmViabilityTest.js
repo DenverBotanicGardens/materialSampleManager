@@ -68,14 +68,6 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.STRING,
             allowNull : true
         }
-        // materialSampleTableID : {
-        //     type : Sequelize.INTEGER,
-        //     allowNull : true,
-        //     references : {
-        //         model : "materialSamples",
-        //         key : "id"
-        //     }
-        // }
     });
 
     GermplasmViabilityTest.associate = (models) => {

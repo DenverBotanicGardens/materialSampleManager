@@ -12,14 +12,6 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.TEXT,
             allowNull : true
         }
-        // germplasmViabilityTestID : {
-        //     type : Sequelize.INTEGER,
-        //     allowNull : true,
-        //     references : {
-        //         model : "GermplasmViabilityTests",
-        //         key : "id"
-        //     }
-        // }
     },
     {
         freezeTableName: true

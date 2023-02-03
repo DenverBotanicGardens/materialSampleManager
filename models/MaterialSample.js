@@ -47,42 +47,18 @@ module.exports = (sequelize, Sequelize) => {
         storageLocation : {
             type : Sequelize.INTEGER,
             allowNull : true
-        },
-        source_materialSampleTableID : {
-            type : Sequelize.INTEGER,
-            allowNull : true,
-            references : {
-                model : "materialSamples",
-                key : "id"
-            }
-        }           
-        // source_preservedSpecimenTableID : {
-        //     type : Sequelize.INTEGER,
-        //     allowNull : true,
-        //     references : {
-        //         model : "preservedSpecimens",
-        //         key : "id"
-        //     }
-        // }
-        // ,
-        // occurrenceTableID : {
-        //     type : Sequelize.INTEGER,
-        //     allowNull : true,
-        //     references : {
-        //         model : "occurrences",
-        //         key : "id"
-        //     }
-        // }                
+        }
     });
 
     MaterialSample.associate = (models) => {
         MaterialSample.hasMany(models.transfer, {
             foreignKey: 'materialSampleTableID'
         })
-    }
-    MaterialSample.associate = (models) => {
         MaterialSample.hasMany(models.germplasmViabilityTest, {
             foreignKey: 'materialSampleTableID'
+        })
+        MaterialSample.hasMany(models.materialSample, {
+            foreignKey: 'sourceMaterialSampleTableID'
         })
     }
     return MaterialSample;
