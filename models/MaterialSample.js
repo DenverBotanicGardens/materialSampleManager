@@ -63,15 +63,16 @@ module.exports = (sequelize, Sequelize) => {
                 model : "preservedSpecimens",
                 key : "id"
             }
-        },
-        occurrenceTableID : {
-            type : Sequelize.INTEGER,
-            allowNull : true,
-            references : {
-                model : "occurrences",
-                key : "id"
-            }
-        }                
+        }
+        // ,
+        // occurrenceTableID : {
+        //     type : Sequelize.INTEGER,
+        //     allowNull : true,
+        //     references : {
+        //         model : "occurrences",
+        //         key : "id"
+        //     }
+        // }                
     });
 
     return MaterialSample;

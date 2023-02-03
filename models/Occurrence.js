@@ -98,7 +98,11 @@ module.exports = (sequelize, Sequelize) => {
             }
     });
 
-
+    Occurrence.associate = (models) => {
+        Occurrence.hasMany(models.materialSample, {
+            foreignKey: 'occurrenceTableID'
+        })
+    }
 
     return Occurrence;
 };
