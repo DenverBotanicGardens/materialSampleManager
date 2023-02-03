@@ -78,5 +78,10 @@ module.exports = (sequelize, Sequelize) => {
         // }
     });
 
+    GermplasmViabilityTest.associate = (models) => {
+        GermplasmViabilityTest.hasMany(models.viabilityTracking, {
+            foreignKey: 'germplasmViabilityTestID'
+        })
+    }
     return GermplasmViabilityTest;
 };
