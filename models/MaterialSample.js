@@ -80,5 +80,10 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'materialSampleTableID'
         })
     }
+    MaterialSample.associate = (models) => {
+        MaterialSample.hasMany(models.germplasmViabilityTest, {
+            foreignKey: 'materialSampleTableID'
+        })
+    }
     return MaterialSample;
 };

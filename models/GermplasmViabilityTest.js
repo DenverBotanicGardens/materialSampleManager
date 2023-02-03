@@ -67,15 +67,15 @@ module.exports = (sequelize, Sequelize) => {
         materialSampleID : {
             type : Sequelize.STRING,
             allowNull : true
-        },
-        materialSampleTableID : {
-            type : Sequelize.INTEGER,
-            allowNull : true,
-            references : {
-                model : "materialSamples",
-                key : "id"
-            }
         }
+        // materialSampleTableID : {
+        //     type : Sequelize.INTEGER,
+        //     allowNull : true,
+        //     references : {
+        //         model : "materialSamples",
+        //         key : "id"
+        //     }
+        // }
     });
 
     return GermplasmViabilityTest;
