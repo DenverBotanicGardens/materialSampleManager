@@ -75,5 +75,10 @@ module.exports = (sequelize, Sequelize) => {
         // }                
     });
 
+    MaterialSample.associate = (models) => {
+        MaterialSample.hasMany(models.transfer, {
+            foreignKey: 'materialSampleTableID'
+        })
+    }
     return MaterialSample;
 };

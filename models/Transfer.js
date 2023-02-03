@@ -35,15 +35,15 @@ module.exports = (sequelize, Sequelize) => {
         numberSamplesReturned : {
             type : Sequelize.INTEGER,
             allowNull : true
-        },
-        materialSampleTableID : {
-            type : Sequelize.INTEGER,
-            allowNull : true,
-            references : {
-                model : "materialSamples",
-                key : "id"
-                }
         }
+        // materialSampleTableID : {
+        //     type : Sequelize.INTEGER,
+        //     allowNull : true,
+        //     references : {
+        //         model : "materialSamples",
+        //         key : "id"
+        //         }
+        // }
     });
 
     return Transfer;
