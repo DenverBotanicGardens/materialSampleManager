@@ -43,10 +43,6 @@ module.exports = (sequelize, Sequelize) => {
         dateStored : {
             type : Sequelize.DATEONLY,
             allowNull : true
-        },
-        storageLocation : {
-            type : Sequelize.INTEGER,
-            allowNull : true
         }
     });
 
@@ -59,6 +55,9 @@ module.exports = (sequelize, Sequelize) => {
         })
         MaterialSample.hasMany(models.materialSample, {
             foreignKey: 'sourceMaterialSampleTableID'
+        })
+        MaterialSample.belongsTo(models.occurrence, {
+            foreignKey: 'occurrenceTableID'
         })
     }
     return MaterialSample;
