@@ -18,10 +18,14 @@ const csvUpload = async (req, res) => {
           throw error.message;
         })
         .on("data", (row) => {
-          records.push(row);
+          // records.push(row);
+          // console.log(records)
+          console.log(row)
+          console.log(records)
         })
         .on("end", () => {
             console.log("csv uploaded to server")
+            res.send()
         });
     } catch (error) {
       console.log(error);
