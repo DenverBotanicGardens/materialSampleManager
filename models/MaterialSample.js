@@ -43,10 +43,6 @@ module.exports = (sequelize, Sequelize) => {
         dateStored : {
             type : Sequelize.DATEONLY,
             allowNull : true
-        },
-        storageLocation : {
-            type : Sequelize.INTEGER,
-            allowNull : true
         }
     });
 

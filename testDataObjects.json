@@ -11,10 +11,10 @@
 [
     {
       "recordedBy": "Botanist One",
-      "eventDate": "2023-08-15",
+      "eventDate": 1335205592410,
       "scientificName": "Sclerocactus glaucus",
       "identifiedby": "Rick Levy",
-      "dateIdentified": "2023-08-15",
+      "dateIdentified": 1335205592410,
       "associatedTaxa": "Bouteloua gracilis, Pinus edulis",
       "reproductiveCondition": "flower",
       "occurrenceRemarks": "growing in shade of pinyon pine, looking happy",
@@ -29,7 +29,6 @@
       "decimalLongitude": "-104.12345",
       "minimumElevationInMeters": "1500",
       "permitURI": "2023_BLM_Rick",
-      "projectTableID": 1,
       "materialSamples":[
           {
             "materialSampleID": "0a438185-0f34-4c58-a248-b62d2a8d6c30",
@@ -41,8 +40,8 @@
             "numberCollected": 15,
             "numberAvailable": "15",
             "sourcePlantCount": "1",
-            "preparationDate": "2023-18-15",
-            "dateStored": "2023-08-15"
+            "preparationDate": 1335205592410,
+            "dateStored": 1335205592410
           },
           {
             "materialSampleID": "0a438185-0f34-4c58-a248-b62d2a8d6c31",
@@ -54,8 +53,8 @@
             "numberCollected": 1,
             "numberAvailable": "1",
             "sourcePlantCount": "1",
-            "preparationDate": "2023-18-15",
-            "dateStored": "2023-08-15"
+            "preparationDate": 1335205592410,
+            "dateStored": 1335205592410
           }
       ],
       "preservedSpecimens":
