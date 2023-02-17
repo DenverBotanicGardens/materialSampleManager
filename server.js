@@ -3,6 +3,7 @@ var express = require("express")
 var exhbs = require("express-handlebars")
 var path = require("path")
 var dotenv = require('dotenv').config()
+var fs = require("fs");
 
 //create express server
 var app = express()
@@ -20,6 +21,9 @@ app.use(express.json())
 
 //set the static directory to public dir
 app.use(express.static("public"))
+
+//set the global root dir
+global.__basedir = __dirname + "/.";
 
 // setup handelbars
 app.engine("handlebars", exhbs.engine({
