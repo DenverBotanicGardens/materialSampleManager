@@ -2,12 +2,12 @@ const db = require("../models");
 const MaterialSample = db.materialSample;
 const Occurrence = db.occurrence;
 
-async function insertData() {
+async function insertData(req,res) {
   //create some data
   const data = [
     {
       recordedBy: "Rick Levy",
-      MaterialSample:
+      materialSamples:
         {
           materialSampleType: "tissue",
           numberCollected: 2
@@ -15,7 +15,7 @@ async function insertData() {
     },
     {
       recordedBy: "Shawn Cohen",
-      MaterialSample:
+      materialSamples:
       {
         materialSampleType: "seed",
         numberCollected: 72
@@ -30,6 +30,13 @@ async function insertData() {
         model: MaterialSample
       }
     ]
+  })
+  .then(() => {
+    console.log(data)
+    res.send()
+  })
+  .catch((err) => {
+    console.log(err);
   })
 
 }
