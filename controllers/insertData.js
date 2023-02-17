@@ -4,27 +4,26 @@ const Occurrence = db.occurrence;
 
 async function insertData(req,res) {
   //create some data
-  const data = [
-    {
-      recordedBy: "Rick Levy",
-      materialSamples:
-        {
-          materialSampleType: "tissue",
-          numberCollected: 2
-        }
-    },
-    {
-      recordedBy: "Shawn Cohen",
-      materialSamples:
-      {
-        materialSampleType: "seed",
-        numberCollected: 72
-      }
-    }
-  ]
-
+  // const data = [
+  //   {
+  //     recordedBy: "Rick Levy",
+  //     materialSamples:
+  //       {
+  //         materialSampleType: "tissue",
+  //         numberCollected: 2
+  //       }
+  //   },
+  //   {
+  //     recordedBy: "Shawn Cohen",
+  //     materialSamples:
+  //     {
+  //       materialSampleType: "seed",
+  //       numberCollected: 72
+  //     }
+  //   }
+  // ]
   //use bulkCreate with include to insert the data
-  const result = await Occurrence.bulkCreate(data, {
+  const result = await Occurrence.bulkCreate(req.body, {
     include : [
       {
         model: MaterialSample
@@ -32,7 +31,7 @@ async function insertData(req,res) {
     ]
   })
   .then(() => {
-    console.log(data)
+    //console.log(data)
     res.send()
   })
   .catch((err) => {
