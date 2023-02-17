@@ -1,0 +1,57 @@
+
+{
+    "project": "test",
+    "principalInvestigator": "test",
+    "dbgContact": "test",
+    "PIemail": "test@test.com"
+}
+
+
+{
+    "occurrenceData":
+    {
+        "occurrenceID":"test",
+        "recordedBy":"test",
+        "eventDate":2023-08-15,
+        "scientificName":"test", 
+        "identifiedBy":"test",
+        "dateIdentified":"test",
+        "associatedTaxa":"test",
+        "reproductiveCondition":"test",
+        "occurrenceRemarks":"test",
+        "habitat":"test",
+        "country":"test", 
+        "stateProvince":"test",
+        "county":"test",
+        "locality":"test",  
+        "locationRemarks":"test",  
+        "locationID":"test",
+        "decimalLatitude":"test",
+        "decimalLongitude":"test",
+        "minimumElevationInMeters":"test",
+        "permitURI":"test"
+    }
+},
+{
+    "preservedSpecimenData":
+    {
+        "catalogNumber": "test",
+        "recordNumber": "test"
+    }
+},
+{
+    "materialSampleData":
+    {
+        "materialSampleID": "test",
+        "materialSampleType": "test",
+        "materialSample_catalogNumber": "test",
+        "recordNumber": "test",
+        "storageLocation": "test",
+        "disposition": "test",
+        "numberCollected": 123,
+        "numberAvailable": 123,
+        "sourcePlantCount": 123,
+        "preparationDate": 2023-08-15,
+        "dateStored": 2023-08-15
+    }
+}
