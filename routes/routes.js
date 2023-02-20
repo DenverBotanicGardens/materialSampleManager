@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const projectController = require("../controllers/project");
-const insertDatasController = require("../controllers/insertData")
+const insertDataController = require("../controllers/insertData")
 const csvController = require("../controllers/csvUpload")
 const upload = require("../middlewares/upload");
 
@@ -26,8 +26,8 @@ let routes = (app) => {
   //POST /api/upload
   router.post("/upload", upload.single("file"), csvController.csvUpload);
 
-  //POST /api/materialSamples
-  router.post("/materialSample", insertDatasController.insertData)
+  //POST /api/materialSample
+  router.post("/materialSample", insertDataController.insertData)
 
   app.use("/api", router);
 };
