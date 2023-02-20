@@ -7,62 +7,13 @@
 }
 
 
-{
-    "occurrenceData":
-    {
-        "occurrenceID":"test",
-        "recordedBy":"test",
-        "eventDate":2023-08-15,
-        "scientificName":"test", 
-        "identifiedBy":"test",
-        "dateIdentified":"test",
-        "associatedTaxa":"test",
-        "reproductiveCondition":"test",
-        "occurrenceRemarks":"test",
-        "habitat":"test",
-        "country":"test", 
-        "stateProvince":"test",
-        "county":"test",
-        "locality":"test",  
-        "locationRemarks":"test",  
-        "locationID":"test",
-        "decimalLatitude":"test",
-        "decimalLongitude":"test",
-        "minimumElevationInMeters":"test",
-        "permitURI":"test"
-    }
-},
-{
-    "preservedSpecimenData":
-    {
-        "catalogNumber": "test",
-        "recordNumber": "test"
-    }
-},
-{
-    "materialSampleData":
-    {
-        "materialSampleID": "test",
-        "materialSampleType": "test",
-        "materialSample_catalogNumber": "test",
-        "recordNumber": "test",
-        "storageLocation": "test",
-        "disposition": "test",
-        "numberCollected": 123,
-        "numberAvailable": 123,
-        "sourcePlantCount": 123,
-        "preparationDate": 2023-08-15,
-        "dateStored": 2023-08-15
-    }
-}
-
 
 [
     {
       "recordedBy": "Botanist One",
       "eventDate": 1335205592410,
       "scientificName": "Sclerocactus glaucus",
-      "identifiedBy": "Rick Levy",
+      "identifiedby": "Rick Levy",
       "dateIdentified": 1335205592410,
       "associatedTaxa": "Bouteloua gracilis, Pinus edulis",
       "reproductiveCondition": "flower",
@@ -78,13 +29,13 @@
       "decimalLongitude": "-104.12345",
       "minimumElevationInMeters": "1500",
       "permitURI": "2023_BLM_Rick",
-      "materialSamples":
+      "materialSamples":[
           {
             "materialSampleID": "0a438185-0f34-4c58-a248-b62d2a8d6c30",
-            "materialSampleType": "tissue",
+            "materialSampleType": "seed",
             "materialSample_catalogNumber": "ScGl-1340",
             "recordNumber": "1340",
-            "storageLocation": "lab",
+            "storageLocation": "Freezer",
             "disposition": "in collection",
             "numberCollected": 15,
             "numberAvailable": "15",
@@ -92,87 +43,23 @@
             "preparationDate": 1335205592410,
             "dateStored": 1335205592410
           },
+          {
+            "materialSampleID": "0a438185-0f34-4c58-a248-b62d2a8d6c31",
+            "materialSampleType": "tissue",
+            "materialSample_catalogNumber": "ScGl-1340",
+            "recordNumber": "1340",
+            "storageLocation": "Ecology Lab",
+            "disposition": "in collection",
+            "numberCollected": 1,
+            "numberAvailable": "1",
+            "sourcePlantCount": "1",
+            "preparationDate": 1335205592410,
+            "dateStored": 1335205592410
+          }
+      ],
       "preservedSpecimens":
         {
           "catalogNumber": "KHD00000001",
           "recordNumber": "51"
         }
     }
-,
-    {
-      "recordedBy": "Botanist One",
-      "eventDate": 1335205592410,
-      "scientificName": "Sclerocactus glaucus",
-      "identifiedBy": "Rick Levy",
-      "dateIdentified": 1335205592410,
-      "associatedTaxa": "Bouteloua gracilis, Pinus edulis",
-      "reproductiveCondition": "flower",
-      "occurrenceRemarks": "growing in shade of pinyon pine, looking happy",
-      "habitat": "pinyon pine woodland and grassland",
-      "country": "United States of America",
-      "stateProvince": "Colorado",
-      "county": "Grand",
-      "locality": "10.2 km NNW of Debeque cutoff",
-      "locationRemarks": "Landowner: BLM",
-      "locationID": "Site77",
-      "decimalLatitude": "38.12345",
-      "decimalLongitude": "-104.12345",
-      "minimumElevationInMeters": "1500",
-      "permitURI": "2023_BLM_Rick",
-      "materialSamples":
-          {
-            "materialSampleID": "0a438185-0f34-4c58-a248-b62d2a8d6c30",
-            "materialSampleType": "seed",
-            "materialSample_catalogNumber": "ScGl-1341",
-            "recordNumber": "1341",
-            "storageLocation": "Freezer",
-            "disposition": "in collection",
-            "numberCollected": 16,
-            "numberAvailable": "16",
-            "sourcePlantCount": "2",
-            "preparationDate": 1335205592410,
-            "dateStored": 1335205592410
-          },
-      "preservedSpecimens":
-        {
-          "catalogNumber": "KHD00000002",
-          "recordNumber": "52"
-        }
-    }
-  ]
-
-
-  {
-    recordedBy: 'Rick Levy',
-    eventDate: '1.33521E+12',
-    scientificName: 'Sclerocactus glaucus',
-    identifiedby: 'Rick Levy',
-    dateIdentified: '1.33521E+12',
-    associatedTaxa: 'Bouteloua gracilis;Pinus edulis',
-    reproductiveCondition: 'flower',
-    occurrenceRemarks: 'growing in shade of pinyon pine looking happy',
-    habitat: 'pinyon pine woodland and grassland',
-    country: 'United States of America',
-    stateProvince: 'Colorado',
-    county: 'Grand',
-    locality: '10.2 km NNW of Debeque cutoff',
-    locationRemarks: 'Landowner: BLM',
-    locationID: 'Site77',
-    decimalLatitude: '38.12345',
-    decimalLongitude: '-104.12345',
-    minimumElevationInMeters: '1500',
-    permitURI: '2023_BLM_Rick',
-    materialSampleID: '0a438185-0f34-4c58-a248-b62d2a8d6c30',
-    materialSampleType: 'seed',
-    materialSample_catalogNumber: 'ScGl-1344',
-    'recordNumber-materialSample': '1344',
-    storageLocation: 'Freezer',
-    disposition: 'in collection',
-    numberCollected: '19',
-    numberAvailable: '19',
-    sourcePlantCount: '1',
-    preparationDate: '1.33521E+12',
-    dateStored: '1.33521E+12',
-    catalogNumber: 'KHD00000001',
-    recordNumber: '51'
-  }
