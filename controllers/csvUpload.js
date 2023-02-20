@@ -1,7 +1,7 @@
 const db = require("../models");
 const fs = require("fs");
 const csv = require("fast-csv");
-
+const Collection = require("./collectionConstructor")
 
 const csvUpload = async (req, res) => {
     try {
@@ -27,7 +27,9 @@ const csvUpload = async (req, res) => {
         .on("end", () => {
             console.log("csv uploaded to server")
             res.send()
-            console.log(records)
+            //console.log(records)
+            var collectionOne = new Collection('test','test','test','test')
+            console.log(collectionOne)
         });
     } catch (error) {
       console.log(error);
@@ -40,3 +42,5 @@ const csvUpload = async (req, res) => {
   module.exports = {
     csvUpload,
   };
+
+

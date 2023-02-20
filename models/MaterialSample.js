@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.STRING,
             allowNull : true
         },
-        recordNumber : {
+        materialSample_recordNumber : {
             type : Sequelize.STRING,
             allowNull : true
         },
