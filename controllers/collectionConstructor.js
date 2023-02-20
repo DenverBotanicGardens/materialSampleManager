@@ -1,4 +1,4 @@
-var Collection = function (recordedBy,eventDate,scientificName,identifiedBy,dateIdentified,associatedTaxa,reproductiveCondition,occurrenceRemarks,habitat,country,stateProvince,county,locality,locationRemarks,locationID,decimalLatitude,decimalLongitude,minimumElevationInMeters,permitURI,materialSampleID,materialSampleType,materialSample_catalogNumber,materialSample_recordNumber,storageLocation,disposition,numberCollected,numberAvailable,sourcePlantCount,preparationDate,dateStored,catalogNumber,recordNumber)
+var Occurrence = function (recordedBy,eventDate,scientificName,identifiedBy,dateIdentified,associatedTaxa,reproductiveCondition,occurrenceRemarks,habitat,country,stateProvince,county,locality,locationRemarks,locationID,decimalLatitude,decimalLongitude,minimumElevationInMeters,permitURI,materialSampleID,materialSampleType,materialSample_catalogNumber,materialSample_recordNumber,storageLocation,disposition,numberCollected,numberAvailable,sourcePlantCount,preparationDate,dateStored,catalogNumber,recordNumber)
     {
         this.recordedBy = recordedBy;
         this.eventDate = eventDate;
@@ -34,9 +34,9 @@ var Collection = function (recordedBy,eventDate,scientificName,identifiedBy,date
         }
         this.preservedSpecimen= {
             catalogNumber : catalogNumber,
-            recordNumber :recordNumber
+            recordNumber : recordNumber
         }
     }
     
 
-module.exports = Collection
+module.exports = Occurrence
