@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const projectController = require("../controllers/project");
-const insertDatasController = require("../controllers/insertData")
-//const upload = require("../middlewares/upload");
-//const { auth, requiresAuth } = require('express-openid-connect');
+const insertDataController = require("../controllers/insertData")
+const csvController = require("../controllers/csvUpload")
+const upload = require("../middlewares/upload");
+
 
 
 
@@ -22,8 +23,11 @@ let routes = (app) => {
   //GET /api/projects
   router.get("/project", projectController.getAllProjects);
 
-  //POST /api/materialSamples
-  router.post("/materialSample", insertDatasController.insertData)
+  //POST /api/upload
+  router.post("/upload", upload.single("file"), csvController.csvUpload);
+
+  //POST /api/materialSample
+  router.post("/materialSample", insertDataController.insertData)
 
   app.use("/api", router);
 };
