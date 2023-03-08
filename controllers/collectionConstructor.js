@@ -1,4 +1,4 @@
-var Occurrence = function (recordedBy,eventDate,scientificName,identifiedBy,dateIdentified,associatedTaxa,reproductiveCondition,occurrenceRemarks,habitat,country,stateProvince,county,locality,locationRemarks,locationID,decimalLatitude,decimalLongitude,minimumElevationInMeters,permitURI,materialSampleID,materialSampleType,materialSample_catalogNumber,materialSample_recordNumber,storageLocation,disposition,numberCollected,numberAvailable,sourcePlantCount,preparationDate,dateStored,catalogNumber,recordNumber)
+var OccurrenceObj = function (recordedBy,eventDate,scientificName,identifiedBy,dateIdentified,associatedTaxa,reproductiveCondition,occurrenceRemarks,habitat,country,stateProvince,county,locality,locationRemarks,locationID,decimalLatitude,decimalLongitude,minimumElevationInMeters,permitURI,materialSampleID,materialSampleType,materialSample_catalogNumber,materialSample_recordNumber,storageLocation,disposition,numberCollected,numberAvailable,sourcePlantCount,preparationDate,dateStored,catalogNumber,recordNumber)
     {
         this.recordedBy = recordedBy;
         this.eventDate = eventDate;
@@ -19,7 +19,7 @@ var Occurrence = function (recordedBy,eventDate,scientificName,identifiedBy,date
         this.decimalLongitude = decimalLongitude
         this.minimumElevationInMeters = minimumElevationInMeters
         this.permitURI = permitURI
-        this.materialSample = {
+        this.materialSamples = {
             materialSampleID : materialSampleID,
             materialSampleType : materialSampleType,
             materialSample_catalogNumber : materialSample_catalogNumber,
@@ -32,11 +32,11 @@ var Occurrence = function (recordedBy,eventDate,scientificName,identifiedBy,date
             preparationDate : preparationDate,
             dateStored : dateStored
         }
-        this.preservedSpecimen= {
+        this.preservedSpecimens= {
             catalogNumber : catalogNumber,
             recordNumber : recordNumber
         }
     }
     
 
-module.exports = Occurrence
+module.exports = OccurrenceObj

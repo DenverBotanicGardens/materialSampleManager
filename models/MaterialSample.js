@@ -37,11 +37,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull : true
         },
         preparationDate : {
-            type : Sequelize.DATEONLY,
+            type : Sequelize.STRING,
             allowNull : true
         },
         dateStored : {
-            type : Sequelize.DATEONLY,
+            type : Sequelize.STRING,
             allowNull : true
         }
     });
