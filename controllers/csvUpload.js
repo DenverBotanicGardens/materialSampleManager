@@ -3,51 +3,97 @@ const fs = require("fs");
 const csv = require("fast-csv");
 const Occurrence = require("./collectionConstructor");
 
-//create an empty array for each object/row from the csv to be added to
+//records array contains the data objects in the format as they are upon upload
 let records = [];
+//collections array contains the data objects in the format where materialSample and preservedSpecimen are nested in an Occurrence object, using the Occurrence constructor
 let collections = [];
 
-//function to convert the records array into the collections array and then upload them to the db
-const importCollectionObjects = () => {
-  for (let i = 0; i <records.length; i++){
-    let event = new Occurrence(
-      records[i].recordedBy,
-      records[i].eventDate,
-      records[i].scientificName,
-      records[i].identifiedBy,
-      records[i].dateIdentified,
-      records[i].associatedTaxa,
-      records[i].reproductiveCondition,
-      records[i].occurrenceRemarks,
-      records[i].habitat,
-      records[i].country,
-      records[i].stateProvince,
-      records[i].county,
-      records[i].locality,
-      records[i].locationRemarks,
-      records[i].locationID,
-      records[i].decimalLatitude,
-      records[i].decimalLongitude,
-      records[i].minimumElevationInMeters,
-      records[i].permitURI,
-      records[i].materialSampleID,
-      records[i].materialSampleType,
-      records[i].materialSample_catalogNumber,
-      records[i].materialSample_recordNumber,
-      records[i].storageLocation,
-      records[i].disposition,
-      records[i].numberCollected,
-      records[i].numberAvailable,
-      records[i].sourcePlantCount,
-      records[i].preparationDate,
-      records[i].dateStored,
-      records[i].catalogNumber,
-      records[i].recordNumber
-      )
-    collections.push(event)
+//function to convert the records array into the collections array of objects and then upload them to the db
+// const importCollectionObjects = () => {
+//   for (let i = 0; i <records.length; i++){
+//     let event = new Occurrence(
+//       records[i].recordedBy,
+//       records[i].eventDate,
+//       records[i].scientificName,
+//       records[i].identifiedBy,
+//       records[i].dateIdentified,
+//       records[i].associatedTaxa,
+//       records[i].reproductiveCondition,
+//       records[i].occurrenceRemarks,
+//       records[i].habitat,
+//       records[i].country,
+//       records[i].stateProvince,
+//       records[i].county,
+//       records[i].locality,
+//       records[i].locationRemarks,
+//       records[i].locationID,
+//       records[i].decimalLatitude,
+//       records[i].decimalLongitude,
+//       records[i].minimumElevationInMeters,
+//       records[i].permitURI,
+//       records[i].materialSampleID,
+//       records[i].materialSampleType,
+//       records[i].materialSample_catalogNumber,
+//       records[i].materialSample_recordNumber,
+//       records[i].storageLocation,
+//       records[i].disposition,
+//       records[i].numberCollected,
+//       records[i].numberAvailable,
+//       records[i].sourcePlantCount,
+//       records[i].preparationDate,
+//       records[i].dateStored,
+//       records[i].catalogNumber,
+//       records[i].recordNumber
+//       )
+//     collections.push(event)
+//   }
+//   console.log(collections)
+// }
+
+async function importCollectionObjects() {
+    for (let i = 0; i <records.length; i++){
+      await new Promise(resolve => setTimeout(() => {
+        let event = new Occurrence(
+          records[i].recordedBy,
+          records[i].eventDate,
+          records[i].scientificName,
+          records[i].identifiedBy,
+          records[i].dateIdentified,
+          records[i].associatedTaxa,
+          records[i].reproductiveCondition,
+          records[i].occurrenceRemarks,
+          records[i].habitat,
+          records[i].country,
+          records[i].stateProvince,
+          records[i].county,
+          records[i].locality,
+          records[i].locationRemarks,
+          records[i].locationID,
+          records[i].decimalLatitude,
+          records[i].decimalLongitude,
+          records[i].minimumElevationInMeters,
+          records[i].permitURI,
+          records[i].materialSampleID,
+          records[i].materialSampleType,
+          records[i].materialSample_catalogNumber,
+          records[i].materialSample_recordNumber,
+          records[i].storageLocation,
+          records[i].disposition,
+          records[i].numberCollected,
+          records[i].numberAvailable,
+          records[i].sourcePlantCount,
+          records[i].preparationDate,
+          records[i].dateStored,
+          records[i].catalogNumber,
+          records[i].recordNumber
+          )
+        collections.push(event)
+        resolve()
+      }, 1000))
   }
   console.log(collections)
 }
+
 
 //function that takes in a csv and parses the data into an array of objects (by row)
 const csvUpload = async (req, res) => {
