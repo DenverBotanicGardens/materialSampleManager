@@ -70,9 +70,6 @@ async function insertData(data) {
       }
     ]
   })
-  .then(() => {
-    data.send()
-  })
   .catch((err) => {
     console.log(err);
   })
