@@ -17,7 +17,7 @@ async function importCollectionObjects() {
       await new Promise(resolve => setTimeout(() => {
         let event = new OccurrenceObj(
           records[i].recordedBy,
-         new Date(records[i].eventDate),
+          new Date(records[i].eventDate),
           records[i].scientificName,
           records[i].identifiedBy,
           new Date(records[i].dateIdentified),
