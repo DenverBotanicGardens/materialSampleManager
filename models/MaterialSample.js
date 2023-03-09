@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.STRING,
             allowNull : true
         },
-        recordNumber : {
+        materialSample_recordNumber : {
             type : Sequelize.STRING,
             allowNull : true
         },
@@ -37,11 +37,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull : true
         },
         preparationDate : {
-            type : Sequelize.DATEONLY,
+            type : Sequelize.STRING,
             allowNull : true
         },
         dateStored : {
-            type : Sequelize.DATEONLY,
+            type : Sequelize.STRING,
             allowNull : true
         }
     });

@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull : true
             },
         eventDate : {
-            type : Sequelize.DATEONLY,
+            type : Sequelize.STRING,
             allowNull : true
             },
         scientificName : {
@@ -21,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull : true
             },
         dateIdentified : {
-            type : Sequelize.DATEONLY,
+            type : Sequelize.STRING,
             allowNull : true
             },
         associatedTaxa : {
