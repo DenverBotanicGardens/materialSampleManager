@@ -17,10 +17,10 @@ async function importCollectionObjects() {
       await new Promise(resolve => setTimeout(() => {
         let event = new OccurrenceObj(
           records[i].recordedBy,
-          records[i].eventDate,
+          new Date(records[i].eventDate),
           records[i].scientificName,
           records[i].identifiedBy,
-          records[i].dateIdentified,
+          new Date(records[i].dateIdentified),
           records[i].associatedTaxa,
           records[i].reproductiveCondition,
           records[i].occurrenceRemarks,
@@ -44,8 +44,8 @@ async function importCollectionObjects() {
           records[i].numberCollected,
           records[i].numberAvailable,
           records[i].sourcePlantCount,
-          records[i].preparationDate,
-          records[i].dateStored,
+          new Date(records[i].preparationDate),
+          new Date(records[i].dateStored),
           records[i].catalogNumber,
           records[i].recordNumber
           )
