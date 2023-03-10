@@ -1,0 +1,26 @@
+const db = require("../models");
+const MaterialSample = db.materialSample;
+const Occurrence = db.occurrence;
+const PreservedSpecimen = db.preservedSpecimen;
+
+
+const getSeedsForTrial = (req, res) => {
+    MaterialSample.findAll(
+        {
+    where: {
+        materialSample_catalogNumber: req.body.materialSample_catalogNumber,
+        materialSampleType: 'seed'
+    }
+}
+)
+.then((data) => {
+    res.send(data)
+})
+.catch((err) => {
+    console.log(err)
+    })
+}
+
+module.exports = {
+    getSeedsForTrial
+  };
