@@ -2,24 +2,56 @@ const db = require("../models");
 const MaterialSample = db.materialSample;
 const Occurrence = db.occurrence;
 const PreservedSpecimen = db.preservedSpecimen;
+const Sequelize = require("sequelize");
+const { sequelize } = require("../models");
+const { QueryTypes } = require('sequelize');
+const Op = Sequelize.Op;
 
+
+var seedQuery = "SELECT * FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id WHERE ms.materialSampleType = 'seed' AND ms.materialSample_catalogNumber = 'ScGl-1340' AND o.scientificName = 'Sclerocactus glaucus' AND o.eventDate BETWEEN '2022-12-25' AND '2023-01-01'"
+
+const writeSeedQuery = () => {
+
+}
 
 const getSeedsForTrial = (req, res) => {
-    MaterialSample.findAll(
-        {
-    where: {
-        materialSample_catalogNumber: req.body.materialSample_catalogNumber,
-        materialSampleType: 'seed'
-    }
+    console.log(req.body.materialSample_catalogNumber)
+    console.log(req.body.scientificName)
+    console.log(req.body.earlyDate)
+    console.log(req.body.lateDate)
 }
-)
-.then((data) => {
-    res.send(data)
-})
-.catch((err) => {
-    console.log(err)
-    })
-}
+
+// const getSeedsForTrial = (req, res) => {
+//     MaterialSample.findAll(
+//         {
+//             where: {
+//                 [Op.or]:
+//                 [
+//                 {materialSampleType: 'seed'},
+//                 {materialSample_catalogNumber: req.body.materialSample_catalogNumber}
+//                 ]
+//             },
+//             include: [{
+//                 model: Occurrence,
+//                 where: {
+//                     [Op.or]:
+//                     [{scientificName: req.body.scientificName},
+//                    [
+//                     {eventDate: {
+//                         [Op.between]: [req.body.earlyDate, req.body.lateDate]
+//                         }
+//                     }
+//                 ]]
+//             }}]
+// }
+// )
+// .then((data) => {
+//     res.send(data)
+// })
+// .catch((err) => {
+//     console.log(err)
+//     })
+// }
 
 module.exports = {
     getSeedsForTrial
