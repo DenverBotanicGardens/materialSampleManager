@@ -63,3 +63,18 @@
           "recordNumber": "51"
         }
     }
+
+{
+"materialSample_catalogNumber": "12345",
+"testConductedBy": "Alex Seglias",
+"sampleFrozen": "1",
+"medium": "agar",
+"scarified": "1",
+"stratificationTemperature": "15",
+"stratificationStartDate": "2023-08-15",
+"incubationStartDate": "2023-08-30",
+"numberSeedsTested": "40",
+"incubationTempDay": "30",
+"incubationTempNight": "25",
+"materialSampleTableID": "1"
+}
