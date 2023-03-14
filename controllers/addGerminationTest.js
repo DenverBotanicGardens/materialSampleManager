@@ -6,7 +6,6 @@ const { QueryTypes } = require('sequelize');
 const Op = Sequelize.Op;
 
 async function addGerminationTest(req,res) {
-    //use bulkCreate with include to insert the data
     const result = await GermplasmViabilityTest.create({
         materialSample_catalogNumber : req.body.materialSample_catalogNumber,
         testConductedBy : req.body.testConductedBy,
