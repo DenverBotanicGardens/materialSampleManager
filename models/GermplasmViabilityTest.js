@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.STRING,
             allowNull : true
         },
-        sampleStored : {
+        sampleFrozen : {
             type : Sequelize.BOOLEAN,
             allowNull : true
         },

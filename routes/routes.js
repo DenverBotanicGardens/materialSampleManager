@@ -5,7 +5,7 @@ const insertDataController = require("../controllers/insertData")
 const csvController = require("../controllers/csvUpload")
 const upload = require("../middlewares/upload");
 const getSeedForTrial = require("../controllers/getSeedForTrial")
-
+const addGerminationTest = require("../controllers/addGerminationTest")
 
 
 let routes = (app) => {
@@ -31,6 +31,9 @@ let routes = (app) => {
 
   //GET /api/seedForTrial
   router.get("/seedForTrial", getSeedForTrial.getSeedsForTrial)
+
+  //POST /api/addGerminationTest
+  router.post("/addGerminationTest", addGerminationTest.addGerminationTest)
 
   app.use("/api", router);
 };
