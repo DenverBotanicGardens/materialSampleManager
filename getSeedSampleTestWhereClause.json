@@ -1,6 +1,0 @@
-
-if catalogNumber, scientificName, and early data and late date are provided
- 
-{
-    "seedsForTrialQuery": "SELECT * FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id WHERE ms.materialSampleType = "seed" AND ms.materialSample_catalogNumber = "ScGl-1340" AND o.scientificName LIKE = "Sclerocactus glaucus" AND o.eventDate BETWEEN '2022-12-25' AND '2023-01-01'"
-}

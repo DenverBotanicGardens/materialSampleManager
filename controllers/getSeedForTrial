@@ -7,6 +7,7 @@ const { sequelize } = require("../models");
 const { QueryTypes } = require('sequelize');
 const Op = Sequelize.Op;
 
+var seedQuery = [`SELECT * FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id WHERE ms.materialSampleType = 'seed'`]
 
 const getSeedsForTrial = (req, res) => {
     console.log(req.body.materialSample_catalogNumber)
@@ -14,30 +15,35 @@ const getSeedsForTrial = (req, res) => {
     console.log(req.body.earlyDate)
     console.log(req.body.lateDate)
 
-    var seedQuery = `SELECT * FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id WHERE ms.materialSampleType = 'seed'`
-    
     if (req.body.materialSample_catalogNumber !== '') {
-      seedQuery = `${seedQuery} AND ms.materialSample_catalogNumber = ${req.body.materialSample_catalogNumber}`;
-      console.log(seedQuery)
+        seedQuery.push(` AND ms.materialSample_catalogNumber = ${req.body.materialSample_catalogNumber}`);
     }
-    
-    if (typeof req.body.scientificName !== 'undefined') {
-        seedQuery.concat(` AND o.scientificName = ${req.body.scientificName}`);
+    console.log(seedQuery)
+
+    if (req.body.scientificName !== '') {
+        seedQuery.push(` AND o.scientificName = ${req.body.scientificName}`);
     }
-    
-    if (typeof req.body.earlyDate !== 'undefined' && typeof req.body.lateDate === 'undefined') {
-        seedQuery.concat(` o.eventDate BETWEEN ${req.body.earlyDate} AND '2300-01-01'`)
+    console.log(seedQuery)
+    if (req.body.earlyDate !== '' && req.body.lateDate === '') {
+        seedQuery.push(` o.eventDate BETWEEN '${req.body.earlyDate}' AND '2300-01-01'`)
     }
-    
-    if (typeof req.body.earlyDate !== 'undefined' && typeof req.body.lateDate !== 'undefined') {
-        seedQuery.concat(` o.eventDate BETWEEN ${req.body.earlyDate} AND ${req.body.lateDate}`)
+    console.log(seedQuery)
+    if (req.body.earlyDate !== '' && req.body.lateDate !== '') {
+        seedQuery.push(` o.eventDate BETWEEN '${req.body.earlyDate}' AND '${req.body.lateDate}'`)
     }
-    
-    if (typeof req.body.earlyDate === 'undefined' && typeof req.body.lateDate !== 'undefined') {
-        seedQuery.concat(` o.eventDate BETWEEN '1900-01-01' AND ${req.body.lateDate}`)
+    console.log(seedQuery)
+    if (req.body.earlyDate === '' && req.body.lateDate !== '') {
+        seedQuery.push(` o.eventDate BETWEEN '1900-01-01' AND '${req.body.lateDate}'`)
     }
-    
+    fullSeedQuery = seedQuery.join()
+    console.log(fullSeedQuery.replaceAll(',',''))
+    seedQuery = [`SELECT * FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id WHERE ms.materialSampleType = 'seed'`] 
 }
+    
+    
+    
+    
+
 
 // const getSeedsForTrial = (req, res) => {
 //     MaterialSample.findAll(
