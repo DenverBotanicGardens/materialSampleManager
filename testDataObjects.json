@@ -64,6 +64,8 @@
         }
     }
 
+
+    new germination test
 {
 "materialSample_catalogNumber": "12345",
 "testConductedBy": "Alex Seglias",
@@ -79,9 +81,19 @@
 "materialSampleTableID": "1"
 }
 
+
+new viability tracking
 {
 "numberGerminants": 5
 "date": "2023-08-30",
 "notes": "Did some fly ass shit",
 "germplasmViabilityTestID": 3
+}
+
+finish germination test
+{
+  "endDate" : 2023-08-30,
+  "numberDead" : 14,
+  "numberViable" : 20,
+  "totalGerminants": 40,
 }
