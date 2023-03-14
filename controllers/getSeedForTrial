@@ -9,37 +9,41 @@ const Op = Sequelize.Op;
 
 var seedQuery = [`SELECT * FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id WHERE ms.materialSampleType = 'seed'`]
 
-const getSeedsForTrial = (req, res) => {
-    console.log(req.body.materialSample_catalogNumber)
-    console.log(req.body.scientificName)
-    console.log(req.body.earlyDate)
-    console.log(req.body.lateDate)
+async function getSeedsForTrial(req, res) {
+    await new Promise(resolve => setTimeout(() => {
+        if (req.body.materialSample_catalogNumber !== '') {
+            seedQuery.push(` AND ms.materialSample_catalogNumber = '${req.body.materialSample_catalogNumber}'`);
+        }
 
-    if (req.body.materialSample_catalogNumber !== '') {
-        seedQuery.push(` AND ms.materialSample_catalogNumber = ${req.body.materialSample_catalogNumber}`);
-    }
-    console.log(seedQuery)
+        if (req.body.scientificName !== '') {
+            seedQuery.push(` AND o.scientificName = '${req.body.scientificName}'`);
+        }
 
-    if (req.body.scientificName !== '') {
-        seedQuery.push(` AND o.scientificName = ${req.body.scientificName}`);
-    }
-    console.log(seedQuery)
-    if (req.body.earlyDate !== '' && req.body.lateDate === '') {
-        seedQuery.push(` o.eventDate BETWEEN '${req.body.earlyDate}' AND '2300-01-01'`)
-    }
-    console.log(seedQuery)
-    if (req.body.earlyDate !== '' && req.body.lateDate !== '') {
-        seedQuery.push(` o.eventDate BETWEEN '${req.body.earlyDate}' AND '${req.body.lateDate}'`)
-    }
-    console.log(seedQuery)
-    if (req.body.earlyDate === '' && req.body.lateDate !== '') {
-        seedQuery.push(` o.eventDate BETWEEN '1900-01-01' AND '${req.body.lateDate}'`)
-    }
-    fullSeedQuery = seedQuery.join()
-    console.log(fullSeedQuery.replaceAll(',',''))
-    seedQuery = [`SELECT * FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id WHERE ms.materialSampleType = 'seed'`] 
+        if (req.body.earlyDate !== '' && req.body.lateDate === '') {
+            seedQuery.push(` AND .eventDate BETWEEN '${req.body.earlyDate}' AND '2300-01-01'`)
+        }
+
+        if (req.body.earlyDate !== '' && req.body.lateDate !== '') {
+            seedQuery.push(` AND o.eventDate BETWEEN '${req.body.earlyDate}' AND '${req.body.lateDate}'`)
+        }
+
+        if (req.body.earlyDate === '' && req.body.lateDate !== '') {
+            seedQuery.push(` AND o.eventDate BETWEEN '1900-01-01' AND '${req.body.lateDate}'`)
+        }
+        fullSeedQuery = seedQuery.join()
+        finalQuery = fullSeedQuery.replaceAll(',','')
+        seedQuery = [`SELECT * FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id WHERE ms.materialSampleType = 'seed'`]
+        resolve()
+    },1000))
+    console.log(finalQuery)
+    sequelize.query(finalQuery, { type:QueryTypes.SELECT })
+    .then((data) => {
+        res.send(data)
+    })
+    .catch((err) => {
+        console.log(err);
+      })
 }
-    
     
     
     
