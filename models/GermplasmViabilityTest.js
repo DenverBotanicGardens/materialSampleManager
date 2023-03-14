@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const GermplasmViabilityTest = sequelize.define("germplasmViabilityTest", {
-        materialSampleCatalogNumber : {
+        materialSample_catalogNumber : {
             type : Sequelize.STRING,
             allowNull : true
         },

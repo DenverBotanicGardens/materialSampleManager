@@ -39,7 +39,7 @@ require("./routes/routes.js")(app);
 
 // start the server. {force:true} drops the tables from exisiting db. {force:false} keeps the existing db and tables and data in place
 db.sequelize.sync({
-    force: true
+    force: false
   }).then(function () {
     app.listen(PORT, function () {
         console.log("App listening at http://localhost:" + PORT);

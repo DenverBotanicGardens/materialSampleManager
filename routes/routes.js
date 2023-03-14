@@ -4,12 +4,12 @@ const projectController = require("../controllers/project");
 const insertDataController = require("../controllers/insertData")
 const csvController = require("../controllers/csvUpload")
 const upload = require("../middlewares/upload");
-
+const getSeedForTrial = require("../controllers/getSeedForTrial")
 
 
 
 let routes = (app) => {
- 
+
   //views
     //index
     app.get('/', (req, res) => {
@@ -28,6 +28,9 @@ let routes = (app) => {
 
   //POST /api/materialSample
   router.post("/materialSample", insertDataController.insertData)
+
+  //GET /api/seedForTrial
+  router.get("/seedForTrial", getSeedForTrial.getSeedsForTrial)
 
   app.use("/api", router);
 };
