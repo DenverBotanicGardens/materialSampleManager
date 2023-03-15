@@ -8,6 +8,7 @@ const getSeedForTrial = require("../controllers/getSeedForTrial")
 const addGerminationTest = require("../controllers/addGerminationTest")
 const addViabilityTracking = require("../controllers/addViabilityTracking")
 const finishGerminationTest = require("../controllers/finishGerminationTest")
+const addTransfer = require("../controllers/addTransfer")
 
 let routes = (app) => {
 
@@ -41,6 +42,9 @@ let routes = (app) => {
 
   //PUT /api/finsihGerminationTest
   router.put("/finishGerminationTest", finishGerminationTest.finishGerminationTest)
+
+  //POST /api/addTransfer
+  router.post("/addTransfer", addTransfer.addTransfer)
 
   app.use("/api", router);
 };
