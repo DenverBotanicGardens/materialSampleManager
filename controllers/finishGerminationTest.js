@@ -10,13 +10,24 @@ const calculateViabilityAdjustedGermination = (numberGerminants, numberViable) =
 }
 
 async function finishGerminationTest(req,res) {
-    const result = await GermplasmViabilityTest.update({
-        endDate : req.body.endDate,
-        numberDead : req.body.numberDead,
-        numberViable : req.body.numberViable,
-        totalGerminants: req.body.totalGerminants,
-        viabilityAdjustedGermination: calculateViabilityAdjustedGermination(req.body.totalGerminants,req.body.numberViable),
-    },{
+  var set = {}
+  if (req.body.endDate){
+    set.endDate = req.body.endDate
+  }
+  if (req.body.numberDead){
+    set.numberDead = req.body.numberDead
+  }
+  if (req.body.numberViable){
+    set.numberViable = req.body.numberViable
+  }
+  if (req.body.totalGerminants){
+    set.totalGerminants = req.body.totalGerminants
+  }
+  if (req.body.totalGerminants && req.body.numberViable){
+    set.viabilityAdjustedGermination = calculateViabilityAdjustedGermination(req.body.totalGerminants,req.body.numberViable)
+  }
+  console.log(set)
+    const result = await GermplasmViabilityTest.update(set,{
         where: {
             id: req.body.id
         }
