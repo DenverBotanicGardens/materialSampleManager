@@ -38,7 +38,6 @@ async function getTransfer(req, res) {
             transferQuery.push(` AND ms.materialSampleType = '${req.body.materialSampleType}'`)
         }
         fullTransferQuery = transferQuery.join()
-        console.log(fullTransferQuery)
         queryParams = fullTransferQuery.replaceAll(',','')
         finalQuery = transferSelect.concat(queryParams)
         transferQuery = []
