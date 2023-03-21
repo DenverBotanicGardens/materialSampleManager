@@ -9,6 +9,7 @@ const addGerminationTest = require("../controllers/addGerminationTest")
 const addViabilityTracking = require("../controllers/addViabilityTracking")
 const finishGerminationTest = require("../controllers/finishGerminationTest")
 const addTransfer = require("../controllers/addTransfer")
+const updateTransfer = require("../controllers/updateTransfer")
 
 let routes = (app) => {
 
@@ -45,6 +46,9 @@ let routes = (app) => {
 
   //POST /api/addTransfer
   router.post("/addTransfer", addTransfer.addTransfer)
+
+  //PUT /api/updateTransfer
+  router.put("/updateTransfer", updateTransfer.updateTransfer)
 
   app.use("/api", router);
 };
