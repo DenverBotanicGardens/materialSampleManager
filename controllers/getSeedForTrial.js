@@ -44,42 +44,6 @@ async function getSeedsForTrial(req, res) {
         console.log(err);
       })
 }
-    
-    
-    
-
-
-// const getSeedsForTrial = (req, res) => {
-//     MaterialSample.findAll(
-//         {
-//             where: {
-//                 [Op.and]:
-//                 [
-//                 {materialSampleType: 'seed'},
-//                 {materialSample_catalogNumber: req.body.materialSample_catalogNumber}
-//                 ]
-//             },
-//             include: [{
-//                 model: Occurrence,
-//                 where: {
-//                     [Op.or]:
-//                     [{scientificName: req.body.scientificName},
-//                    [
-//                     {eventDate: {
-//                         [Op.between]: [req.body.earlyDate, req.body.lateDate]
-//                         }
-//                     }
-//                 ]]
-//             }}]
-// }
-// )
-// .then((data) => {
-//     res.send(data)
-// })
-// .catch((err) => {
-//     console.log(err)
-//     })
-// }
 
 module.exports = {
     getSeedsForTrial
