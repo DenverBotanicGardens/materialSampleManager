@@ -1,9 +1,5 @@
 const db = require("../models");
 const Transfer = db.transfer
-const Sequelize = require("sequelize");
-const { sequelize } = require("../models");
-const { QueryTypes } = require('sequelize');
-const Op = Sequelize.Op;
 
 async function updateTransfer(req,res) {
     var set = {}
