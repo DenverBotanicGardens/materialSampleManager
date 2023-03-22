@@ -11,6 +11,7 @@ const finishGerminationTest = require("../controllers/finishGerminationTest")
 const addTransfer = require("../controllers/addTransfer")
 const updateTransfer = require("../controllers/updateTransfer")
 const getTransfer = require("../controllers/getTransfer")
+const updateMaterialSample = require("../controllers/updateMaterialSample")
 
 let routes = (app) => {
 
@@ -53,6 +54,9 @@ let routes = (app) => {
 
   //GET /api/getTransfer
   router.get("/getTransfer", getTransfer.getTransfer)
+
+  //PUT /api/updateMaterialSample
+  router.put("/updateMaterialSample", updateMaterialSample.updateMaterialSample)
 
   app.use("/api", router);
 };
