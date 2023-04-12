@@ -36,20 +36,20 @@ async function getGerminationTrials(req, res) {
             germplasmTrialQuery.push(` AND gvt.endDate BETWEEN '${req.body.endEarlyDate}' AND '2300-01-01'`)
         }
         if (req.body.endEarlyDate !== '' && req.body.endLateDate !== '') {
-            germplasmTrialQuery.push(` AND gvt.endDate '${req.body.endEarlyDate}' AND '${req.body.endLateDate}'`)
+            germplasmTrialQuery.push(` AND gvt.endDate BETWEEN '${req.body.endEarlyDate}' AND '${req.body.endLateDate}'`)
         }
         if (req.body.endEarlyDate === '' && req.body.endLateDate !== '') {
-            germplasmTrialQuery.push(` AND gvt.endDate '1900-01-01' AND '${req.body.endLateDate}'`)
+            germplasmTrialQuery.push(` AND gvt.endDate BETWEEN '1900-01-01' AND '${req.body.endLateDate}'`)
         }
         //eventDate
         if (req.body.eventEarlyDate !== '' && req.body.eventLateDate === '') {
             germplasmTrialQuery.push(` AND o.eventDate BETWEEN '${req.body.eventEarlyDate}' AND '2300-01-01'`)
         }
         if (req.body.eventEarlyDate !== '' && req.body.eventLateDate !== '') {
-            germplasmTrialQuery.push(` AND o.eventDate '${req.body.eventEarlyDate}' AND '${req.body.eventLateDate}'`)
+            germplasmTrialQuery.push(` AND o.eventDate BETWEEN '${req.body.eventEarlyDate}' AND '${req.body.eventLateDate}'`)
         }
         if (req.body.eventEarlyDate === '' && req.body.eventLateDate !== '') {
-            germplasmTrialQuery.push(` AND o.eventDate '1900-01-01' AND '${req.body.eventLateDate}'`)
+            germplasmTrialQuery.push(` AND o.eventDate BETWEEN '1900-01-01' AND '${req.body.eventLateDate}'`)
         }
         //stateProvince
         if (req.body.stateProvince !== ''){
