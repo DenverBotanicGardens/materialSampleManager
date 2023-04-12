@@ -13,7 +13,50 @@ var dataForExport
 //empty array to populate with parameters that make up where clause
 var germplasmTrialQuery = []
 //standard query to return all records from germplasmviabilitytest table. extra where params provided by user are concatted to the end of this string
-var germplasmTrialSelect = `SELECT gvt.id, gvt.materialSample_catalogNumber, gvt.testConductedBy, gvt.sampleFrozen, gvt.medium, gvt.scarified, gvt.stratificationTemperature, gvt.stratificationStartDate, gvt.incubationStartDate, gvt.endDate, gvt.numberSeedsTested, gvt.incubationTempDay, gvt.incubationTempNight, gvt.numberDead, gvt.numberViable, gvt.totalGerminants, gvt.viabilityAdjustedGermination, gvt.materialSampleID, vt.numberGerminants, vt.date, vt.notes, o.scientificName, o.eventDate, o.stateProvince, o.county, o.locality, o.locationRemarks, o.recordedBy, o.decimalLatitude, o.decimalLongitude, o.minimumElevationInMeters, o.locationID, o.reproductiveCondition, o.identifiedBy, o.dateIdentified, o.occurrenceID, ms.materialSample_recordNumber, ms.numberCollected, ms.numberAvailable, ms.sourcePlantCount, ms.preparationDate, ms.dateStored FROM occurrences AS o LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN germplasmviabilitytests AS gvt ON ms.id = gvt.materialSampleTableID LEFT JOIN viabilitytracking AS vt ON gvt.id = vt.germplasmViabilityTestID WHERE gvt.id IS NOT NULL`
+var germplasmTrialSelect = `SELECT
+o.scientificName AS "species",
+o.eventDate AS "collection date",
+gvt.id AS "trial database ID",
+gvt.materialSample_catalogNumber AS "seed sample catalog number",
+gvt.testConductedBy,
+gvt.sampleFrozen,
+gvt.medium,
+gvt.scarified,
+gvt.stratificationTemperature,
+gvt.stratificationStartDate,
+gvt.incubationStartDate,
+gvt.endDate AS "trial end date",
+gvt.numberSeedsTested,
+gvt.incubationTempDay,
+gvt.incubationTempNight,
+gvt.numberDead,
+gvt.numberViable,
+gvt.totalGerminants,
+gvt.viabilityAdjustedGermination,
+vt.numberGerminants AS "number of germinants_tracking",
+vt.date AS "date_tracking",
+vt.notes AS "notes_tracking",
+ms.dateStored AS "date seeds stored",
+o.stateProvince AS "state",
+o.county,
+o.locality,
+o.locationRemarks AS "landownder or EO",
+o.recordedBy AS "collector",
+o.decimalLatitude,
+o.decimalLongitude,
+o.minimumElevationInMeters,
+o.locationID,
+o.reproductiveCondition,
+o.identifiedBy,
+o.dateIdentified,
+o.occurrenceID,
+ms.materialSample_recordNumber AS "collector assigned number",
+ms.numberCollected,
+ms.numberAvailable,
+ms.sourcePlantCount,
+ms.preparationDate,
+gvt.materialSampleID
+FROM occurrences AS o LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN germplasmviabilitytests AS gvt ON ms.id = gvt.materialSampleTableID LEFT JOIN viabilitytracking AS vt ON gvt.id = vt.germplasmViabilityTestID WHERE gvt.id IS NOT NULL`
 
 //function to define query and get germination trials
 async function getGerminationTrialResults(req, res) {
