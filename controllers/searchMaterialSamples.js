@@ -3,8 +3,11 @@ const Sequelize = require("sequelize");
 const { sequelize } = require("../models");
 const { QueryTypes } = require('sequelize');
 const Op = Sequelize.Op;
+const fs = require("fs")
+const csv = require("fast-csv")
 
-
+//variable to hold the data so that it can be exported after a search
+var dataForExport
 
 //empty array to populate with parameters that make up where clause
 var materialSampleQuery = []
@@ -92,6 +95,40 @@ async function searchMaterialSamples(req, res) {
     sequelize.query(finalQuery, { type:QueryTypes.SELECT })
     .then((data) => {
         res.send(data)
+        dataForExport = data
+    })
+    .catch((err) => {
+        console.log(err);
+      })
+}
+
+//------------------------------------------------------------------------------
+//EXPORTING DATA TO CSV
+
+//function to write the data into a csv and then create the file in the resources dir
+async function exportSearchToCSV(req, res) {
+    //create the date object for the download file name
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+    //set the path for the file
+    const ws = fs.createWriteStream(`./resources/static/assets/downloads/${date}_materialSampleSearchDataExport.csv`)
+    await new Promise(resolve => setTimeout(() => {
+        console.log(dataForExport)
+        csv.write(dataForExport, { headers: true })
+        .pipe(ws)
+        .on("finish", function(){
+            console.log("CSV successfully created")
+        })
+        resolve()
+    },1000))
+    .then((data) => {
+        res.send(data)
     })
     .catch((err) => {
         console.log(err);
@@ -99,5 +136,6 @@ async function searchMaterialSamples(req, res) {
 }
 
 module.exports = {
-    searchMaterialSamples
+    searchMaterialSamples,
+    exportSearchToCSV
 }

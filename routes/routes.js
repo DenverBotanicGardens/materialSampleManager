@@ -67,6 +67,9 @@ let routes = (app) => {
   //GET /api/searchMaterialSamples
   router.get("/searchMaterialSamples", searchMaterialSamples.searchMaterialSamples)
 
+  //POST /api/exportSearchToCSV
+  router.post("/exportSearchToCSV", searchMaterialSamples.exportSearchToCSV)
+
   app.use("/api", router);
 };
 
