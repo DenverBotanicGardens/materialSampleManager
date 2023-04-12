@@ -6,6 +6,9 @@ const Op = Sequelize.Op;
 const fs = require("fs")
 const csv = require("fast-csv")
 
+//variable to hold the data so that it can be exported after a search
+var dataForExport
+
 //empty array to populate with parameters that make up where clause
 var materialSampleQuery = []
 //standard query to return all records from transfers table. extra where params provided by user are concatted to the end of this string
@@ -99,32 +102,29 @@ async function searchMaterialSamples(req, res) {
       })
 }
 
+//------------------------------------------------------------------------------
 //EXPORTING DATA TO CSV
-//create the date object for the download file name
-Date.prototype.yyyymmdd = function() {
-    var mm = this.getMonth() + 1; // getMonth() is zero-based
-    var dd = this.getDate();
-  
-    return [this.getFullYear(),
-            (mm>9 ? '' : '0') + mm,
-            (dd>9 ? '' : '0') + dd
-            ].join('');
-  };
-var date = new Date();
-//create a variable for the csv file name
-const ws = fs.createWriteStream(`./resources/static/assets/downloads/${date.yyyymmdd()}_materialSampleSearchDataExport.csv`)
-
-//variable to hold the data so that it can be exported after a search
-var dataForExport
 
 //function to write the data into a csv and then create the file in the resources dir
 async function exportSearchToCSV(req, res) {
+    //create the date object for the download file name
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+    //set the path for the file
+    const ws = fs.createWriteStream(`./resources/static/assets/downloads/${date}_materialSampleSearchDataExport.csv`)
     await new Promise(resolve => setTimeout(() => {
+        console.log(dataForExport)
         csv.write(dataForExport, { headers: true })
+        .pipe(ws)
         .on("finish", function(){
             console.log("CSV successfully created")
         })
-        .pipe(ws)
         resolve()
     },1000))
     .then((data) => {
