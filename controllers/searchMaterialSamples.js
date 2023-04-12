@@ -3,8 +3,8 @@ const Sequelize = require("sequelize");
 const { sequelize } = require("../models");
 const { QueryTypes } = require('sequelize');
 const Op = Sequelize.Op;
-
-
+const fs = require("fs")
+const csv = require("fast-csv")
 
 //empty array to populate with parameters that make up where clause
 var materialSampleQuery = []
@@ -92,6 +92,43 @@ async function searchMaterialSamples(req, res) {
     sequelize.query(finalQuery, { type:QueryTypes.SELECT })
     .then((data) => {
         res.send(data)
+        dataForExport = data
+    })
+    .catch((err) => {
+        console.log(err);
+      })
+}
+
+//EXPORTING DATA TO CSV
+//create the date object for the download file name
+Date.prototype.yyyymmdd = function() {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+  
+    return [this.getFullYear(),
+            (mm>9 ? '' : '0') + mm,
+            (dd>9 ? '' : '0') + dd
+            ].join('');
+  };
+var date = new Date();
+//create a variable for the csv file name
+const ws = fs.createWriteStream(`./resources/static/assets/downloads/${date.yyyymmdd()}_materialSampleSearchDataExport.csv`)
+
+//variable to hold the data so that it can be exported after a search
+var dataForExport
+
+//function to write the data into a csv and then create the file in the resources dir
+async function exportSearchToCSV(req, res) {
+    await new Promise(resolve => setTimeout(() => {
+        csv.write(dataForExport, { headers: true })
+        .on("finish", function(){
+            console.log("CSV successfully created")
+        })
+        .pipe(ws)
+        resolve()
+    },1000))
+    .then((data) => {
+        res.send(data)
     })
     .catch((err) => {
         console.log(err);
@@ -99,5 +136,6 @@ async function searchMaterialSamples(req, res) {
 }
 
 module.exports = {
-    searchMaterialSamples
+    searchMaterialSamples,
+    exportSearchToCSV
 }
