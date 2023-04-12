@@ -4,14 +4,19 @@ const Sequelize = require("sequelize");
 const { sequelize } = require("../models");
 const { QueryTypes } = require('sequelize');
 const Op = Sequelize.Op;
+const fs = require("fs")
+const csv = require("fast-csv")
+
+//variable to hold the data so that it can be exported after a search
+var dataForExport
 
 //empty array to populate with parameters that make up where clause
 var germplasmTrialQuery = []
 //standard query to return all records from germplasmviabilitytest table. extra where params provided by user are concatted to the end of this string
-var germplasmTrialSelect = `SELECT gvt.id,gvt.materialSample_catalogNumber,gvt.stratificationStartDate,gvt.endDate,o.scientificName,o.eventDate,o.stateProvince,o.county,o.locality,o.locationRemarks,o.recordedBy FROM occurrences AS o LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN germplasmviabilitytests AS gvt ON ms.id = gvt.materialSampleTableID WHERE gvt.id IS NOT NULL`
+var germplasmTrialSelect = `SELECT gvt.id, gvt.materialSample_catalogNumber, gvt.testConductedBy, gvt.sampleFrozen, gvt.medium, gvt.scarified, gvt.stratificationTemperature, gvt.stratificationStartDate, gvt.incubationStartDate, gvt.endDate, gvt.numberSeedsTested, gvt.incubationTempDay, gvt.incubationTempNight, gvt.numberDead, gvt.numberViable, gvt.totalGerminants, gvt.viabilityAdjustedGermination, gvt.materialSampleID, vt.numberGerminants, vt.date, vt.notes, o.scientificName, o.eventDate, o.stateProvince, o.county, o.locality, o.locationRemarks, o.recordedBy, o.decimalLatitude, o.decimalLongitude, o.minimumElevationInMeters, o.locationID, o.reproductiveCondition, o.identifiedBy, o.dateIdentified, o.occurrenceID, ms.materialSample_recordNumber, ms.numberCollected, ms.numberAvailable, ms.sourcePlantCount, ms.preparationDate, ms.dateStored FROM occurrences AS o LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN germplasmviabilitytests AS gvt ON ms.id = gvt.materialSampleTableID LEFT JOIN viabilitytracking AS vt ON gvt.id = vt.germplasmViabilityTestID WHERE gvt.id IS NOT NULL`
 
 //function to define query and get germination trials
-async function getGerminationTrials(req, res) {
+async function getGerminationTrialResults(req, res) {
     await new Promise(resolve => setTimeout(() => {
         //catalogNumber
         if (req.body.materialSample_catalogNumber !== '') {
@@ -82,6 +87,39 @@ async function getGerminationTrials(req, res) {
     sequelize.query(finalQuery, { type:QueryTypes.SELECT })
     .then((data) => {
         res.send(data)
+        dataForExport = data
+    })
+    .catch((err) => {
+        console.log(err);
+      })
+}
+
+//------------------------------------------------------------------------------
+//EXPORTING DATA TO CSV
+
+//function to write the data into a csv and then create the file in the resources dir
+async function exportGerminationTrialResults(req, res) {
+    //create the date object for the download file name
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+    //set the path for the file
+    const ws = fs.createWriteStream(`./resources/static/assets/downloads/${date}_germinationTrialDataExport.csv`)
+    await new Promise(resolve => setTimeout(() => {
+        csv.write(dataForExport, { headers: true })
+        .pipe(ws)
+        .on("finish", function(){
+            console.log("CSV successfully created")
+        })
+        resolve()
+    },1000))
+    .then((data) => {
+        res.send(data)
     })
     .catch((err) => {
         console.log(err);
@@ -89,5 +127,6 @@ async function getGerminationTrials(req, res) {
 }
 
 module.exports = {
-    getGerminationTrials
+    getGerminationTrialResults,
+    exportGerminationTrialResults
 }
