@@ -14,7 +14,7 @@ const getTransfer = require("../controllers/getTransfer")
 const updateMaterialSample = require("../controllers/updateMaterialSample")
 const getGerminationTrials = require("../controllers/getGerminationTrials")
 const searchMaterialSamples = require("../controllers/searchMaterialSamples")
-
+const getGerminationTrialResults = require("../controllers/exportGerminationTrialResults")
 
 let routes = (app) => {
 
@@ -69,6 +69,12 @@ let routes = (app) => {
 
   //POST /api/exportSearchToCSV
   router.post("/exportSearchToCSV", searchMaterialSamples.exportSearchToCSV)
+
+  //GET /api/getGerminationTrialResults
+  router.get("/getGerminationTrialResults", getGerminationTrialResults.getGerminationTrialResults)
+
+  //POST /api/exportGerminationTrialResults
+  router.post("/exportGerminationTrialResults", getGerminationTrialResults.exportGerminationTrialResults)
 
   app.use("/api", router);
 };
