@@ -18,13 +18,42 @@ const getGerminationTrialResults = require("../controllers/exportGerminationTria
 
 let routes = (app) => {
 
-  //views
+  //VIEW ROUTES-------------------------------------------------------------------------------------------------
     //index
     app.get('/', (req, res) => {
       res.render("index");
     });
+
+    app.get('/createNewProject', (req, res) => {
+      res.render("createNewProject");
+    });
+
+    app.get('/uploadMaterialSamples', (req, res) => {
+      res.render("uploadMaterialSamples");
+    });
+
+    app.get('/search', (req, res) => {
+      res.render("search");
+    });
+
+    app.get('/updateMaterialSample', (req, res) => {
+      res.render("updateMaterialSample");
+    });
+
+    app.get('/germinationTrials', (req, res) => {
+      res.render("germinationTrials");
+    });
+
+    app.get('/createNewGerminationTrial', (req, res) => {
+      res.render("createNewGerminationTrial");
+    });
+
+    app.get('/finishGerminationTrial', (req, res) => {
+      res.render("finishGerminationTrial");
+    });
+
   
-  
+  //API ROUTES---------------------------------------------------------------------------------------------
   //POST /api/projects
   router.post("/project", projectController.addProject);
 
