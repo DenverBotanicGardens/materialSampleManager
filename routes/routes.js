@@ -52,6 +52,21 @@ let routes = (app) => {
       res.render("finishGerminationTrial");
     });
 
+    app.get('/addViabilityTracking', (req, res) => {
+      res.render("addViabilityTracking");
+    });
+
+    app.get('/transferMaterialSample', (req, res) => {
+      res.render("transferMaterialSample");
+    });
+
+    app.get('/transfers', (req, res) => {
+      res.render("transfers");
+    });
+
+    app.get('/updateTransfer', (req, res) => {
+      res.render("updateTransfer");
+    });
   
   //API ROUTES---------------------------------------------------------------------------------------------
   //POST /api/projects
