@@ -1,6 +1,127 @@
 {{!-- TEMPLATE FOR SEARCHING MATERIAL SAMPLE DATA PAGE --}}
 <br>
 <div class="container-fluid">
-    <p class="lead">Search Material Sample Data</p>
+    <p class="lead">Search for Material Sample Data</p>
     <p>query box, results, export button</p>
+    {{!-- project --}}
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Project</span>
+        </div>
+        <input id="project" type="text" class="form-control">
+    </div>
+    {{!-- scientificName --}}
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Scientific Name</span>
+        </div>
+        <input id="scientificName" type="text" class="form-control">
+    </div>
+    {{!-- catalogNumber --}}
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Catalog Number</span>
+        </div>
+        <input id="catalogNumber" type="text" class="form-control">
+    </div>
+    {{!-- eventDate --}}
+    <label class="form-control-sm" for="eventDate">Collection Date</label>
+    <div class="form-row">
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">After</span>
+                </div>
+                <input id="eventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Before</span>
+                </div>
+                <input id="eventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+            </div>
+        </div>
+    </div>
+    {{!-- recordedBy --}}
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Collector</span>
+        </div>
+        <input id="recordedBy" type="text" class="form-control">
+    </div>
+    {{!-- recordNumber --}}
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Collector Number</span>
+        </div>
+        <input id="recordNumber" type="text" class="form-control">
+    </div>
+    {{!-- stateProvince --}}
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">State</span>
+        </div>
+        <input id="stateProvince" type="text" class="form-control">
+    </div>
+    {{!-- county --}}
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">County</span>
+        </div>
+        <input id="county" type="text" class="form-control">
+    </div>
+    {{!-- locality --}}
+    <div class="form-row">
+        <div class="col-7">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Locality</span>
+                </div>
+                <input id="locality" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <label class="form-check-label form-control-sm" for="exampleRadios1">Contains</label>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <label class="form-check-label form-control-sm" for="exampleRadios1">Starts With</label>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <label class="form-check-label form-control-sm" for="exampleRadios1">Is Exactly</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- locationRemarks --}}
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Landowner or EO</span>
+        </div>
+        <input id="locationRemarks" type="text" class="form-control">
+    </div>
+    {{!-- locationID --}}
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Location ID</span>
+        </div>
+        <input id="locationID" type="text" class="form-control">
+    </div>
+    {{!-- SUBMIT BUTTON --}}
+    <button type="button" class="btn btn-primary">Submit</button>
+
 </div>
