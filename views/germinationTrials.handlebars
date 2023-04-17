@@ -4,23 +4,29 @@
     <p class="lead">Germination Trials</p>
     <p>list all trials, sorted by taxon and then date</p>
     {{!-- NEW TRIAL BUTTON --}}
-    <button type="button" class="btn btn-primary">Create New Germination Trial</button>
+    <button type="button" class="btn btn-primary">Create New Germination Trial</button><p>turn this into an href</p>
     <br><br>
     {{!-- TRIAL SEARCH --}}
     <p>Search for Germination Trials</p>
-    {{!-- project --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Project</span>
+    <div class="form-row">
+        <div class="col">
+            {{!-- project --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Project</span>
+                </div>
+                <input id="project" type="text" class="form-control">
+            </div>
         </div>
-        <input id="project" type="text" class="form-control">
-    </div>
-    {{!-- scientificName --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Scientific Name</span>
+        <div class="col">
+            {{!-- scientificName --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Scientific Name</span>
+                </div>
+                <input id="scientificName" type="text" class="form-control">
+            </div>
         </div>
-        <input id="scientificName" type="text" class="form-control">
     </div>
     {{!-- catalogNumber --}}
     <div class="input-group input-group-sm mb-3">
@@ -89,34 +95,46 @@
             </div>
         </div>
     </div>
-    {{!-- recordedBy --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Collector</span>
+    <div class="row">
+        <div class="col">
+            {{!-- recordedBy --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Collector</span>
+                </div>
+                <input id="recordedBy" type="text" class="form-control">
+            </div>
         </div>
-        <input id="recordedBy" type="text" class="form-control">
-    </div>
-    {{!-- recordNumber --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Collector Number</span>
+        <div class="col">
+            {{!-- recordNumber --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Collector Number</span>
+                </div>
+                <input id="recordNumber" type="text" class="form-control">
+            </div>
         </div>
-        <input id="recordNumber" type="text" class="form-control">
     </div>
-    {{!-- stateProvince --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">State</span>
+    <div class="row">
+        <div class="col">
+            {{!-- stateProvince --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">State</span>
+                </div>
+                <input id="stateProvince" type="text" class="form-control">
+            </div>
         </div>
-        <input id="stateProvince" type="text" class="form-control">
-    </div>
-    {{!-- county --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">County</span>
+            {{!-- county --}}
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">County</span>
+                </div>
+                <input id="county" type="text" class="form-control">
+            </div>
         </div>
-        <input id="county" type="text" class="form-control">
-    </div>
+    </div> 
     {{!-- locality --}}
     <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
@@ -124,20 +142,27 @@
         </div>
         <input id="locality" type="text" class="form-control" placeholder="Enter text that locality string contains">
     </div>
-    {{!-- locationRemarks --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Landowner or EO</span>
+    <div class="row">
+        <div class="col">
+            {{!-- locationRemarks --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Landowner or EO</span>
+                </div>
+                <input id="locationRemarks" type="text" class="form-control">
+            </div>
         </div>
-        <input id="locationRemarks" type="text" class="form-control">
-    </div>
-    {{!-- locationID --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Location ID</span>
+        <div class="col">
+            {{!-- locationID --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Location ID</span>
+                </div>
+                <input id="locationID" type="text" class="form-control">
+            </div>
         </div>
-        <input id="locationID" type="text" class="form-control">
     </div>
+
     {{!-- SUBMIT BUTTON --}}
     <button type="button" class="btn btn-primary">Submit</button>
     {{!-- Download BUtton --}}
