@@ -123,5 +123,16 @@
     </div>
     {{!-- SUBMIT BUTTON --}}
     <button type="button" class="btn btn-primary">Submit</button>
+    <br>
+    <br>
+    {{!-- SEARCH RESULTS LIST --}}
+    <form id="searchResults">
+        <label>Hold down the Ctrl (Windows) or Command (Mac) button to select/deselect multiple records.</label>
+        <br>
+        <button id="downloadRecords" type="button" class="btn btn-primary">Download Selected Records to CSV</button>
+        <br>
+        <br>
+        <select id="searchResult" class="form-select" multiple size="30" style="width: 100%;"></select>
+    </form>
 
 </div>
