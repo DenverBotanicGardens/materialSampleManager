@@ -2,7 +2,159 @@
 <br>
 <div class="container-fluid">
     <p class="lead">Create New Germination Trial</p>
-    <p>search box to select seed. add to trial button (grabs materialSampleTableID)</p>
-    <p>form for addGerminationTest metadata</p>
-
+    <p>Search for seed to add to trial</p>
+    <div class="form-row">
+        <div class="col">
+            {{!-- scientificName --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Scientific Name</span>
+                </div>
+                <input id="scientificName" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- catalogNumber --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Catalog Number</span>
+                </div>
+                <input id="catalogNumber" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    {{!-- eventDate --}}
+    <label class="form-control-sm" for="eventDate">Collection Date</label>
+    <div class="form-row">
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">After</span>
+                </div>
+                <input id="eventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Before</span>
+                </div>
+                <input id="eventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+            </div>
+        </div>
+    </div>
+    {{!-- SUBMIT BUTTON --}}
+    <button type="button" class="btn btn-primary">Search</button>
+    <br><br>
+    {{!-- SEED RESULT LIST --}}
+    <p>Seed</p>
+    <ul class="list-group"> 
+                    <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
+                    <button class="btn btn-sm btn-outline-primary">Create New Germination Trial</button> 
+                    </li>
+    </ul>
+    <br><br>
+    <p>New Trial for catalogNumberXXXXX</p>
+    <div class="form-row">
+        <div class="col">
+            {{!-- testConductedBy --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Test Conducted By</span>
+                </div>
+                <input id="testConductedBy" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- sampleFrozen --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Sample Frozen</span>
+                </div>
+                <input id="sampleFrozen" type="text" class="form-control" placeHolder="0 or 1">
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            {{!-- medium --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Medium</span>
+                </div>
+                <input id="medium" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- scarified --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Scarified</span>
+                </div>
+                <input id="scarified" type="text" class="form-control" placeHolder="0 or 1">
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            {{!-- stratificationTemperature --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Stratification Temperature</span>
+                </div>
+                <input id="stratificationTemperature" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- stratificationStartDate --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Stratification Start Date</span>
+                </div>
+                <input id="stratificationStartDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col">
+            {{!-- incubationStartDate --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Incubation Start Date</span>
+                </div>
+                <input id="incubationStartDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- numberSeedsTested --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Number Seeds Tested</span>
+                </div>
+                <input id="numberSeedsTested" type="text" class="form-control">
+            </div>
+        </div>
+    </div> 
+    <div class="form-row">
+        <div class="col">
+            {{!-- incubationTemperatureDay --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Incubation Temperature Day</span>
+                </div>
+                <input id="incubationTemperatureDay" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- incubationTemperatureNight --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Incubation Temperature Night</span>
+                </div>
+                <input id="incubationTemperatureNight" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    {{!-- SUBMIT BUTTON --}}
+    <button type="button" class="btn btn-primary">Submit</button>
 </div>
