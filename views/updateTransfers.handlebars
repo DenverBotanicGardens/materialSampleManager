@@ -1,6 +1,72 @@
 {{!-- TEMPLATE FOR UPDATING MATERIAL SAMPLE TRANSFERS PAGE --}}
 <br>
 <div class="container-fluid">
-    <p class="lead">Update Material Sample Transfers</p>
-    <p>form for updating the selected material sample transfer record</p>
+    <p class="lead">Update Material Sample Transfer</p>
+    <p>Record transfer updates here. Existing values will be overwritten. Fields left blank will remain unchanged.</p>
+    <div class="row">
+        <div class="col">
+            {{!-- numberSamplesTransferred --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Number Samples Transferred</span>
+                <input id="numberSamplesTransferred" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- transferDate --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Transfer Date</span>
+                <input id="transferDate" type="text" class="form-control">
+            </div>    
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{!-- receivedDate --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Received Date</span>
+                <input id="receivedDate" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- agencyTransferredTo --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Agency Transferred To</span>
+                <input id="agencyTransferredTo" type="text" class="form-control">
+            </div>    
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{!-- personTransferredTo --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Person Transferred To</span>
+                <input id="personTransferredTo" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- purposeNotes --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Purpose</span>
+                <input id="purposeNotes" type="text" class="form-control">
+            </div>    
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{!-- returnedDate --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Returned Date</span>
+                <input id="returnedDate" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- numberSamplesReturned --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Number Samples Returned</span>
+                <input id="numberSamplesReturned" type="text" class="form-control">
+            </div>    
+        </div>
+    </div>
+    {{!-- SUBMIT BUTTON --}}
+    <button type="button" class="btn btn-primary">Submit</button>
 </div>

@@ -2,6 +2,52 @@
 <br>
 <div class="container-fluid">
     <p class="lead">Projects</p>
-    <p>form for adding new projects</p>
-    <p>list of existing projects</p>
+    <p>Create a new project</p>
+
+    <div class="row">
+        <div class="col">
+            {{!-- project --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Project Title</span>
+                <input id="project" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- principalInvestigator --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Principal Investigator</span>
+                <input id="project" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{!-- dbgContact --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">DBG Contact</span>
+                <input id="project" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- PIemail --}}
+                <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Principal Investigator Email</span>
+                <input id="project" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    {{!-- SUBMIT BUTTON --}}
+    <button type="button" class="btn btn-primary">Submit</button>
+    <br>
+    <br>
+    {{!-- EXISTING PROJECTS LIST --}}
+    <p>Existing Projects</p>
+    
+    <ul class="list-group list-group-flush" id=""projects">
+        <li class="list-group-item">A first item</li>
+        <li class="list-group-item">A second item</li>
+        <li class="list-group-item">A third item</li>
+        <li class="list-group-item">A fourth item</li>
+        <li class="list-group-item">And a fifth one</li>
+    </ul>
 </div>

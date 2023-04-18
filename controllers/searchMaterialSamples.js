@@ -85,6 +85,10 @@ async function searchMaterialSamples(req, res) {
         if (req.body.locality !== '' && req.body.optradio === 'contains'){
             materialSampleQuery.push(` AND o.locality LIKE '%${req.body.locality}%'`)
         }
+        //materialSampleType
+        if (req.body.materialSampleType !== ''){
+            materialSampleQuery.push(` AND ms.materialSampleType = '${req.body.materialSampleType}'`)
+        }
         fullMaterialSampleQuery = materialSampleQuery.join()
         queryParams = fullMaterialSampleQuery.replaceAll(',','')
         finalQuery = materialSampleSelect.concat(queryParams)
