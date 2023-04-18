@@ -35,29 +35,90 @@ $(document).ready(function() {
 //--------------------------------------------------------------------------------------------------
 // EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------
-    //Hide Elements
+// //Hide Elements
+//     //Search Page
+//     $('#searchResults').hide()
 
-    //Search Page
-    $('#searchResults').hide()
+//     //Germination Trials Page
+//     $('#searchGermTrialResults').hide()
 
-    //Germination Trials Page
-    $('#searchGermTrialResults').hide()
+//     //Create New Germination Trial Page
+//     $('#seedSearchGermTrialResults').hide()
+//     $('#newGermTrialDataForm').hide()
 
-    //Create New Germination Trial Page
-    $('#seedSearchGermTrialResults').hide()
-    $('#newGermTrialDataForm').hide()
+//     //Transfers Page
+//     $('#searchTransfersResults').hide()
 
-    //Transfers Page
-    $('#searchTransfersResults').hide()
+//     //New Transfer Page
+//     $('#searchMaterialSampleToTransferResults').hide()
+//     $('#newTransferDataForm').hide()
 
-    //New Transfer Page
-    $('#searchMaterialSampleToTransferResults').hide()
-    $('#newTransferDataForm').hide()
+//     //Update Material Sample Page
+//     $('#searchSamplesToUpdateResults').hide()
+//     $('#sampleUpdatesForm').hide()
 
-    //Update Material Sample Page
-    $('#searchSamplesToUpdateResults').hide()
-    $('#sampleUpdatesForm').hide()
+//Functions Executed On Page Load
+    //Get Projects and Display on Projects Page
+
+//Buttons to Execute Functions
+    //Execute Search
+
+
+    //Download Search Results to CSV
+
+
+    //Submit New Project
+
+
+    //Upload CSV File
+
+
+    //Execute Search for Germination Trials
+
+
+    //Download Germinations Trials to CSV
+
+
+    //Select Germination Trial to Add Viability Tracking To
+
+
+    //Submit Add Viability Tracking Data Form
+
+
+    //Select Germination Trial to Finish
+
+
+    //Submit Finish Germiation Trial Form
+
+
+    //Execute Search for seed to Use in Germination Trial
+
     
+    //Select Seed to Create New Germinaiton Trial
+
+
+    //Submit New Germination Trial Form
+
+
+    //Execute Search for Transfers
+
+
+    //Select Transfer to Update
+
+
+    //Submit Transfer Update Form
+
+
+    //Exectue Search for Samples to Transfer
+
+
+    //Select Sample to Transfer
+
+
+    ///Submit New Transfer Form
+
+
+
 
 //--------------------------------------------------------------------------------------------------
 //FUNCTIONS
