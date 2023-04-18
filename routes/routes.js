@@ -65,7 +65,7 @@ let routes = (app) => {
     });
 
     app.get('/updateTransfer', (req, res) => {
-      res.render("updateTransfer");
+      res.render("updateTransfers");
     });
   
   //API ROUTES---------------------------------------------------------------------------------------------

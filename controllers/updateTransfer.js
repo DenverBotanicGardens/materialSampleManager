@@ -3,9 +3,6 @@ const Transfer = db.transfer
 
 async function updateTransfer(req,res) {
     var set = {}
-    if (req.body.materialSample_catalogNumber){
-      set.materialSample_catalogNumber = req.body.materialSample_catalogNumber
-    }
     if (req.body.numberSamplesTransferred){
       set.numberSamplesTransferred = req.body.numberSamplesTransferred
     }
