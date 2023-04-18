@@ -115,9 +115,7 @@ $(document).ready(function() {
     //Select Sample to Transfer
 
 
-    ///Submit New Transfer Form
-
-
+    //Submit New Transfer Form
 
 
 //--------------------------------------------------------------------------------------------------
