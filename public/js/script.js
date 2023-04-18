@@ -109,7 +109,7 @@ $(document).ready(function() {
     //Submit Transfer Update Form
 
 
-    //Exectue Search for Samples to Transfer
+    //Execute Search for Samples to Transfer
 
 
     //Select Sample to Transfer
