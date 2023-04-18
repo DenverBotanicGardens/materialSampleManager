@@ -1,7 +1,7 @@
 $(document).ready(function() {
     console.log("hi")
 //--------------------------------------------------------------------------------------------------
-    //GLOBAL VARIABLES
+//GLOBAL VARIABLES
 //--------------------------------------------------------------------------------------------------
     //Search Form
     let searchFormEntires = {}
@@ -31,11 +31,36 @@ $(document).ready(function() {
     let searchSamplesToTransferFormEntries = {}
 
     //New Transfer Form
+    let newTransferFormEntries = {}
 //--------------------------------------------------------------------------------------------------
-    // EVENT LISTENERS
+// EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------
+    //Hide Elements
+
+    //Search Page
+    $('#searchResults').hide()
+
+    //Germination Trials Page
+    $('#searchGermTrialResults').hide()
+
+    //Create New Germination Trial Page
+    $('#seedSearchGermTrialResults').hide()
+    $('#newGermTrialDataForm').hide()
+
+    //Transfers Page
+    $('#searchTransfersResults').hide()
+
+    //New Transfer Page
+    $('#searchMaterialSampleToTransferResults').hide()
+    $('#newTransferDataForm').hide()
+
+    //Update Material Sample Page
+    $('#searchSamplesToUpdateResults').hide()
+    $('#sampleUpdatesForm').hide()
+    
+
 //--------------------------------------------------------------------------------------------------
-    //FUNCTIONS
+//FUNCTIONS
 //--------------------------------------------------------------------------------------------------
 
 
