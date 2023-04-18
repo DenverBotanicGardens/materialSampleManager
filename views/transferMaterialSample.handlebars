@@ -5,33 +5,45 @@
     <p>form for addTransfer</p>
     <div class="container-fluid">
         <p>Search for Material Sample To Transfer</p>
-        {{!-- project --}}
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Project</span>
+        <div class="row">
+            <div class="col">
+                {{!-- project --}}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Project</span>
+                    </div>
+                    <input id="project" type="text" class="form-control">
+                </div>
             </div>
-            <input id="project" type="text" class="form-control">
+            <div class="col">
+                {{!-- scientificName --}}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Scientific Name</span>
+                    </div>
+                    <input id="scientificName" type="text" class="form-control">
+                </div>
+            </div>
         </div>
-        {{!-- scientificName --}}
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Scientific Name</span>
+        <div class="row">
+            <div class="col">
+                {{!-- materialSampleType --}}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Material Sample Type</span>
+                    </div>
+                    <input id="materialSampleType" type="text" class="form-control">
+                </div>
             </div>
-            <input id="scientificName" type="text" class="form-control">
-        </div>
-        {{!-- materialSampleType --}}
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Material Sample Type</span>
+            <div class="col">
+                {{!-- catalogNumber --}}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Catalog Number</span>
+                    </div>
+                    <input id="catalogNumber" type="text" class="form-control">
+                </div>
             </div>
-            <input id="materialSampleType" type="text" class="form-control">
-        </div>
-        {{!-- catalogNumber --}}
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Catalog Number</span>
-            </div>
-            <input id="catalogNumber" type="text" class="form-control">
         </div>
         {{!-- eventDate --}}
         <label class="form-control-sm" for="eventDate">Collection Date</label>
@@ -53,33 +65,45 @@
                 </div>
             </div>
         </div>
-        {{!-- recordedBy --}}
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Collector</span>
+        <div class="row">
+            <div class="col">
+                {{!-- recordedBy --}}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Collector</span>
+                    </div>
+                    <input id="recordedBy" type="text" class="form-control">
+                </div>
             </div>
-            <input id="recordedBy" type="text" class="form-control">
+            <div class="col">
+                {{!-- recordNumber --}}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Collector Number</span>
+                    </div>
+                    <input id="recordNumber" type="text" class="form-control">
+                </div>
+            </div>
         </div>
-        {{!-- recordNumber --}}
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Collector Number</span>
+        <div class="row">
+            <div class="col">
+                {{!-- stateProvince --}}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">State</span>
+                    </div>
+                    <input id="stateProvince" type="text" class="form-control">
+                </div>
             </div>
-            <input id="recordNumber" type="text" class="form-control">
-        </div>
-        {{!-- stateProvince --}}
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">State</span>
-            </div>
-            <input id="stateProvince" type="text" class="form-control">
-        </div>
-        {{!-- county --}}
-        <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">County</span>
-            </div>
-            <input id="county" type="text" class="form-control">
+            <div class="col">
+                {{!-- county --}}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">County</span>
+                    </div>
+                    <input id="county" type="text" class="form-control">
+                </div>
+            </div>        
         </div>
 
     {{!-- SUBMIT BUTTON --}}

@@ -5,20 +5,26 @@
     <a href="/transferMaterialSample">Add a new transfer</a>
     <br><br>
     <p>Search for transfers</p>
-    {{!-- scientificName --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Scientific Name</span>
+    <div class="row">
+        <div class="col">
+            {{!-- scientificName --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Scientific Name</span>
+                </div>
+                <input id="scientificName" type="text" class="form-control">
+            </div>
         </div>
-        <input id="scientificName" type="text" class="form-control">
+        <div class="col">
+            {{!-- materialSampleType --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Material Sample Type</span>
+                </div>
+                <input id="catalogNumber" type="text" class="form-control">
+            </div>    
+        </div>
     </div>
-    {{!-- materialSampleType --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Material Sample Type</span>
-        </div>
-        <input id="catalogNumber" type="text" class="form-control">
-    </div>    
     {{!-- catalogNumber --}}
     <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
@@ -46,19 +52,25 @@
             </div>
         </div>
     </div>
-    {{!-- agencyTransferredTo --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Agency Transferred To</span>
+    <div class="row">
+        <div class="col">
+            {{!-- agencyTransferredTo --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Agency Transferred To</span>
+                </div>
+                <input id="agencyTransferredTo" type="text" class="form-control">
+            </div>
         </div>
-        <input id="agencyTransferredTo" type="text" class="form-control">
-    </div>
-    {{!-- personTransferredTo --}}
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Person Transferred To</span>
+        <div class="col">
+            {{!-- personTransferredTo --}}
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Person Transferred To</span>
+                </div>
+                <input id="personTransferredTo" type="text" class="form-control">
+            </div>
         </div>
-        <input id="personTransferredTo" type="text" class="form-control">
     </div>
 
     {{!-- SUBMIT BUTTON --}}
