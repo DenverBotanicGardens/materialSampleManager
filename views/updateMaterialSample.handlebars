@@ -2,5 +2,76 @@
 <br>
 <div class="container-fluid">
     <p class="lead">Update Material Sample Data</p>
-    <p>query box (search), select a record ( or records?), update form</p>
+    <p>Search for material samples to update.</p>
+    <div class="row">
+        <div class="col">
+            {{!-- catalogNumber --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Catalog Number</span>
+                <input id="catalogNumber" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- scientificName --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Scientific Name</span>
+                <input id="scientificName" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{!-- materialSampleType --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Material Sample Type</span>
+                <input id="materialSampleType" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- project --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Project</span>
+                <input id="project" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    {{!-- SUBMIT BUTTON --}}
+    <button type="button" class="btn btn-primary">Search</button>
+    <br><br>
+    {{!-- MATERIAL SAMPLE RESULT LIST --}}
+    <p>Search Results</p>
+    <ul class="list-group list-group-flush"> 
+        <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
+        <button class="btn btn-sm btn-outline-primary">Update Sample Data</button> 
+        </li>
+    </ul>
+    <br>
+    {{!-- UPDATE MATERIAL SAMPLE FORM --}}
+    <p>Record sample updates here. Existing values will be overwritten. Fields left blank will remain unchanged. Contact Scientific Data Manager to make additional updates to sample records.</p>
+    <div class="row">
+        <div class="col">
+            {{!-- disposition --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Disposition</span>
+                <input id="disposition" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- storageLocation --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Storage Location</span>
+                <input id="storageLocation" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- numberAvailable --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Number Available</span>
+                <input id="numberAvailable" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    {{!-- SUBMIT BUTTON --}}
+    <button type="button" class="btn btn-primary">Submit</button>
+    <br><br>
 </div>
