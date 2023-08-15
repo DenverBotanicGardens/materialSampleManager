@@ -39,110 +39,114 @@
     <button type="button" class="btn btn-primary">Search</button>
     <br><br>
     {{!-- SEED RESULT LIST --}}
-    <p>Seed</p>
-    <ul class="list-group"> 
-                    <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
-                    <button class="btn btn-sm btn-outline-primary">Create New Germination Trial</button> 
-                    </li>
-    </ul>
+    <div id = "seedSearchGermTrialResults">
+        <p>Seed</p>
+        <ul class="list-group"> 
+                        <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
+                        <button class="btn btn-sm btn-outline-primary">Create New Germination Trial</button> 
+                        </li>
+        </ul>
+    </div>
     <br><br>
-    <p>New Trial for catalogNumberXXXXX</p>
-    <div class="row">
-        <div class="col">
-            {{!-- testConductedBy --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Test Conducted By</span>
-                <input id="testConductedBy" type="text" class="form-control">
+    <div id="newGermTrialDataForm">
+        <p>New Trial for catalogNumberXXXXX</p>
+        <div class="row">
+            <div class="col">
+                {{!-- testConductedBy --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Test Conducted By</span>
+                    <input id="testConductedBy" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- sampleFrozen --}}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozen">
+                    <label class="form-check-label" for="sampleFrozenYes">
+                        Sample Frozen
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozen">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Sample Not Frozen
+                    </label>
+                </div>
             </div>
         </div>
-        <div class="col">
-            {{!-- sampleFrozen --}}
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozen">
-                <label class="form-check-label" for="sampleFrozenYes">
-                    Sample Frozen
-                </label>
+        <div class="row">
+            <div class="col">
+                {{!-- medium --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Medium</span>
+                    <input id="medium" type="text" class="form-control">
+                </div>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozen">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Sample Not Frozen
-                </label>
+            <div class="col">
+                {{!-- scarified --}}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="scarified" id="scarified">
+                    <label class="form-check-label" for="scarified">
+                        Scarified
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="scarified" id="scarified">
+                    <label class="form-check-label" for="scarified">
+                        Not Scarified
+                    </label>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                {{!-- stratificationTemperature --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Stratification Temperature</span>
+                    <input id="stratificationTemperature" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- stratificationStartDate --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Stratification Start Date</span>
+                    <input id="stratificationStartDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{!-- incubationStartDate --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Incubation Start Date</span>
+                    <input id="incubationStartDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- numberSeedsTested --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Number Seeds Tested</span>
+                    <input id="numberSeedsTested" type="text" class="form-control">
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col">
+                {{!-- incubationTemperatureDay --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Incubation Temperature Day</span>
+                    <input id="incubationTemperatureDay" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- incubationTemperatureNight --}}
+                    <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Incubation Temperature Night</span>
+                    <input id="incubationTemperatureNight" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="button" class="btn btn-primary">Submit</button>   
     </div>
-    <div class="row">
-        <div class="col">
-            {{!-- medium --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Medium</span>
-                <input id="medium" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- scarified --}}
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="scarified" id="scarified">
-                <label class="form-check-label" for="scarified">
-                    Scarified
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="scarified" id="scarified">
-                <label class="form-check-label" for="scarified">
-                    Not Scarified
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- stratificationTemperature --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Stratification Temperature</span>
-                <input id="stratificationTemperature" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- stratificationStartDate --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Stratification Start Date</span>
-                <input id="stratificationStartDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- incubationStartDate --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Incubation Start Date</span>
-                <input id="incubationStartDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- numberSeedsTested --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Number Seeds Tested</span>
-                <input id="numberSeedsTested" type="text" class="form-control">
-            </div>
-        </div>
-    </div> 
-    <div class="row">
-        <div class="col">
-            {{!-- incubationTemperatureDay --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Incubation Temperature Day</span>
-                <input id="incubationTemperatureDay" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- incubationTemperatureNight --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Incubation Temperature Night</span>
-                <input id="incubationTemperatureNight" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    {{!-- SUBMIT BUTTON --}}
-    <button type="button" class="btn btn-primary">Submit</button>
 </div>
