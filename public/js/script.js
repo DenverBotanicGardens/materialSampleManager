@@ -233,6 +233,21 @@ $(document).ready(function() {
 //Get Existing Projects to Display in Dropdown List on Upload Data Page
     //retrieve all projects via api
     //add all results to projectSelection array
+    const listProjectsForUpload = () => {
+        $.ajax({
+            method: "GET",
+            url: "/api/project"
+        })
+        .then((projects) => {
+            projectsListUpload = []
+            $.each(projects, function(i, projectItemUpload) {
+                projectsListUpload.push('<option value='+projectItemUpload.id+'>' + projectItemUpload.project + ' | '+ projectItemUpload.principalInvestigator + '</option>')
+            });
+        })
+        .then(function(){
+            $('#projectsUpload').append(projectsListUpload.join(''))           
+        })
+    }
 
 //Capture id For Selected Project
     // send to backend csvUplaod controller to be incorporated into data being uploaded
@@ -309,4 +324,5 @@ $(document).ready(function() {
 //Functions Executed On Page Load
     //Get Projects and Display on Projects Page
     fetchProjects()
+    listProjectsForUpload()
 })
