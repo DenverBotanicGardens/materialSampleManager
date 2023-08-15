@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    console.log("hi")
     //--------------------------------------------------------------------------------------------------
     //GLOBAL VARIABLES
     //--------------------------------------------------------------------------------------------------
@@ -90,30 +89,27 @@ $(document).ready(function() {
 //--------------------------------------------------------------------------------------------------
 // EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------
-// //Hide Elements
-//     //Search Page
-//     $('#searchResults').hide()
+//Hide Elements
+    //Search Page
+    $('#searchResults').hide()
 
-//     //Germination Trials Page
-//     $('#searchGermTrialResults').hide()
+    //Germination Trials Page
+    $('#searchGermTrialResults').hide()
 
-//     //Create New Germination Trial Page
-//     $('#seedSearchGermTrialResults').hide()
-//     $('#newGermTrialDataForm').hide()
+    //Create New Germination Trial Page
+    $('#seedSearchGermTrialResults').hide()
+    $('#newGermTrialDataForm').hide()
 
-//     //Transfers Page
-//     $('#searchTransfersResults').hide()
+    //Transfers Page
+    $('#searchTransfersResults').hide()
 
-//     //New Transfer Page
-//     $('#searchMaterialSampleToTransferResults').hide()
-//     $('#newTransferDataForm').hide()
+    //New Transfer Page
+    $('#searchMaterialSampleToTransferResults').hide()
+    $('#newTransferDataForm').hide()
 
-//     //Update Material Sample Page
-//     $('#searchSamplesToUpdateResults').hide()
-//     $('#sampleUpdatesForm').hide()
-
-//Functions Executed On Page Load
-    //Get Projects and Display on Projects Page
+    //Update Material Sample Page
+    $('#searchSamplesToUpdateResults').hide()
+    $('#sampleUpdatesForm').hide()
 
 //Buttons to Execute Functions
     //Execute Search
@@ -196,6 +192,21 @@ $(document).ready(function() {
     //retrieve all projects via api
     //add all results to a projectsList array
     //append each item in array to the list id = #projects
+    const fetchProjects = () => {
+        $.ajax({
+            method: "GET",
+            url: "/api/project"
+        })
+        .then((projects) => {
+            projectsList = []
+            $.each(projects, function(i, projectItem) {
+                projectsList.push('<li class="list-group-item">' + projectItem.project + ' | '+ projectItem.principalInvestigator + ' | '+ projectItem.PIemail + ' | '+ projectItem.dbgContact + '</li>')
+            });
+        })
+        .then(function(){
+            $('#projects').append(projectsList.join(''))           
+        })
+    }
 
 
 //Get Existing Projects to Display in Dropdown List on Upload Data Page
@@ -271,4 +282,10 @@ $(document).ready(function() {
     //add user entries to updatTransferFormEntries object
     //send to backend via api
 
+//--------------------------------------------------------------------------------------------------
+// EVENT LISTENERS
+//--------------------------------------------------------------------------------------------------
+//Functions Executed On Page Load
+    //Get Projects and Display on Projects Page
+    fetchProjects()
 })
