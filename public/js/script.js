@@ -6,9 +6,9 @@ $(document).ready(function() {
     //an object to contain the values entered by the user into the form on the Search page
     let searchFormEntires = {}
     
-    //New Project Form
-    //an object to contain the values entered by the user into the form to create a new project
-    let newProjectFormEntries = {}
+    // //New Project Form
+    // //an object to contain the values entered by the user into the form to create a new project
+    // let newProjectFormEntries = {}
     
     //Projects List
     //an array that contains all projects from the database. to be displayed on the list on the projects page and in the dropdown selection on the upload data page.
@@ -114,7 +114,6 @@ $(document).ready(function() {
 //Buttons to Execute Functions
     //Execute Search
 
-
     //Download Search Results to CSV
 
 
@@ -185,8 +184,30 @@ $(document).ready(function() {
 
 //Submit New Project
     //add user entries to newProjectFormEntries object
-    //send to backend via api
-
+    let projectInput = $("#project")
+    let principalInvestigatorInput = $("#principalInvestigator")
+    let dbgContactInput = $("#dbgContact")
+    let PIemailInput = $("#PIemail")
+    let projectForm = $("#projectForm")
+    $(projectForm).on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        if (!projectInput.val().trim() || !principalInvestigatorInput.val().trim() || !PIemailInput.val().trim() || !dbgContactInput.val().trim()){
+            alert("Please provide a value for each field and be sure that the PI Email is a valid email address")
+        }
+        let newProjectFormEntries = {
+            project: projectInput.val().trim(),
+            principalInvestigator: principalInvestigatorInput.val().trim(),
+            PIemail: PIemailInput.val().trim(),
+            dbgContact: dbgContactInput.val().trim()
+        }
+        submitProject(newProjectFormEntries)
+    })
+    
+    const submitProject = (project) => {
+        $.post("api/project", project, function(){
+            window.location.reload();
+        })
+    }     
 
 //Get Existing Projects to Display on Projects Page
     //retrieve all projects via api
@@ -212,6 +233,21 @@ $(document).ready(function() {
 //Get Existing Projects to Display in Dropdown List on Upload Data Page
     //retrieve all projects via api
     //add all results to projectSelection array
+    const listProjectsForUpload = () => {
+        $.ajax({
+            method: "GET",
+            url: "/api/project"
+        })
+        .then((projects) => {
+            projectsListUpload = []
+            $.each(projects, function(i, projectItemUpload) {
+                projectsListUpload.push('<option value='+projectItemUpload.id+'>' + projectItemUpload.project + ' | '+ projectItemUpload.principalInvestigator + '</option>')
+            });
+        })
+        .then(function(){
+            $('#projectsUpload').append(projectsListUpload.join(''))           
+        })
+    }
 
 //Capture id For Selected Project
     // send to backend csvUplaod controller to be incorporated into data being uploaded
@@ -288,4 +324,5 @@ $(document).ready(function() {
 //Functions Executed On Page Load
     //Get Projects and Display on Projects Page
     fetchProjects()
+    listProjectsForUpload()
 })

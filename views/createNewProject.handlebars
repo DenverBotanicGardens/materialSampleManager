@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <p class="lead">Projects</p>
     <p>Create a new project</p>
-
+    <form id="projectForm">
     <div class="row">
         <div class="col">
             {{!-- project --}}
@@ -16,7 +16,7 @@
             {{!-- principalInvestigator --}}
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Principal Investigator</span>
-                <input id="project" type="text" class="form-control">
+                <input id="principalInvestigator" type="text" class="form-control">
             </div>
         </div>
     </div>
@@ -25,21 +25,22 @@
             {{!-- dbgContact --}}
             <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">DBG Contact</span>
-                <input id="project" type="text" class="form-control">
+                <input id="dbgContact" type="text" class="form-control">
             </div>
         </div>
         <div class="col">
             {{!-- PIemail --}}
                 <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">Principal Investigator Email</span>
-                <input id="project" type="text" class="form-control">
+                <input id="PIemail" type="text" class="form-control">
             </div>
         </div>
     </div>
     {{!-- SUBMIT BUTTON --}}
-    <button type="button" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" id="projectSubmit">Submit</button>
     <br>
     <br>
+    </form>
     {{!-- EXISTING PROJECTS LIST --}}
     <p>Existing Projects</p>
     
