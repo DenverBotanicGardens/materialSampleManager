@@ -82,7 +82,7 @@ let routes = (app) => {
   router.post("/materialSample", insertDataController.insertData)
 
   //GET /api/seedForTrial
-  router.get("/seedForTrial", getSeedForTrial.getSeedsForTrial)
+  router.post("/seedForTrial", getSeedForTrial.getSeedsForTrial)
 
   //POST /api/addGerminationTest
   router.post("/addGerminationTest", addGerminationTest.addGerminationTest)

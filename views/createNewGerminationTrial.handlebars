@@ -3,45 +3,47 @@
 <div class="container-fluid">
     <p class="lead">Create New Germination Trial</p>
     <p>Search for seed to add to trial</p>
-    <div class="row">
-        <div class="col">
-            {{!-- scientificName --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Scientific Name</span>
-                <input id="scientificName" type="text" class="form-control">
+    <form id="seedForTrialSearchForm">
+        <div class="row">
+            <div class="col">
+                {{!-- scientificName --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Scientific Name</span>
+                    <input id="scientificNameSeedNewTrial" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- catalogNumber --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Catalog Number</span>
+                    <input id="catalogNumberSeedNewTrial" type="text" class="form-control">
+                </div>
             </div>
         </div>
-        <div class="col">
-            {{!-- catalogNumber --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Catalog Number</span>
-                <input id="catalogNumber" type="text" class="form-control">
+        {{!-- eventDate --}}
+        <label class="form-control-sm" for="eventDate">Collection Date</label>
+        <div class="row">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">After</span>
+                    <input id="eventEarlyDateSeedNewTrial" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Before</span>
+                    <input id="eventLateDateSeedNewTrial" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
             </div>
         </div>
-    </div>
-    {{!-- eventDate --}}
-    <label class="form-control-sm" for="eventDate">Collection Date</label>
-    <div class="row">
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">After</span>
-                <input id="eventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Before</span>
-                <input id="eventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-    </div>
-    {{!-- SUBMIT BUTTON --}}
-    <button type="button" class="btn btn-primary">Search</button>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     <br><br>
     {{!-- SEED RESULT LIST --}}
     <div id = "seedSearchGermTrialResults">
         <p>Seed</p>
-        <ul class="list-group"> 
+        <ul class="list-group" id="seedResultList"> 
                         <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
                         <button class="btn btn-sm btn-outline-primary">Create New Germination Trial</button> 
                         </li>

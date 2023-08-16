@@ -111,6 +111,8 @@ $(document).ready(function() {
     $('#searchSamplesToUpdateResults').hide()
     $('#sampleUpdatesForm').hide()
 
+
+
 //Buttons to Execute Functions
     //Execute Search
 
@@ -279,6 +281,45 @@ $(document).ready(function() {
     //send to backend via api
     //return results
     //display results in list sorted by taxon
+    let scientificNameSeedNewTrialInput = $("#scientificNameSeedNewTrial")
+    let catalogNumberSeedNewTrialInput = $("#catalogNumberSeedNewTrial")
+    let eventEarlyDateSeedNewTrialInput = $("#eventEarlyDateSeedNewTrial")
+    let eventLateDateSeedNewTrialInput = $("#eventLateDateSeedNewTrial")
+    let seedForTrialSearchForm = $("#seedForTrialSearchForm")
+    $(seedForTrialSearchForm).on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let newTrialSeedSearchEntries = {
+            materialSample_catalogNumber: catalogNumberSeedNewTrialInput.val(),
+            scientificName: scientificNameSeedNewTrialInput.val(),
+            earlyDate: eventEarlyDateSeedNewTrialInput.val(),
+            lateDate: eventLateDateSeedNewTrialInput.val()
+        }
+        searchSeedForGermTrialFormEntries = newTrialSeedSearchEntries
+        submitnewTrialSeedSearch()
+    })
+    
+    const submitnewTrialSeedSearch = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/seedForTrial",
+            data: searchSeedForGermTrialFormEntries
+        })
+        .then((seedsForTrialResults) => {
+            seedforTrialResultsList = []
+            $.each(seedsForTrialResults, function(i, seedInResult) {
+                seedforTrialResultsList.push(
+                    '<li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">' + seedInResult.scientificName + '</p>' +
+                    '<button class="btn btn-sm btn-outline-primary" value=' +seedInResult.id + '>Create New Germination Trial</button>' + 
+                    '</li>')
+                console.log(seedforTrialResultsList)
+            });
+        })
+        .then(function(){
+            $('#seedResultList').empty()
+            $('#seedResultList').append(seedforTrialResultsList.join(''))
+            $('#seedSearchGermTrialResults').show()
+        })
+    }    
 
 //Create New Germination Trial
     //event listener for button to capture ID of selected seed for new germination trial
@@ -321,8 +362,17 @@ $(document).ready(function() {
 //--------------------------------------------------------------------------------------------------
 // EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------
-//Functions Executed On Page Load
-    //Get Projects and Display on Projects Page
-    fetchProjects()
-    listProjectsForUpload()
+
+    //Functions to Execute on Page Load by Page
+    let currentURL = window.location.pathname
+
+    let creatProjectPage = "/createNewProject"
+    let uploadData = "/uploadMaterialSamples"
+
+    if (currentURL === creatProjectPage){
+        fetchProjects()
+    } else if (currentURL === uploadData){
+        listProjectsForUpload()
+    }
+
 })
