@@ -86,6 +86,11 @@ $(document).ready(function() {
     //an object to contian the values entered by the user in the sample updates form on the update material sample page
     let updateMaterialSampleFormEntries = {}
 
+    //Seed sample selected for Germination Trial
+    //variables to hold the id and catalogNumber for the seed sample selected for a new germination trial
+    let seedSampleSelectedID
+    let seedSampleSelectedCatalogNumber
+
 //--------------------------------------------------------------------------------------------------
 // EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------
@@ -98,7 +103,7 @@ $(document).ready(function() {
 
     //Create New Germination Trial Page
     $('#seedSearchGermTrialResults').hide()
-    $('#newGermTrialDataForm').hide()
+    //$('#newGermTrialDataForm').hide()
 
     //Transfers Page
     $('#searchTransfersResults').hide()
@@ -322,7 +327,7 @@ $(document).ready(function() {
                     <td>${seedInResult.locality}</td>
                     <td>${seedInResult.locationID}</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" value=${seedInResult.id} >Create New Germination Trial</button>
+                        <button class="seedSampleSelected btn btn-sm btn-outline-primary" value=${seedInResult.id} >Create New Germination Trial</button>
                     </td>`
                 )
             })
@@ -336,6 +341,9 @@ $(document).ready(function() {
 
 //Create New Germination Trial
     //event listener for button to capture ID of selected seed for new germination trial
+    $("#seedResultTableData").on('click','.seedSampleSelected', function(){
+        console.log($(this).attr("value"))
+    })
     //add user entries to newGermTrialFormEntries object
     //send to backend via api
 
