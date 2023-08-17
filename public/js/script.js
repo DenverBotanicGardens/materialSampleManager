@@ -305,18 +305,31 @@ $(document).ready(function() {
             data: searchSeedForGermTrialFormEntries
         })
         .then((seedsForTrialResults) => {
+            console.log(seedsForTrialResults)
             seedforTrialResultsList = []
             $.each(seedsForTrialResults, function(i, seedInResult) {
                 seedforTrialResultsList.push(
-                    '<li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">' + seedInResult.scientificName + '</p>' +
-                    '<button class="btn btn-sm btn-outline-primary" value=' +seedInResult.id + '>Create New Germination Trial</button>' + 
-                    '</li>')
-                console.log(seedforTrialResultsList)
-            });
+                    `<tr>
+                    <td>${seedInResult.scientificName}</td>
+                    <td>${seedInResult.materialSample_catalogNumber}</td>
+                    <td>${seedInResult.eventDate}</td>
+                    <td>${seedInResult.numberCollected}</td>
+                    <td>${seedInResult.numberAvailable}</td>
+                    <td>${seedInResult.preparationDate}</td>
+                    <td>${seedInResult.dateStored}</td>
+                    <td>${seedInResult.stateProvince}</td>
+                    <td>${seedInResult.county}</td>
+                    <td>${seedInResult.locality}</td>
+                    <td>${seedInResult.locationID}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" value=${seedInResult.id} >Create New Germination Trial</button>
+                    </td>`
+                )
+            })
         })
         .then(function(){
-            $('#seedResultList').empty()
-            $('#seedResultList').append(seedforTrialResultsList.join(''))
+            $('#seedResultTableData').empty()
+            $('#seedResultTableData').append(seedforTrialResultsList.join(''))
             $('#seedSearchGermTrialResults').show()
         })
     }    
