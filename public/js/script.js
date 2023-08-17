@@ -103,7 +103,7 @@ $(document).ready(function() {
 
     //Create New Germination Trial Page
     $('#seedSearchGermTrialResults').hide()
-    //$('#newGermTrialDataForm').hide()
+    $('#newGermTrialDataForm').hide()
 
     //Transfers Page
     $('#searchTransfersResults').hide()
@@ -327,7 +327,7 @@ $(document).ready(function() {
                     <td>${seedInResult.locality}</td>
                     <td>${seedInResult.locationID}</td>
                     <td>
-                        <button class="seedSampleSelected btn btn-sm btn-outline-primary" value=${seedInResult.id} >Create New Germination Trial</button>
+                        <button class="seedSampleSelected btn btn-sm btn-outline-primary" data-id=${seedInResult.id} data-catalognumber=${seedInResult.materialSample_catalogNumber}>Create New Germination Trial</button>
                     </td>`
                 )
             })
@@ -342,7 +342,10 @@ $(document).ready(function() {
 //Create New Germination Trial
     //event listener for button to capture ID of selected seed for new germination trial
     $("#seedResultTableData").on('click','.seedSampleSelected', function(){
-        console.log($(this).attr("value"))
+        seedSampleSelectedID = $(this).data('id')
+        seedSampleSelectedCatalogNumber = $(this).data('catalognumber')
+        $('#newGermTrialDataForm').show()
+        $('#seedSelectedTitle').text(`New Germination Trial for ${seedSampleSelectedCatalogNumber}`)
     })
     //add user entries to newGermTrialFormEntries object
     //send to backend via api
