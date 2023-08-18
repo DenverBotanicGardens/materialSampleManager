@@ -65,7 +65,8 @@
         </table>
     </div>
     <br><br>
-    <div id="newGermTrialDataForm">
+    {{!-- New Germination Trial Data Form --}}
+    <form id="newGermTrialDataForm">
         <p id="seedSelectedTitle"></p>
         <div class="row">
             <div class="col">
@@ -78,14 +79,14 @@
             <div class="col">
                 {{!-- sampleFrozen --}}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozen">
-                    <label class="form-check-label" for="sampleFrozenYes">
+                    <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozenYes">
+                    <label class="form-check-label" for="sampleFrozen">
                         Sample Frozen
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozen">
-                    <label class="form-check-label" for="flexRadioDefault2">
+                    <input class="form-check-input" type="radio" name="sampleNotFrozen" id="sampleFrozenNo">
+                    <label class="form-check-label" for="sampleNotFrozen">
                         Sample Not Frozen
                     </label>
                 </div>
@@ -102,14 +103,14 @@
             <div class="col">
                 {{!-- scarified --}}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="scarified" id="scarified">
+                    <input class="form-check-input" type="radio" name="scarified" id="scarifiedYes">
                     <label class="form-check-label" for="scarified">
                         Scarified
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="scarified" id="scarified">
-                    <label class="form-check-label" for="scarified">
+                    <input class="form-check-input" type="radio" name="notScarified" id="scarifiedNo">
+                    <label class="form-check-label" for="notScarified">
                         Not Scarified
                     </label>
                 </div>
@@ -164,6 +165,6 @@
             </div>
         </div>
         {{!-- SUBMIT BUTTON --}}
-        <button type="button" class="btn btn-primary">Submit</button>   
-    </div>
+        <button type="submit" class="btn btn-primary">Submit</button>   
+    </form>
 </div>

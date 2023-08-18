@@ -100,7 +100,7 @@ $(document).ready(function() {
 
     //Germination Trials Page
     $('#searchGermTrialResults').hide()
-
+    
     //Create New Germination Trial Page
     $('#seedSearchGermTrialResults').hide()
     $('#newGermTrialDataForm').hide()
@@ -115,6 +115,7 @@ $(document).ready(function() {
     //Update Material Sample Page
     $('#searchSamplesToUpdateResults').hide()
     $('#sampleUpdatesForm').hide()
+
 
 
 
@@ -348,7 +349,67 @@ $(document).ready(function() {
         $('#seedSelectedTitle').text(`New Germination Trial for ${seedSampleSelectedCatalogNumber}`)
     })
     //add user entries to newGermTrialFormEntries object
-    //send to backend via api
+    let testConductedByInput = $("#testConductedBy")
+    let sampleFrozenAnswer
+    //let sampleFrozenYesInput = $("#sampleFrozenYes")
+    //let sampleFrozenNoInput = $("#sampleFrozenNo")
+    let mediumInput = $("#medium")
+    //let scarifiedYesInput = $("#scarifiedYes")
+    //let scarifiedNoInput = $("#scarifiedNo")
+    let scarifiedAnswer
+    let stratificationTemperatureInput = $("#stratificationTemperature")
+    let stratificationStartDateInput = $("#stratificationStartDate")
+    let incubationStartDateInput = $("#incubationStartDate")
+    let numberSeedsTestedInput = $("#numberSeedsTested")
+    let incubationTemperatureDayInput = $("#incubationTemperatureDay")
+    let incubationTemperatureNightInput = $("#incubationTemperatureNight")
+    let newGermTrialDataForm = $("#newGermTrialDataForm")
+    $(newGermTrialDataForm).on("submit", function handleFormSubmit(event){
+        console.log("Submitting germination trial data")
+        event.preventDefault()
+        if (document.getElementById('sampleFrozenYes').checked) {
+            sampleFrozenAnswer = 1
+        }
+        if (document.getElementById('sampleFrozenNo').checked) {
+            sampleFrozenAnswer = 0
+        }
+        if (document.getElementById('scarifiedYes').checked) {
+            scarifiedAnswer = 1
+        }
+        if (document.getElementById('scarifiedNo').checked) {
+            scarifiedAnswer = 0
+        }
+        let newGermTrialEntries = {
+            materialSample_catalogNumber: seedSampleSelectedCatalogNumber,
+            testConductedBy: testConductedByInput.val().trim(),
+            sampleFrozen: sampleFrozenAnswer,
+            medium: mediumInput.val().trim(),
+            scarified: scarifiedAnswer,
+            stratificationTemperature: stratificationTemperatureInput.val().trim(),
+            stratificationStartDate: stratificationStartDateInput.val().trim(),
+            incubationStartDate: incubationStartDateInput.val().trim(),
+            numberSeedsTested: numberSeedsTestedInput.val().trim(),
+            incubationTempDay: incubationTemperatureDayInput.val().trim(),
+            incubationTempNight: incubationTemperatureNightInput.val().trim(),
+            materialSampleTableID: seedSampleSelectedID
+        }
+        newGermTrialFormEntries = newGermTrialEntries
+        submitNewGerminationTrial()
+    })
+//send to backend via api
+const submitNewGerminationTrial = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/addGerminationTest",
+            data: newGermTrialFormEntries,
+            success: function(){
+                alert('Success! Your new germination trial was submitted to the database. Hope they sprout!')
+            }
+    })
+    .then(function(){
+        window.location.href = '/germinationTrials'
+    })
+}
 
 //Search for Transfers
     //add user entries to searchTransfersFormEntries object
