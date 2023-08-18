@@ -264,11 +264,61 @@ $(document).ready(function() {
 
 //Search Germination Trials
     //add user entries to searchGermTrialsFormEntries object
+    let germSearchProjectInput = $("#germSearchProject")
+    let germSearchScientificNameInput = $("#germSearchScientificName")
+    let germSearchCatalogNumberInput = $("#germSearchCatalogNumber")
+    let germSearchStratificationEarlyDateInput = $("#germSearchStratificationEarlyDate")
+    let germSearchStratificationLateDateInput = $("#germSearchStratificationLateDate")
+    let germSearchEndEarlyDateInput = $("#germSearchEndEarlyDate")
+    let germSearchEndLateDateInput = $("#germSearchEndLateDate")
+    let germSearchEventEarlyDateInput = $("#germSearchEventEarlyDate")
+    let germSearchEventLateDateInput = $("#germSearchEventLateDate")
+    let germSearchRecordedByInput = $("#germSearchRecordedBy")
+    let germSearchRecordNumberInput = $("#germSearchRecordNumber")
+    let germSearchStateProvinceInput = $("#germSearchStateProvince")
+    let germSearchCountyInput = $("#germSearchCounty")
+    let germSearchLocalityInput = $("#germSearchLocality")
+    let germSearchLocationRemarksInput = $("#germSearchLocationRemarks")
+    let germSearchLocationIDInput = $("#germSearchLocationID")
+    let searchGermTrialsForm = $("#searchGermTrialsForm")
+    $(searchGermTrialsForm).on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let newSearchGermTrialsSearchEntries = {
+            project: germSearchProjectInput.val(),
+            scientificName: germSearchScientificNameInput.val(),
+            materialSample_catalogNumber: germSearchCatalogNumberInput.val(),
+            stratStartEarlyDate: germSearchStratificationEarlyDateInput.val(),
+            stratStartLateDate: germSearchStratificationLateDateInput.val(),
+            endEarlyDate: germSearchEndEarlyDateInput.val(),
+            endLateDate: germSearchEndLateDateInput.val(),
+            eventEarlyDate: germSearchEventEarlyDateInput.val(),
+            eventLateDate: germSearchEventLateDateInput.val(),
+            recordedBy: germSearchRecordedByInput.val(),
+            recordNumber: germSearchRecordNumberInput.val(),
+            stateProvince: germSearchStateProvinceInput.val(),
+            county: germSearchCountyInput.val(),
+            locality: germSearchLocalityInput.val(),
+            locationRemarks: germSearchLocationRemarksInput.val(),
+            locationID: germSearchLocationIDInput.val()
+        }
+        searchGermTrialsFormEntries = newSearchGermTrialsSearchEntries
+        submitGermTrialSearch()
+    })
     //send to backend via api
+    const submitGermTrialSearch = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/getGermplasmViabilityTests",
+            data: searchGermTrialsFormEntries
+        })
+        .then((germinationTrialResults) => {
+            console.log(germinationTrialResults)
+        })
+    }
     //return results
     //display results in list sorted by taxon and then date
-
-//Download Germination Trial Search Results to CSV
+    
+    //Download Germination Trial Search Results to CSV
 
 //Add Viability Tracking to Germination Trial Record
     //Event listener for button to capture ID of selected germination trial
@@ -321,7 +371,6 @@ $(document).ready(function() {
                     <td>${seedInResult.eventDate}</td>
                     <td>${seedInResult.numberCollected}</td>
                     <td>${seedInResult.numberAvailable}</td>
-                    <td>${seedInResult.preparationDate}</td>
                     <td>${seedInResult.dateStored}</td>
                     <td>${seedInResult.stateProvince}</td>
                     <td>${seedInResult.county}</td>

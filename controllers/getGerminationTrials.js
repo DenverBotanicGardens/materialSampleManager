@@ -8,7 +8,7 @@ const Op = Sequelize.Op;
 //empty array to populate with parameters that make up where clause
 var germplasmTrialQuery = []
 //standard query to return all records from germplasmviabilitytest table. extra where params provided by user are concatted to the end of this string
-var germplasmTrialSelect = `SELECT gvt.id,gvt.materialSample_catalogNumber,gvt.stratificationStartDate,gvt.endDate,o.scientificName,o.eventDate,o.stateProvince,o.county,o.locality,o.locationRemarks,o.recordedBy FROM occurrences AS o LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN germplasmviabilitytests AS gvt ON ms.id = gvt.materialSampleTableID WHERE gvt.id IS NOT NULL`
+var germplasmTrialSelect = `SELECT gvt.id,gvt.materialSample_catalogNumber,gvt.stratificationStartDate,gvt.endDate,o.scientificName,o.eventDate,o.stateProvince,o.county,o.locality,o.locationRemarks,o.locationID,o.recordedBy FROM occurrences AS o LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN germplasmviabilitytests AS gvt ON ms.id = gvt.materialSampleTableID WHERE gvt.id IS NOT NULL`
 
 //function to define query and get germination trials
 async function getGerminationTrials(req, res) {
@@ -66,6 +66,10 @@ async function getGerminationTrials(req, res) {
         //locationRemarks
         if (req.body.locationRemarks !== ''){
             germplasmTrialQuery.push(` AND o.locationRemarks LIKE '%${req.body.locationRemarks}%'`)
+        }
+        //locationID
+        if (req.body.locationID !== ''){
+            germplasmTrialQuery.push(` AND o.locationID LIKE '%${req.body.locationID}%'`)
         }
         //recordedBy
         if (req.body.recordedBy !== ''){
