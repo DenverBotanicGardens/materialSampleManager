@@ -313,10 +313,45 @@ $(document).ready(function() {
         })
         .then((germinationTrialResults) => {
             console.log(germinationTrialResults)
+            germinationTrialResultList = []
+            $.each(germinationTrialResults, function(i, trialInResult) {
+                germinationTrialResultList.push(
+                    `<tr>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" data-id=${trialInResult.id} data-catalognumber=${trialInResult.materialSample_catalogNumber}>Add Viability Tracking</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-secondary" data-id=${trialInResult.id} data-catalognumber=${trialInResult.materialSample_catalogNumber}>Finish Trial</button>
+                    </td>
+                    <td>${trialInResult.scientificName}</td>
+                    <td>${trialInResult.materialSample_catalogNumber}</td>
+                    <td>${trialInResult.stratificationStartDate}</td>
+                    <td>${trialInResult.incubationStartDate}</td>
+                    <td>${trialInResult.endDate}</td>
+                    <td>${trialInResult.numberSeedsTested}</td>
+                    <td>${trialInResult.numberDead}</td>
+                    <td>${trialInResult.numberViable}</td>
+                    <td>${trialInResult.totalGerminants}</td>
+                    <td>${trialInResult.viabilityAdjustedGermination}</td>
+                    <td>${trialInResult.stratificationTemperature}</td>
+                    <td>${trialInResult.incubationTempDay}</td>
+                    <td>${trialInResult.incubationTempNight}</td>
+                    <td>${trialInResult.testConductedBy}</td>
+                    <td>${trialInResult.eventDate}</td>
+                    <td>${trialInResult.locationID}</td>
+                    `
+                )
+            })
+        })
+        .then(function(){
+            $('#germinationTrialResultTableData').empty()
+            $('#germinationTrialResultTableData').append(germinationTrialResultList.join(''))
+            $('#searchGermTrialResults').show()
         })
     }
     //return results
     //display results in list sorted by taxon and then date
+
     
     //Download Germination Trial Search Results to CSV
 
