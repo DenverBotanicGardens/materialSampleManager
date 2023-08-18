@@ -10,7 +10,7 @@ const Op = Sequelize.Op;
 //empty array to populate with parameters that make up where clause
 var seedQuery =[]
 //standard query to return all seed records from materialSamples table. extra where params provided by user are concatted to the end of this string
-var seedSelect = `SELECT ms.id, ms.materialSampleType, ms.materialSample_catalogNumber, ms.materialSample_recordNumber, ms.storageLocation, ms.disposition, ms.numberCollected, ms.numberAvailable, ms.sourcePlantCount, ms.preparationDate, ms.dateStored, o.scientificName, o.eventDate, o.recordedBy, o.county, o.stateProvince, o.county, o.locality, o.locationID, o.locationRemarks, o.decimalLatitude, o.decimalLongitude, o.minimumElevationInMeters, ps.catalogNumber FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id LEFT JOIN preservedSpecimens AS ps ON o.id = ps.occurrenceTableID WHERE ms.materialSampleType = 'seed'`
+var seedSelect = `SELECT ms.id, ms.materialSampleType, ms.materialSample_catalogNumber, ms.materialSample_recordNumber, ms.storageLocation, ms.disposition, ms.numberCollected, ms.numberAvailable, ms.sourcePlantCount, ms.preparationDate, ms.dateStored, o.scientificName, o.eventDate, o.recordedBy, o.county, o.stateProvince, o.county, o.locality, o.locationID, o.locationRemarks, o.decimalLatitude, o.decimalLongitude, o.minimumElevationInMeters, ps.catalogNumber FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id LEFT JOIN preservedSpecimens AS ps ON o.id = ps.occurrenceTableID WHERE ms.materialSampleType = 'seed' ORDER BY o.scientificName, o.eventDate`
 
 async function getSeedsForTrial(req, res) {
     await new Promise(resolve => setTimeout(() => {
