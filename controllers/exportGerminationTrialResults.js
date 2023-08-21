@@ -60,6 +60,10 @@ FROM occurrences AS o LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTab
 
 //function to define query and get germination trials
 async function getGerminationTrialResults(req, res) {
+    for (const key in dataForExport) {
+        delete dataForExport[key];
+      }
+    console.log(dataForExport)
     await new Promise(resolve => setTimeout(() => {
         //catalogNumber
         if (req.body.materialSample_catalogNumber !== '') {
@@ -74,10 +78,10 @@ async function getGerminationTrialResults(req, res) {
             germplasmTrialQuery.push(` AND gvt.stratificationStartDate BETWEEN '${req.body.stratStartEarlyDate}' AND '2300-01-01'`)
         }
         if (req.body.stratStartEarlyDate !== '' && req.body.stratStartLateDate !== '') {
-            germplasmTrialQuery.push(` AND gvt.stratificationStartDate '${req.body.stratStartEarlyDate}' AND '${req.body.stratStartLateDate}'`)
+            germplasmTrialQuery.push(` AND gvt.stratificationStartDate BETWEEN '${req.body.stratStartEarlyDate}' AND '${req.body.stratStartLateDate}'`)
         }
         if (req.body.stratStartEarlyDate === '' && req.body.stratStartLateDate !== '') {
-            germplasmTrialQuery.push(` AND gvt.stratificationStartDate '1900-01-01' AND '${req.body.stratStartLateDate}'`)
+            germplasmTrialQuery.push(` AND gvt.stratificationStartDate BETWEEN '1900-01-01' AND '${req.body.stratStartLateDate}'`)
         }
         //endDate
         if (req.body.endEarlyDate !== '' && req.body.endLateDate === '') {
@@ -151,9 +155,11 @@ async function exportGerminationTrialResults(req, res) {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
     const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+    let filename = `${date}_germinationTrialDataExport.csv`
     //set the path for the file
-    const ws = fs.createWriteStream(`./resources/static/assets/downloads/${date}_germinationTrialDataExport.csv`)
+    const ws = fs.createWriteStream(`./resources/static/assets/downloads/${filename}`)
     await new Promise(resolve => setTimeout(() => {
+        console.log(filename)
         csv.write(dataForExport, { headers: true })
         .pipe(ws)
         .on("finish", function(){
@@ -162,14 +168,28 @@ async function exportGerminationTrialResults(req, res) {
         resolve()
     },1000))
     .then((data) => {
-        res.send(data)
+        res.send(filename)
     })
     .catch((err) => {
         console.log(err);
       })
 }
 
+//download the specified file
+const downloadGerminationTrialsFile = (req, res) => {
+    const fileName = req.params.name;
+    const directoryPath = __basedir + "/resources/static/assets/downloads/";
+    res.download(directoryPath + fileName, fileName, (err) => {
+      if (err) {
+        res.status(500).send({
+          message: "Could not download the file" + err,
+        })
+      }
+    })
+  }
+
 module.exports = {
     getGerminationTrialResults,
-    exportGerminationTrialResults
+    exportGerminationTrialResults,
+    downloadGerminationTrialsFile
 }

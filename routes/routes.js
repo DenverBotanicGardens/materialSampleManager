@@ -114,11 +114,14 @@ let routes = (app) => {
   //POST /api/exportSearchToCSV
   router.post("/exportSearchToCSV", searchMaterialSamples.exportSearchToCSV)
 
-  //GET /api/getGerminationTrialResults
-  router.get("/getGerminationTrialResults", getGerminationTrialResults.getGerminationTrialResults)
+  //POST /api/getGerminationTrialResults
+  router.post("/getGerminationTrialResults", getGerminationTrialResults.getGerminationTrialResults)
 
   //POST /api/exportGerminationTrialResults
   router.post("/exportGerminationTrialResults", getGerminationTrialResults.exportGerminationTrialResults)
+
+  //GET /api/downloadGerminationTrialsFile
+  router.get("/downloadGerminationTrialsFile/:name", getGerminationTrialResults.downloadGerminationTrialsFile);
 
   app.use("/api", router);
 };

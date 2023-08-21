@@ -91,6 +91,9 @@ $(document).ready(function() {
     let seedSampleSelectedID
     let seedSampleSelectedCatalogNumber
 
+    //Filename for CSV containing Germination Trial Results Data that is to be downloaded by the client
+    let germinationTrialResultsCSVFileName
+
 //--------------------------------------------------------------------------------------------------
 // EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------
@@ -135,7 +138,9 @@ $(document).ready(function() {
 
 
     //Download Germinations Trials to CSV
-
+    $("#downloadGerminationTrialRecordsResults").on("click", function(){
+        exportGermTrialResults()
+    })
 
     //Select Germination Trial to Add Viability Tracking To
 
@@ -308,11 +313,10 @@ $(document).ready(function() {
     const submitGermTrialSearch = () => {
         $.ajax({
             method: "POST",
-            url: "/api/getGermplasmViabilityTests",
+            url: "/api/getGerminationTrialResults",
             data: searchGermTrialsFormEntries
         })
         .then((germinationTrialResults) => {
-            console.log(germinationTrialResults)
             germinationTrialResultList = []
             $.each(germinationTrialResults, function(i, trialInResult) {
                 germinationTrialResultList.push(
@@ -353,7 +357,56 @@ $(document).ready(function() {
     //display results in list sorted by taxon and then date
 
     
-    //Download Germination Trial Search Results to CSV
+    //create the csv of germination trial results on the back end
+    const exportGermTrialResults = (req,res) => {
+        $.ajax({
+            url: "/api/exportGerminationTrialResults",
+            method: "POST",
+        })
+        .then((res) => {
+            //console.log(res)
+            germinationTrialResultsCSVFileName = res
+        })
+        .then(function(){
+            downloadFileFromBackend()
+        })
+    }
+
+    function downloadFileFromBackend() {
+        $.ajax({
+            url: "/api/downloadGerminationTrialsFile/"+germinationTrialResultsCSVFileName,
+            method: "GET"
+        })
+        .then(function() {
+            downloadBlobFromURL('http://localhost:8080/api/downloadGerminationTrialsFile/'+germinationTrialResultsCSVFileName, germinationTrialResultsCSVFileName);
+        })
+        function downloadBlobFromURL(url, fileName) {
+            fetch(url)
+              .then(response => response.blob())
+              .then(blob => {
+                // Create a URL for the Blob
+                const blobURL = URL.createObjectURL(blob);
+          
+                // Create an anchor element
+                const downloadLink = document.createElement('a');
+                downloadLink.href = blobURL;
+                downloadLink.download = fileName; // Set the desired filename
+          
+                // Append the anchor element to the document body
+                document.body.appendChild(downloadLink);
+          
+                // Simulate a click event on the anchor element
+                downloadLink.click();
+          
+                // Clean up the created URL and remove the anchor element
+                URL.revokeObjectURL(blobURL);
+                document.body.removeChild(downloadLink);
+              })
+              .catch(error => {
+                console.error('Error downloading blob:', error);
+              });
+          }
+    }
 
 //Add Viability Tracking to Germination Trial Record
     //Event listener for button to capture ID of selected germination trial
