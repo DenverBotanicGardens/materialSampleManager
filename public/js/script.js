@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     //Germination Trials Search Results
     //an array of objects to contain the list of germination trials retured to the user based upon their query
-    let germinationTrialsSearchResults = []
+    let germinationTrialResultList = []
 
     //Search for Seed to add to Germinamtion Trial Form
     //an object to contain the values entered by the user in the search for seed to add to trial form on the create new germination trial page.
@@ -94,6 +94,9 @@ $(document).ready(function() {
     //Filename for CSV containing Germination Trial Results Data that is to be downloaded by the client
     let germinationTrialResultsCSVFileName
 
+    //Germination Trial Sellected for Add Viability Tracking
+    let germinationTrialIDSelectedAddViability
+
 //--------------------------------------------------------------------------------------------------
 // EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------
@@ -143,7 +146,7 @@ $(document).ready(function() {
     })
 
     //Select Germination Trial to Add Viability Tracking To
-
+    
 
     //Submit Add Viability Tracking Data Form
 
@@ -322,10 +325,10 @@ $(document).ready(function() {
                 germinationTrialResultList.push(
                     `<tr>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary" data-id=${trialInResult.id} data-catalognumber=${trialInResult.materialSample_catalogNumber}>Add Viability Tracking</button>
+                        <button class="btn btn-sm btn-outline-primary" data-addViabilityTrackingButton="true" data-id=${trialInResult.id} data-catalognumber=${trialInResult.materialSample_catalogNumber}>Add Viability Tracking</button>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-secondary" data-id=${trialInResult.id} data-catalognumber=${trialInResult.materialSample_catalogNumber}>Finish Trial</button>
+                        <button class="btn btn-sm btn-outline-secondary" data-finishTrialButton="true" data-id=${trialInResult.id} data-catalognumber=${trialInResult.materialSample_catalogNumber}>Finish Trial</button>
                     </td>
                     <td>${trialInResult.scientificName}</td>
                     <td>${trialInResult.materialSample_catalogNumber}</td>
@@ -412,6 +415,26 @@ $(document).ready(function() {
     //Event listener for button to capture ID of selected germination trial
     //retrieve user entries and add to addViabilityTrackingFormEntries object
     //send to backend via api
+    $(document).on('click','button[data-addViabilityTrackingButton="true"]',function(event){
+        event.preventDefault()
+        germinationTrialIDSelectedAddViability = $(this).data('id')
+        window.location.href = '/addViabilityTracking'
+        let getOneGermTrialQuery = {
+            id: germinationTrialIDSelectedAddViability
+        }
+        germinationTrialIDSelectedAddViability = getOneGermTrialQuery
+        getGermTrialMetadataForAddTracking()
+    })
+
+    //function to get germiantion trial metadata and display on add viability tracking page
+    getGermTrialMetadataForAddTracking = () => {
+
+        $.ajax({
+            method: "POST",
+            url: "/api/getGermplasmViabilityTests",
+            data: germinationTrialIDSelectedAddViability
+        })
+    }
 
 
 //Finish GerminatioN Trial

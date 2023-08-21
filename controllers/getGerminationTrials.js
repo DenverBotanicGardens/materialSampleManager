@@ -75,7 +75,6 @@ async function getGerminationTrials(req, res) {
         if (req.body.recordedBy !== ''){
             germplasmTrialQuery.push(` AND o.recordedBy LIKE '%${req.body.recordedBy}%'`)
         }
-
         fullGermplasmTrialQuery = germplasmTrialQuery.join()
         queryParams = fullGermplasmTrialQuery.replaceAll(',','')
         finalQuery = germplasmTrialSelect.concat(queryParams)
