@@ -48,14 +48,6 @@ let routes = (app) => {
       res.render("createNewGerminationTrial");
     });
 
-    app.get('/finishGerminationTrial', (req, res) => {
-      res.render("finishGerminationTrial");
-    });
-
-    app.get('/addViabilityTracking', (req, res) => {
-      res.render("addViabilityTracking");
-    });
-
     app.get('/transferMaterialSample', (req, res) => {
       res.render("transferMaterialSample");
     });
