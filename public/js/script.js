@@ -97,7 +97,8 @@ $(document).ready(function() {
     //Germination Trial Sellected for Add Viability Tracking
     let germinationTrialIDSelectedAddViability
     let getOneGermTrialQuery = {}
-    let trialForAddingViabilityTracking = {}
+    let germinationTrialIDForAddingViabilityTracking
+    let newAddViabilityTrackingFormEntries ={}
 
 //--------------------------------------------------------------------------------------------------
 // EVENT LISTENERS
@@ -416,8 +417,6 @@ $(document).ready(function() {
 
 //Add Viability Tracking to Germination Trial Record
     //Event listener for button to capture ID of selected germination trial
-    //retrieve user entries and add to addViabilityTrackingFormEntries object
-    //send to backend via api
     $(document).on('click','button[data-addViabilityTrackingButton="true"]',function(event){
         //event.preventDefault()
         germinationTrialIDSelectedAddViability = $(this).data('id')
@@ -430,7 +429,7 @@ $(document).ready(function() {
         $("#addViabilityTrackingFormAndMetadata").show()
         getGermTrialMetadataForAddTracking()
     })
-
+    
     //function to get germiantion trial metadata and display on add viability tracking page
     getGermTrialMetadataForAddTracking = () => {
         $.ajax({
@@ -439,7 +438,7 @@ $(document).ready(function() {
             data: getOneGermTrialQuery
         })
         .then((trialFromDB) => {
-            console.log(trialFromDB)
+            germinationTrialIDForAddingViabilityTracking = trialFromDB[0].id
             let seedScarified
             let frozen
             if (trialFromDB[0].scarified === 1){
@@ -456,7 +455,45 @@ $(document).ready(function() {
             $("#addViabilityTrackingMetadata2").append(`Pretreatments: | Seed Scarified: ${seedScarified} | Sample Frozen: ${frozen} | Stratification Start Date: ${trialFromDB[0].stratificationStartDate} | Stratification Temperature: ${trialFromDB[0].stratificationTemperature} |  Incubation Start Date ${trialFromDB[0].incubationStartDate} | Incubation Temp Day: ${trialFromDB[0].incubationTempDay} | Incubation Temp Night: ${trialFromDB[0].incubationTempNight} | Trial Started With ${trialFromDB[0].numberSeedsTested} Seeds.`)
         })
     }
-
+    
+    //retrieve user entries and add to addViabilityTrackingFormEntries object
+    let numberGerminantsInput = $("#numberGerminants")
+    let viabilityTrackingDateInput = $("#viabilityTrackingDate")
+    let viabilityTrackingNotesInput = $("#viabilityTrackingNotes")
+    let addViabilityTrackingForm = $("#addViabilityTrackingForm")
+    $(addViabilityTrackingForm).on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        if (!numberGerminantsInput.val().trim() || !viabilityTrackingDateInput.val().trim()){
+            alert("Please provide a value for number germinants and the date")
+        }
+        newAddViabilityTrackingFormEntries = {
+            numberGerminants: numberGerminantsInput.val().trim(),
+            date: viabilityTrackingDateInput.val().trim(),
+            notes: viabilityTrackingNotesInput.val().trim(),
+            germplasmViabilityTestID: germinationTrialIDForAddingViabilityTracking
+        }
+        submitViabilityTracking()
+    })
+    
+    //function to send to backend via api
+    // const submitViabilityTracking = (viabilityTracking) => {
+    //     $.post("api/addViabilityTracking", viabilityTracking, function(){
+    //         window.location.reload();
+    //     })
+    // } 
+    const submitViabilityTracking = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/addViabilityTracking",
+            data: newAddViabilityTrackingFormEntries,
+            success: function(){
+                alert('Success! You have submitted this viability tracking record to the database. Keep up the gret work!')
+            }
+        })
+        .then(function(){
+            window.location.href = '/germinationTrials'
+        })
+    }
 
 
 //Finish GerminatioN Trial
