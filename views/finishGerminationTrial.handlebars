@@ -1,41 +1,44 @@
 {{!-- TEMPLATE FOR NEW GERMINATION TRIALS PAGE --}}
 <br>
-<div class="container-fluid">
+<div id="finishGerminationTrialFormAndMetadata">
     <p class="lead">Finish Germination Trial</p>
-    <p>form for finishGerminationTest metadata</p>
-    <div class="row">
-        <div class="col">
-            {{!-- endDate --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">End Date</span>
-                <input id="endDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+    <p id="finishGerminationTrialMetadata1"></p>
+    <p id="finisheGerminationTrialMetadata2"></p>
+    <form id="finisheGerminationTrialForm">
+        <div class="row">
+            <div class="col">
+                {{!-- endDate --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">End Date</span>
+                    <input id="finishTrialEndDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- numberDead --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Number Dead</span>
+                    <input id="finishTrialNumberDead" type="text" class="form-control">
+                </div>
             </div>
         </div>
-        <div class="col">
-            {{!-- numberDead --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Number Dead</span>
-                <input id="numberDead" type="text" class="form-control">
+        <div class="row">
+            <div class="col">
+                {{!-- numberViable --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Number Viable</span>
+                    <input id="finishTrialNumberViable" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- totalGerminants --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Total Germinants</span>
+                    <input id="finishTrialTotalGerminants" type="text" class="form-control">
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- numberViable --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Number Viable</span>
-                <input id="numberViable" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- totalGerminants --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Total Germinants</span>
-                <input id="totalGerminants" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
 
-    {{!-- SUBMIT BUTTON --}}
-    <button type="button" class="btn btn-primary">Submit</button>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>

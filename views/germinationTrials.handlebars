@@ -170,39 +170,83 @@
         </table>
     </div>
     <div id="addViabilityTrackingFormAndMetadata">
-    <p class="lead">Add Viability Tracking Data for a Germination Trial</p>
-    <br>
-    <p id="addViabilityTrackingMetadata1"></p>
-    <p id="addViabilityTrackingMetadata2"></p>
-    <form id="addViabilityTrackingForm">
-    <div class="row">
-        <div class="col">
-            {{!-- numberGerminants --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Number of Germinants</span>
-                <input id="numberGerminants" type="text" class="form-control">
+        <p class="lead">Add Viability Tracking Data for a Germination Trial</p>
+        <br>
+        <p id="addViabilityTrackingMetadata1"></p>
+        <p id="addViabilityTrackingMetadata2"></p>
+        <form id="addViabilityTrackingForm">
+        <div class="row">
+            <div class="col">
+                {{!-- numberGerminants --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Number of Germinants</span>
+                    <input id="numberGerminants" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- date --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Date</span>
+                    <input id="viabilityTrackingDate" type="text" class="form-control">
+                </div>
             </div>
         </div>
-        <div class="col">
-            {{!-- date --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Date</span>
-                <input id="viabilityTrackingDate" type="text" class="form-control">
+        <div class="row">
+            <div class="col">
+                {{!-- notes --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Notes</span>
+                    <input id="viabilityTrackingNotes" type="text" class="form-control">
+                </div>
             </div>
         </div>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
-    <div class="row">
-        <div class="col">
-            {{!-- notes --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Notes</span>
-                <input id="viabilityTrackingNotes" type="text" class="form-control">
+    
+    <div id="finishGerminationTrialFormAndMetadata">
+        <p class="lead">Finish Germination Trial</p>
+        <p id="finishGerminationTrialMetadata1"></p>
+        <p id="finishGerminationTrialMetadata2"></p>
+        <form id="finishGerminationTrialForm">
+            <div class="row">
+                <div class="col">
+                    {{!-- endDate --}}
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">End Date</span>
+                        <input id="finishTrialEndDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                    </div>
+                </div>
+                <div class="col">
+                    {{!-- numberDead --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Number Dead</span>
+                        <input id="finishTrialNumberDead" type="text" class="form-control">
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col">
+                    {{!-- numberViable --}}
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Number Viable</span>
+                        <input id="finishTrialNumberViable" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col">
+                    {{!-- totalGerminants --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Total Germinants</span>
+                        <input id="finishTrialTotalGerminants" type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            {{!-- SUBMIT BUTTON --}}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
-    {{!-- SUBMIT BUTTON --}}
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    
 </div>
 
-</div>
