@@ -96,6 +96,8 @@ $(document).ready(function() {
 
     //Germination Trial Sellected for Add Viability Tracking
     let germinationTrialIDSelectedAddViability
+    let getOneGermTrialQuery = {}
+    let trialForAddingViabilityTracking = {}
 
 //--------------------------------------------------------------------------------------------------
 // EVENT LISTENERS
@@ -106,6 +108,7 @@ $(document).ready(function() {
 
     //Germination Trials Page
     $('#searchGermTrialResults').hide()
+    $("#addViabilityTrackingFormAndMetadata").hide()
     
     //Create New Germination Trial Page
     $('#seedSearchGermTrialResults').hide()
@@ -416,25 +419,44 @@ $(document).ready(function() {
     //retrieve user entries and add to addViabilityTrackingFormEntries object
     //send to backend via api
     $(document).on('click','button[data-addViabilityTrackingButton="true"]',function(event){
-        event.preventDefault()
+        //event.preventDefault()
         germinationTrialIDSelectedAddViability = $(this).data('id')
-        window.location.href = '/addViabilityTracking'
-        let getOneGermTrialQuery = {
+        getOneGermTrialQuery = {
             id: germinationTrialIDSelectedAddViability
         }
-        germinationTrialIDSelectedAddViability = getOneGermTrialQuery
+        $("#searchGermTrialsFormPage").hide()
+        $("#searchGermTrialResults").hide()
+        $("#createNewGerminationTrialHref").hide()
+        $("#addViabilityTrackingFormAndMetadata").show()
         getGermTrialMetadataForAddTracking()
     })
 
     //function to get germiantion trial metadata and display on add viability tracking page
     getGermTrialMetadataForAddTracking = () => {
-
         $.ajax({
             method: "POST",
-            url: "/api/getGermplasmViabilityTests",
-            data: germinationTrialIDSelectedAddViability
+            url: "/api/getGermplasmViabilityTestByID",
+            data: getOneGermTrialQuery
+        })
+        .then((trialFromDB) => {
+            console.log(trialFromDB)
+            let seedScarified
+            let frozen
+            if (trialFromDB[0].scarified === 1){
+                seedScarified = "Yes"
+            } else {
+                seedScarified = "No"
+            }
+            if (trialFromDB[0].sampleFrozen === 1){
+                frozen = "Yes"
+            } else {
+                frozen = "No"
+            }
+            $("#addViabilityTrackingMetadata1").append(`${trialFromDB[0].scientificName} seed (${trialFromDB[0].materialSample_catalogNumber}) collected from ${trialFromDB[0].locationID} in ${trialFromDB[0].county} County on ${trialFromDB[0].eventDate} by ${trialFromDB[0].recordedBy}.`)
+            $("#addViabilityTrackingMetadata2").append(`Pretreatments: | Seed Scarified: ${seedScarified} | Sample Frozen: ${frozen} | Stratification Start Date: ${trialFromDB[0].stratificationStartDate} | Stratification Temperature: ${trialFromDB[0].stratificationTemperature} |  Incubation Start Date ${trialFromDB[0].incubationStartDate} | Incubation Temp Day: ${trialFromDB[0].incubationTempDay} | Incubation Temp Night: ${trialFromDB[0].incubationTempNight} | Trial Started With ${trialFromDB[0].numberSeedsTested} Seeds.`)
         })
     }
+
 
 
 //Finish GerminatioN Trial
@@ -613,6 +635,7 @@ const submitNewGerminationTrial = () => {
 
     let creatProjectPage = "/createNewProject"
     let uploadData = "/uploadMaterialSamples"
+    let addViabilityTracking = "/addViabilityTracking"
 
     if (currentURL === creatProjectPage){
         fetchProjects()

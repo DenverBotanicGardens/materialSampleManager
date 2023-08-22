@@ -108,6 +108,9 @@ let routes = (app) => {
   //POST /api/getGermplasmViabilityTests
   router.post("/getGermplasmViabilityTests", getGerminationTrials.getGerminationTrials)
 
+  //POST /api/getGermplasmViabilityTestByID
+  router.post("/getGermplasmViabilityTestByID", getGerminationTrials.getGerminationTrialByID)
+
   //GET /api/searchMaterialSamples
   router.get("/searchMaterialSamples", searchMaterialSamples.searchMaterialSamples)
 

@@ -3,139 +3,141 @@
 <div class="container-fluid">
     <p class="lead">Germination Trials</p>
     {{!-- NEW TRIAL LINK --}}
-    <a href="/createNewGerminationTrial">Create a new germination trial</a>
+    <a id="createNewGerminationTrialHref" href="/createNewGerminationTrial">Create a new germination trial</a>
     <br><br>
     {{!-- TRIAL SEARCH --}}
-    <p>Search for Germination Trials</p>
-    <form id="searchGermTrialsForm">
-    <div class="row">
-        <div class="col">
-            {{!-- project --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Project</span>
-                <input id="germSearchProject" type="text" class="form-control">
+    <div id="searchGermTrialsFormPage">
+        <p>Search for Germination Trials</p>
+        <form id="searchGermTrialsForm">
+        <div class="row">
+            <div class="col">
+                {{!-- project --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Project</span>
+                    <input id="germSearchProject" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- scientificName --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Scientific Name</span>
+                    <input id="germSearchScientificName" type="text" class="form-control">
+                </div>
             </div>
         </div>
-        <div class="col">
-            {{!-- scientificName --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Scientific Name</span>
-                <input id="germSearchScientificName" type="text" class="form-control">
+        {{!-- catalogNumber --}}
+        <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text">Catalog Number</span>
+            <input id="germSearchCatalogNumber" type="text" class="form-control">
+        </div>
+        {{!-- stratificationDate --}}
+        <label class="form-control-sm" for="startificationDate">Stratification Date</label>
+        <div class="row">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">After</span>
+                    <input id="germSearchStratificationEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Before</span>
+                    <input id="germSearchStratificationLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
             </div>
         </div>
-    </div>
-    {{!-- catalogNumber --}}
-    <div class="input-group input-group-sm mb-3">
-        <span class="input-group-text">Catalog Number</span>
-        <input id="germSearchCatalogNumber" type="text" class="form-control">
-    </div>
-    {{!-- stratificationDate --}}
-    <label class="form-control-sm" for="startificationDate">Stratification Date</label>
-    <div class="row">
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">After</span>
-                <input id="germSearchStratificationEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+        {{!-- endDate --}}
+        <label class="form-control-sm" for="startificationDate">Trial End Date</label>
+        <div class="row">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">After</span>
+                    <input id="germSearchEndEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Before</span>
+                    <input id="germSearchEndLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Before</span>
-                <input id="germSearchStratificationLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+        {{!-- eventDate --}}
+        <label class="form-control-sm" for="eventDate">Seed Collection Date</label>
+        <div class="row">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">After</span>
+                    <input id="germSearchEventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Before</span>
+                    <input id="germSearchEventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
             </div>
         </div>
-    </div>
-    {{!-- endDate --}}
-    <label class="form-control-sm" for="startificationDate">Trial End Date</label>
-    <div class="row">
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">After</span>
-                <input id="germSearchEndEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+        <div class="row">
+            <div class="col">
+                {{!-- recordedBy --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Collector</span>
+                    <input id="germSearchRecordedBy" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- recordNumber --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Collector Number</span>
+                    <input id="germSearchRecordNumber" type="text" class="form-control">
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Before</span>
-                <input id="germSearchEndLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+        <div class="row">
+            <div class="col">
+                {{!-- stateProvince --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">State</span>
+                    <input id="germSearchStateProvince" type="text" class="form-control">
+                </div>
+            </div>
+                {{!-- county --}}
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">County</span>
+                    <input id="germSearchCounty" type="text" class="form-control">
+                </div>
+            </div>
+        </div> 
+        {{!-- locality --}}
+        <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text">Locality</span>
+            <input id="germSearchLocality" type="text" class="form-control" placeholder="Enter text that locality string contains">
+        </div>
+        <div class="row">
+            <div class="col">
+                {{!-- locationRemarks --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Landowner or EO</span>
+                    <input id="germSearchLocationRemarks" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- locationID --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Location ID</span>
+                    <input id="germSearchLocationID" type="text" class="form-control">
+                </div>
             </div>
         </div>
-    </div>
-    {{!-- eventDate --}}
-    <label class="form-control-sm" for="eventDate">Seed Collection Date</label>
-    <div class="row">
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">After</span>
-                <input id="germSearchEventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Before</span>
-                <input id="germSearchEventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- recordedBy --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Collector</span>
-                <input id="germSearchRecordedBy" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- recordNumber --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Collector Number</span>
-                <input id="germSearchRecordNumber" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- stateProvince --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">State</span>
-                <input id="germSearchStateProvince" type="text" class="form-control">
-            </div>
-        </div>
-            {{!-- county --}}
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">County</span>
-                <input id="germSearchCounty" type="text" class="form-control">
-            </div>
-        </div>
-    </div> 
-    {{!-- locality --}}
-    <div class="input-group input-group-sm mb-3">
-        <span class="input-group-text">Locality</span>
-        <input id="germSearchLocality" type="text" class="form-control" placeholder="Enter text that locality string contains">
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- locationRemarks --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Landowner or EO</span>
-                <input id="germSearchLocationRemarks" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- locationID --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Location ID</span>
-                <input id="germSearchLocationID" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
 
-    {{!-- SUBMIT BUTTON --}}
-    <button type="submit" class="btn btn-primary">Search</button>
-    {{!-- Download BUtton --}}
-    <button id="downloadGerminationTrialRecordsResults" type="button" class="btn btn-secondary">Download Results to CSV</button>
-    </form>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="submit" class="btn btn-primary">Search</button>
+        {{!-- Download BUtton --}}
+        <button id="downloadGerminationTrialRecordsResults" type="button" class="btn btn-secondary">Download Results to CSV</button>
+        </form>
+    </div>
     <br><br>
     {{!-- TRIAL LIST --}}
     <div id="searchGermTrialResults">
@@ -167,4 +169,40 @@
             </tbody>
         </table>
     </div>
+    <div id="addViabilityTrackingFormAndMetadata">
+    <p class="lead">Add Viability Tracking Data for a Germination Trial</p>
+    <br>
+    <p id="addViabilityTrackingMetadata1"></p>
+    <p id="addViabilityTrackingMetadata2"></p>
+    <form id="addViabilityTracking">
+    <div class="row">
+        <div class="col">
+            {{!-- numberGerminants --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Number of Germinants</span>
+                <input id="numberGerminants" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col">
+            {{!-- date --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Date</span>
+                <input id="date" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{!-- notes --}}
+            <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Notes</span>
+                <input id="notes" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    {{!-- SUBMIT BUTTON --}}
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
 </div>
