@@ -299,7 +299,12 @@ $(document).ready(function() {
         type: "POST",
         data: formdata,
         processData: false,
-        contentType: false
+        contentType: false,
+        success: function (data) {
+            if (data.message){
+                alert(data.message)
+            }
+        }
         });
 
         return false;

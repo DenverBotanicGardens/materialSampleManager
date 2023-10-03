@@ -113,10 +113,14 @@ const csvUpload = async (req, res) => {
       })
       //complete the http request
       .on("end", () => {
-        console.log("csv uploaded to server")
-        res.status(200).send()
         importCollectionObjects()
-      });
+        res.status(200).json({
+        message: "File successfully uploaded to database: " + req.file.originalname,
+        })
+      })
+      .on("success", () => {
+        
+      })
     } catch (error) {
       console.log(error);
       res.status(500).send({
