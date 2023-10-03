@@ -275,8 +275,41 @@ $(document).ready(function() {
 
 //Capture id For Selected Project
     // send to backend csvUplaod controller to be incorporated into data being uploaded
+    const sendProjectID = () => {
+        let projectIDForServer = {projectTableID: $('#projectsUpload').val()}
+        console.log(projectIDForServer)
+        $.ajax({
+            url: "/api/projectIDFromClient",
+            type: "POST",
+            data: projectIDForServer,
+            success: function(){
+                console.log("project id sent to server")
+            }
+        })
+    }
+    
+    //Send projectID and csv to backend for upload to database
+    $('#uploadCSV').submit(function(e) {
+        e.preventDefault()
+        sendProjectID()
+        // var formdata = new FormData(this);
+        // //add project.id
+        // formdata.append("username", userInfo.nickname);
 
-//Send csv to backend for upload to database
+        // $.ajax({
+        // url: "/api/upload",
+        // type: "POST",
+        // data: formdata,
+        // processData: false,
+        // contentType: false,
+        // success: function(){
+        //     alert("Data successfully uploaded")
+        // }
+        // });
+
+        // return false;
+    });
+
 
 //Search Germination Trials
     //add user entries to searchGermTrialsFormEntries object

@@ -1,3 +1,5 @@
+const Project = require('./Project')
+
 module.exports = (sequelize, Sequelize) => {
     const Occurrence = sequelize.define("occurrence", {
         occurrenceID : {
@@ -80,6 +82,11 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.STRING,
             allowNull : true
             }
+            ,
+        projectTableID: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+            }        
     });
 
     Occurrence.associate = (models) => {
@@ -89,6 +96,13 @@ module.exports = (sequelize, Sequelize) => {
         Occurrence.hasMany(models.preservedSpecimen, {
             foreignKey: 'occurrenceTableID'
         })
+        Occurrence.belongsTo(models.project, {
+            foreignKey: 'projectTableID',
+            as: 'Project'
+        })
+        // Project.hasMany(models.occurrence, {
+        //     foreignKey: 'projectTableID'
+        // })
     }
     
     return Occurrence;
