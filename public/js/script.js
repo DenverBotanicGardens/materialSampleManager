@@ -292,22 +292,17 @@ $(document).ready(function() {
     $('#uploadCSV').submit(function(e) {
         e.preventDefault()
         sendProjectID()
-        // var formdata = new FormData(this);
-        // //add project.id
-        // formdata.append("username", userInfo.nickname);
+        var formdata = new FormData(this);
 
-        // $.ajax({
-        // url: "/api/upload",
-        // type: "POST",
-        // data: formdata,
-        // processData: false,
-        // contentType: false,
-        // success: function(){
-        //     alert("Data successfully uploaded")
-        // }
-        // });
+        $.ajax({
+        url: "/api/upload",
+        type: "POST",
+        data: formdata,
+        processData: false,
+        contentType: false
+        });
 
-        // return false;
+        return false;
     });
 
 
