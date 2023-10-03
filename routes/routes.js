@@ -48,14 +48,6 @@ let routes = (app) => {
       res.render("createNewGerminationTrial");
     });
 
-    app.get('/finishGerminationTrial', (req, res) => {
-      res.render("finishGerminationTrial");
-    });
-
-    app.get('/addViabilityTracking', (req, res) => {
-      res.render("addViabilityTracking");
-    });
-
     app.get('/transferMaterialSample', (req, res) => {
       res.render("transferMaterialSample");
     });
@@ -82,7 +74,7 @@ let routes = (app) => {
   router.post("/materialSample", insertDataController.insertData)
 
   //GET /api/seedForTrial
-  router.get("/seedForTrial", getSeedForTrial.getSeedsForTrial)
+  router.post("/seedForTrial", getSeedForTrial.getSeedsForTrial)
 
   //POST /api/addGerminationTest
   router.post("/addGerminationTest", addGerminationTest.addGerminationTest)
@@ -105,8 +97,11 @@ let routes = (app) => {
   //PUT /api/updateMaterialSample
   router.put("/updateMaterialSample", updateMaterialSample.updateMaterialSample)
 
-  //GET /api/getGermplasmViabilityTests
-  router.get("/getGermplasmViabilityTests", getGerminationTrials.getGerminationTrials)
+  //POST /api/getGermplasmViabilityTests
+  router.post("/getGermplasmViabilityTests", getGerminationTrials.getGerminationTrials)
+
+  //POST /api/getGermplasmViabilityTestByID
+  router.post("/getGermplasmViabilityTestByID", getGerminationTrials.getGerminationTrialByID)
 
   //GET /api/searchMaterialSamples
   router.get("/searchMaterialSamples", searchMaterialSamples.searchMaterialSamples)
@@ -114,11 +109,14 @@ let routes = (app) => {
   //POST /api/exportSearchToCSV
   router.post("/exportSearchToCSV", searchMaterialSamples.exportSearchToCSV)
 
-  //GET /api/getGerminationTrialResults
-  router.get("/getGerminationTrialResults", getGerminationTrialResults.getGerminationTrialResults)
+  //POST /api/getGerminationTrialResults
+  router.post("/getGerminationTrialResults", getGerminationTrialResults.getGerminationTrialResults)
 
   //POST /api/exportGerminationTrialResults
   router.post("/exportGerminationTrialResults", getGerminationTrialResults.exportGerminationTrialResults)
+
+  //GET /api/downloadGerminationTrialsFile
+  router.get("/downloadGerminationTrialsFile/:name", getGerminationTrialResults.downloadGerminationTrialsFile);
 
   app.use("/api", router);
 };

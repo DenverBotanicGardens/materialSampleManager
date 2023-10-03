@@ -3,53 +3,70 @@
 <div class="container-fluid">
     <p class="lead">Create New Germination Trial</p>
     <p>Search for seed to add to trial</p>
-    <div class="row">
-        <div class="col">
-            {{!-- scientificName --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Scientific Name</span>
-                <input id="scientificName" type="text" class="form-control">
+    <form id="seedForTrialSearchForm">
+        <div class="row">
+            <div class="col">
+                {{!-- scientificName --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Scientific Name</span>
+                    <input id="scientificNameSeedNewTrial" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- catalogNumber --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Catalog Number</span>
+                    <input id="catalogNumberSeedNewTrial" type="text" class="form-control">
+                </div>
             </div>
         </div>
-        <div class="col">
-            {{!-- catalogNumber --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Catalog Number</span>
-                <input id="catalogNumber" type="text" class="form-control">
+        {{!-- eventDate --}}
+        <label class="form-control-sm" for="eventDate">Collection Date</label>
+        <div class="row">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">After</span>
+                    <input id="eventEarlyDateSeedNewTrial" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Before</span>
+                    <input id="eventLateDateSeedNewTrial" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
             </div>
         </div>
-    </div>
-    {{!-- eventDate --}}
-    <label class="form-control-sm" for="eventDate">Collection Date</label>
-    <div class="row">
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">After</span>
-                <input id="eventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Before</span>
-                <input id="eventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-    </div>
-    {{!-- SUBMIT BUTTON --}}
-    <button type="button" class="btn btn-primary">Search</button>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     <br><br>
     {{!-- SEED RESULT LIST --}}
     <div id = "seedSearchGermTrialResults">
-        <p>Seed</p>
-        <ul class="list-group"> 
-                        <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
-                        <button class="btn btn-sm btn-outline-primary">Create New Germination Trial</button> 
-                        </li>
-        </ul>
+        <p>Seed Samples</p>
+        <table class="table" id="seedResultTable">
+            <thead>
+                <tr>
+                    <th scope="col">scientificName</th>
+                    <th scope="col">materialSample_catalogNumber</th>
+                    <th scope="col">eventDate</th>
+                    <th scope="col">numberCollected</th>
+                    <th scope="col">numberAvailable</th>
+                    <th scope="col">dateStored</th>
+                    <th scope="col">stateProvince</th>
+                    <th scope="col">county</th>
+                    <th scope="col">locality</th>
+                    <th scope="col">locationID</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="seedResultTableData">
+            </tbody>
+        </table>
     </div>
     <br><br>
-    <div id="newGermTrialDataForm">
-        <p>New Trial for catalogNumberXXXXX</p>
+    {{!-- New Germination Trial Data Form --}}
+    <form id="newGermTrialDataForm">
+        <p id="seedSelectedTitle"></p>
         <div class="row">
             <div class="col">
                 {{!-- testConductedBy --}}
@@ -61,14 +78,14 @@
             <div class="col">
                 {{!-- sampleFrozen --}}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozen">
-                    <label class="form-check-label" for="sampleFrozenYes">
+                    <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozenYes">
+                    <label class="form-check-label" for="sampleFrozen">
                         Sample Frozen
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sampleFrozen" id="sampleFrozen">
-                    <label class="form-check-label" for="flexRadioDefault2">
+                    <input class="form-check-input" type="radio" name="sampleNotFrozen" id="sampleFrozenNo">
+                    <label class="form-check-label" for="sampleNotFrozen">
                         Sample Not Frozen
                     </label>
                 </div>
@@ -85,14 +102,14 @@
             <div class="col">
                 {{!-- scarified --}}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="scarified" id="scarified">
+                    <input class="form-check-input" type="radio" name="scarified" id="scarifiedYes">
                     <label class="form-check-label" for="scarified">
                         Scarified
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="scarified" id="scarified">
-                    <label class="form-check-label" for="scarified">
+                    <input class="form-check-input" type="radio" name="notScarified" id="scarifiedNo">
+                    <label class="form-check-label" for="notScarified">
                         Not Scarified
                     </label>
                 </div>
@@ -147,6 +164,7 @@
             </div>
         </div>
         {{!-- SUBMIT BUTTON --}}
-        <button type="button" class="btn btn-primary">Submit</button>   
-    </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <br><br>   
+    </form>
 </div>
