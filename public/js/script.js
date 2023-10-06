@@ -544,7 +544,7 @@ $(document).ready(function() {
             url: "/api/addViabilityTracking",
             data: newAddViabilityTrackingFormEntries,
             success: function(){
-                alert('Success! You have submitted this viability tracking record to the database. Keep up the gret work!')
+                alert('Success! You have submitted this viability tracking record to the database. Keep up the great work!')
             }
         })
         .then(function(){
@@ -628,14 +628,11 @@ $(document).ready(function() {
             url: "/api/finishGerminationTest",
             data: newFinishTrialFormEntries,
             success: function(){
-                alert('Success! You have finished this germination trial. Keep up the gret work!')
+                alert('Success! You have finished this germination trial. Keep up the great work!')
             }
         })
         .then(function(){
             window.location.href = '/germinationTrials'
-        })
-        .catch((error) => {
-            console.error(error);
         })
     }
 
@@ -689,9 +686,6 @@ $(document).ready(function() {
                         <button class="seedSampleSelected btn btn-sm btn-outline-primary" data-id=${seedInResult.id} data-catalognumber=${seedInResult.materialSample_catalogNumber}>Create New Germination Trial</button>
                     </td>`
                 )
-            })
-            .catch((error) => {
-                console.error(error);
             })
         })
         .then(function(){
