@@ -299,14 +299,22 @@ $(document).ready(function() {
         type: "POST",
         data: formdata,
         processData: false,
-        contentType: false,
-        success: function (data) {
-            if (data.message){
+        contentType: false
+        })
+        //.then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                //File upload was successful
                 alert(data.message)
+            } else {
+                //File upload failed
+                alert("Error:" + data.message)
             }
-        }
-        });
-
+        })
+        .catch((error) => {
+            console.error(error);
+            alert("An error occurred while uploading this file. Please contact the Scientific Data Manager.")
+        })
         return false;
     });
 

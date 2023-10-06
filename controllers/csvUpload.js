@@ -115,16 +115,15 @@ const csvUpload = async (req, res) => {
       .on("end", () => {
         importCollectionObjects()
         res.status(200).json({
+          success: true,
         message: "File successfully uploaded to database: " + req.file.originalname,
         })
       })
-      .on("success", () => {
-        
-      })
     } catch (error) {
       console.log(error);
-      res.status(500).send({
-        message: "Could not upload the file: " + req.file.originalname,
+      res.status(500).json({
+        success: false,
+        message: "Could not upload the file: " + req.file.originalname + ". Please contact the Scientific Data Manager if this error persists."
       })
     }
   };
