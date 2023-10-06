@@ -104,7 +104,7 @@ $(document).ready(function() {
 
 
     //--------------------------------------------------------------------------------------------------
-    // EVENT LISTENERS
+    // EVENT LISTENERS (more at bottom of script)
     //--------------------------------------------------------------------------------------------------
     //Hide Elements
     //Search Page
@@ -205,8 +205,9 @@ $(document).ready(function() {
 
 //Download Material Sample Records To CSV
 
-
-//Submit New Project
+//--------------------------------------------------------------------------------------------------
+//SUBMIT NEW PROJECT
+//--------------------------------------------------------------------------------------------------
     //add user entries to newProjectFormEntries object
     let projectInput = $("#project")
     let principalInvestigatorInput = $("#principalInvestigator")
@@ -233,7 +234,9 @@ $(document).ready(function() {
         })
     }     
 
-//Get Existing Projects to Display on Projects Page
+//--------------------------------------------------------------------------------------------------
+//DISPLAY EXISTING PROJECTS ON PROJECTS PAGE
+//--------------------------------------------------------------------------------------------------
     //retrieve all projects via api
     //add all results to a projectsList array
     //append each item in array to the list id = #projects
@@ -256,8 +259,9 @@ $(document).ready(function() {
         })
     }
 
-
-//Get Existing Projects to Display in Dropdown List on Upload Data Page
+//--------------------------------------------------------------------------------------------------
+//DISPLAY EXISTING PROJECTS IN DROPDOWN SELECT LIST ON UPLOAD DATA PAGE
+//--------------------------------------------------------------------------------------------------
     //retrieve all projects via api
     //add all results to projectSelection array
     const listProjectsForUpload = () => {
@@ -278,7 +282,9 @@ $(document).ready(function() {
             console.error(error);
         })
     }
-
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+//UPLOAD MATERIAL SAMPLES VIA CSV
+//--------------------------------------------------------------------------------------------------------------------------------------------------
 //Capture id For Selected Project
     // send to backend csvUplaod controller to be incorporated into data being uploaded
     const sendProjectID = () => {
@@ -297,7 +303,7 @@ $(document).ready(function() {
         })
     }
     
-    //Send projectID and csv to backend for upload to database
+//Send projectID and csv to backend for upload to database
     $('#uploadCSV').submit(function(e) {
         e.preventDefault()
         sendProjectID()
@@ -326,8 +332,9 @@ $(document).ready(function() {
         return false;
     });
 
-
-//Search Germination Trials
+//--------------------------------------------------------------------------------------------------
+//SEARCH GERMINATION TRIALS
+//--------------------------------------------------------------------------------------------------    
     //add user entries to searchGermTrialsFormEntries object
     let germSearchProjectInput = $("#germSearchProject")
     let germSearchScientificNameInput = $("#germSearchScientificName")
@@ -416,10 +423,10 @@ $(document).ready(function() {
             console.error(error);
         })
     }
-    //return results
-    //display results in list sorted by taxon and then date
 
-    
+//--------------------------------------------------------------------------------------------------
+//DOWNLOAD GERMINATION TRIAL SEARCH RESULTS TO CSV
+//--------------------------------------------------------------------------------------------------
     //create the csv of germination trial results on the back end
     const exportGermTrialResults = (req,res) => {
         $.ajax({
@@ -474,7 +481,9 @@ $(document).ready(function() {
           }
     }
 
-//Add Viability Tracking to Germination Trial Record
+//--------------------------------------------------------------------------------------------------
+//ADD VIABILITY TRACKING TO GERMINATION TRIAL RECORD
+//--------------------------------------------------------------------------------------------------
     //Event listener for button to capture ID of selected germination trial
     $(document).on('click','button[data-addViabilityTrackingButton="true"]',function(event){
         //event.preventDefault()
@@ -555,8 +564,9 @@ $(document).ready(function() {
         })
     }
 
-
-//Finish Germination Trial
+//--------------------------------------------------------------------------------------------------
+//FINSIH GERMINATION TRIAL
+//--------------------------------------------------------------------------------------------------
     //Event listener for button to capture ID of selected germination trial
     $(document).on('click','button[data-finishTrialButton="true"]',function(event){
         //event.preventDefault()
@@ -637,8 +647,9 @@ $(document).ready(function() {
     }
 
 
-
-//Search for Seed for Germination Trial
+//--------------------------------------------------------------------------------------------------
+//SEARCH FOR SEED TO USE IN GERMINATION TRIAL
+//--------------------------------------------------------------------------------------------------
     //add user entries to searchSeedForGermTrialFormEntries object
     //send to backend via api
     //return results
@@ -697,8 +708,9 @@ $(document).ready(function() {
             console.error(error);
         })
     }    
-
-//Create New Germination Trial
+//--------------------------------------------------------------------------------------------------
+//CREATE NEW GERMINATION TRIAL
+//--------------------------------------------------------------------------------------------------
     //event listener for button to capture ID of selected seed for new germination trial
     $("#seedResultTableData").on('click','.seedSampleSelected', function(){
         seedSampleSelectedID = $(this).data('id')
