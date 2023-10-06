@@ -251,6 +251,9 @@ $(document).ready(function() {
         .then(function(){
             $('#projects').append(projectsList.join(''))           
         })
+        .catch((error) => {
+            console.error(error);
+        })
     }
 
 
@@ -271,6 +274,9 @@ $(document).ready(function() {
         .then(function(){
             $('#projectsUpload').append(projectsListUpload.join(''))           
         })
+        .catch((error) => {
+            console.error(error);
+        })
     }
 
 //Capture id For Selected Project
@@ -285,6 +291,9 @@ $(document).ready(function() {
             success: function(){
                 console.log("project id sent to server")
             }
+        })
+        .catch((error) => {
+            console.error(error);
         })
     }
     
@@ -301,7 +310,6 @@ $(document).ready(function() {
         processData: false,
         contentType: false
         })
-        //.then((response) => response.json())
         .then((data) => {
             if (data.success) {
                 //File upload was successful
@@ -404,6 +412,9 @@ $(document).ready(function() {
             $('#germinationTrialResultTableData').append(germinationTrialResultList.join(''))
             $('#searchGermTrialResults').show()
         })
+        .catch((error) => {
+            console.error(error);
+        })
     }
     //return results
     //display results in list sorted by taxon and then date
@@ -421,6 +432,9 @@ $(document).ready(function() {
         })
         .then(function(){
             downloadFileFromBackend()
+        })
+        .catch((error) => {
+            console.error(error);
         })
     }
 
@@ -499,6 +513,9 @@ $(document).ready(function() {
             $("#addViabilityTrackingMetadata1").append(`${trialFromDB[0].scientificName} seed (${trialFromDB[0].materialSample_catalogNumber}) collected from ${trialFromDB[0].locationID} in ${trialFromDB[0].county} County on ${trialFromDB[0].eventDate} by ${trialFromDB[0].recordedBy}.`)
             $("#addViabilityTrackingMetadata2").append(`Pretreatments: | Seed Scarified: ${seedScarified} | Sample Frozen: ${frozen} | Stratification Start Date: ${trialFromDB[0].stratificationStartDate} | Stratification Temperature: ${trialFromDB[0].stratificationTemperature} |  Incubation Start Date ${trialFromDB[0].incubationStartDate} | Incubation Temp Day: ${trialFromDB[0].incubationTempDay} | Incubation Temp Night: ${trialFromDB[0].incubationTempNight} | Trial Started With ${trialFromDB[0].numberSeedsTested} Seeds.`)
         })
+        .catch((error) => {
+            console.error(error);
+        })
     }
     
     //retrieve user entries and add to addViabilityTrackingFormEntries object
@@ -532,6 +549,9 @@ $(document).ready(function() {
         })
         .then(function(){
             window.location.href = '/germinationTrials'
+        })
+        .catch((error) => {
+            console.error(error);
         })
     }
 
@@ -575,6 +595,9 @@ $(document).ready(function() {
             $("#finishGerminationTrialMetadata1").append(`${trialFromDB[0].scientificName} seed (${trialFromDB[0].materialSample_catalogNumber}) collected from ${trialFromDB[0].locationID} in ${trialFromDB[0].county} County on ${trialFromDB[0].eventDate} by ${trialFromDB[0].recordedBy}.`)
             $("#finishGerminationTrialMetadata2").append(`Pretreatments: | Seed Scarified: ${seedScarified} | Sample Frozen: ${frozen} | Stratification Start Date: ${trialFromDB[0].stratificationStartDate} | Stratification Temperature: ${trialFromDB[0].stratificationTemperature} |  Incubation Start Date ${trialFromDB[0].incubationStartDate} | Incubation Temp Day: ${trialFromDB[0].incubationTempDay} | Incubation Temp Night: ${trialFromDB[0].incubationTempNight} | Trial Started With ${trialFromDB[0].numberSeedsTested} Seeds.`)
         })
+        .catch((error) => {
+            console.error(error);
+        })
     }
     
     //retrieve user entries and add to addViabilityTrackingFormEntries object
@@ -610,6 +633,9 @@ $(document).ready(function() {
         })
         .then(function(){
             window.location.href = '/germinationTrials'
+        })
+        .catch((error) => {
+            console.error(error);
         })
     }
 
@@ -664,11 +690,17 @@ $(document).ready(function() {
                     </td>`
                 )
             })
+            .catch((error) => {
+                console.error(error);
+            })
         })
         .then(function(){
             $('#seedResultTableData').empty()
             $('#seedResultTableData').append(seedforTrialResultsList.join(''))
             $('#seedSearchGermTrialResults').show()
+        })
+        .catch((error) => {
+            console.error(error);
         })
     }    
 
@@ -740,6 +772,9 @@ const submitNewGerminationTrial = () => {
     })
     .then(function(){
         window.location.href = '/germinationTrials'
+    })
+    .catch((error) => {
+        console.error(error);
     })
 }
 
