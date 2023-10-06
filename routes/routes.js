@@ -15,6 +15,7 @@ const updateMaterialSample = require("../controllers/updateMaterialSample")
 const getGerminationTrials = require("../controllers/getGerminationTrials")
 const searchMaterialSamples = require("../controllers/searchMaterialSamples")
 const getGerminationTrialResults = require("../controllers/exportGerminationTrialResults")
+const csvUpload = require("../controllers/csvUpload")
 
 let routes = (app) => {
 
@@ -69,6 +70,9 @@ let routes = (app) => {
 
   //POST /api/upload
   router.post("/upload", upload.single("file"), csvController.csvUpload);
+
+  //POST /api/projectIDFromClient
+  router.post("/projectIDFromClient", csvUpload.getProjectID);
 
   //POST /api/materialSample
   router.post("/materialSample", insertDataController.insertData)

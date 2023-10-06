@@ -5,17 +5,30 @@ const OccurrenceObj = require("./collectionConstructor");
 const MaterialSample = db.materialSample;
 const Occurrence = db.occurrence;
 const PreservedSpecimen = db.preservedSpecimen;
+const Project = db.project;
 
 //records array contains the data objects in the format as they are upon upload
 let records = [];
 //collections array contains the data objects in the format where materialSample and preservedSpecimen are nested in an Occurrence object, using the Occurrence constructor
 let collections = [];
+//variable to hold the project ID for the data being uploaded
+let projectTableID
+
+
+//function that gets the project id from the client and sets it to the global varaible projectTableID
+const getProjectID = (req,res) => {
+  projectTableID = req.body.projectTableID
+  console.log(req.body)
+  res.send("Recieved ID")
+}
+
 
 //function that reformats data into array of nested Occurrence objects
 async function importCollectionObjects() {
     for (let i = 0; i <records.length; i++){
       await new Promise(resolve => setTimeout(() => {
         let event = new OccurrenceObj(
+          projectTableID,
           records[i].recordedBy,
           new Date(records[i].eventDate),
           records[i].scientificName,
@@ -100,18 +113,22 @@ const csvUpload = async (req, res) => {
       })
       //complete the http request
       .on("end", () => {
-        console.log("csv uploaded to server")
-        res.status(200).send()
         importCollectionObjects()
-      });
+        res.status(200).json({
+          success: true,
+        message: "File successfully uploaded to database: " + req.file.originalname,
+        })
+      })
     } catch (error) {
       console.log(error);
-      res.status(500).send({
-        message: "Could not upload the file: " + req.file.originalname,
+      res.status(500).json({
+        success: false,
+        message: "Could not upload the file: " + req.file.originalname + ". Please contact the Scientific Data Manager if this error persists."
       })
     }
   };
 
   module.exports = {
-    csvUpload
+    csvUpload,
+    getProjectID
   };

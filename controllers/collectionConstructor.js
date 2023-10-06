@@ -1,5 +1,6 @@
-var OccurrenceObj = function (recordedBy,eventDate,scientificName,identifiedBy,dateIdentified,associatedTaxa,reproductiveCondition,occurrenceRemarks,habitat,country,stateProvince,county,locality,locationRemarks,locationID,decimalLatitude,decimalLongitude,minimumElevationInMeters,permitURI,materialSampleID,materialSampleType,materialSample_catalogNumber,materialSample_recordNumber,storageLocation,disposition,numberCollected,numberAvailable,sourcePlantCount,preparationDate,dateStored,catalogNumber,recordNumber)
+var OccurrenceObj = function (projectTableID,recordedBy,eventDate,scientificName,identifiedBy,dateIdentified,associatedTaxa,reproductiveCondition,occurrenceRemarks,habitat,country,stateProvince,county,locality,locationRemarks,locationID,decimalLatitude,decimalLongitude,minimumElevationInMeters,permitURI,materialSampleID,materialSampleType,materialSample_catalogNumber,materialSample_recordNumber,storageLocation,disposition,numberCollected,numberAvailable,sourcePlantCount,preparationDate,dateStored,catalogNumber,recordNumber)
     {
+        this.projectTableID = projectTableID;
         this.recordedBy = recordedBy;
         this.eventDate = eventDate;
         this.scientificName = scientificName;
