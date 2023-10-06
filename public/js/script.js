@@ -784,6 +784,22 @@ const submitNewGerminationTrial = () => {
     })
 }
 
+//--------------------------------------------------------------------------------------------------
+//SEARCH FOR SAMPLES TO TRANSFER
+//--------------------------------------------------------------------------------------------------
+    //add user entries to searchSamplesToTransferFormEntries object
+    //send to backend via api
+    //return results
+    //display results in list
+
+
+    
+
+//Create a New Transfer
+    //Event listener for button to capture ID of selected sample
+    //add user entries to newTransferFormEntries object
+    //send to backend via api
+
 //Search for Transfers
     //add user entries to searchTransfersFormEntries object
     //send to backend via api
@@ -795,16 +811,7 @@ const submitNewGerminationTrial = () => {
     //add user entries to updateTransferFormEntries object
     //send to backend via api
 
-//Search for Samples to Transfer
-    //add user entries to searchSamplesToTransferFormEntries object
-    //send to backend via api
-    //return results
-    //display results in list
 
-//Create a New Transfer
-    //Event listener for button to capture ID of selected sample
-    //add user entries to newTransferFormEntries object
-    //send to backend via api
 
 //Search for Material Samples to Update
     //add user entries to searchSamplesToTransferFormEntries object
