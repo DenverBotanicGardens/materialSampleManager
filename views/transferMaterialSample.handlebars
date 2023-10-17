@@ -4,88 +4,90 @@
     <p class="lead">Transfer Material Sample</p>
     <div class="container-fluid">
         <p>Search for Material Sample To Transfer</p>
-        <div class="row">
-            <div class="col">
-                {{!-- project --}}
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Project</span>
-                    <input id="project" type="text" class="form-control">
+        <form id="searchForSampleToTransfer">
+            <div class="row">
+                <div class="col">
+                    {{!-- project --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Project</span>
+                        <input id="projectSearchSampleForTransfer" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col">
+                    {{!-- scientificName --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Scientific Name</span>
+                        <input id="scientificNameSearchSampleForTransfer" type="text" class="form-control">
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                {{!-- scientificName --}}
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Scientific Name</span>
-                    <input id="scientificName" type="text" class="form-control">
+            <div class="row">
+                <div class="col">
+                    {{!-- materialSampleType --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Material Sample Type</span>
+                        <input id="sampleTypeSearchSampleForTransfer" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col">
+                    {{!-- catalogNumber --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Catalog Number</span>
+                        <input id="catalogNumberSearchSampleForTransfer" type="text" class="form-control">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                {{!-- materialSampleType --}}
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Material Sample Type</span>
-                    <input id="materialSampleType" type="text" class="form-control">
+            {{!-- eventDate --}}
+            <label class="form-control-sm" for="eventDate">Collection Date</label>
+            <div class="form-row">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">After</span>
+                        <input id="earlyDateSearchSampleForTransfer" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Before</span>
+                        <input id="lateDateSearchSampleForTransfer" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                {{!-- catalogNumber --}}
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Catalog Number</span>
-                    <input id="catalogNumber" type="text" class="form-control">
+            <div class="row">
+                <div class="col">
+                    {{!-- recordedBy --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Collector</span>
+                        <input id="recordedBySearchSampleForTransfer" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col">
+                    {{!-- recordNumber --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Collector Number</span>
+                        <input id="recordNumberSearchSampleForTransfer" type="text" class="form-control">
+                    </div>
                 </div>
             </div>
-        </div>
-        {{!-- eventDate --}}
-        <label class="form-control-sm" for="eventDate">Collection Date</label>
-        <div class="form-row">
-            <div class="col">
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">After</span>
-                    <input id="eventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+            <div class="row">
+                <div class="col">
+                    {{!-- stateProvince --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">State</span>
+                        <input id="stateProvinceSearchSampleForTransfer" type="text" class="form-control">
+                    </div>
                 </div>
+                <div class="col">
+                    {{!-- county --}}
+                    <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">County</span>
+                        <input id="countySearchSampleForTransfer" type="text" class="form-control">
+                    </div>
+                </div>        
             </div>
-            <div class="col">
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Before</span>
-                    <input id="eventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                {{!-- recordedBy --}}
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Collector</span>
-                    <input id="recordedBy" type="text" class="form-control">
-                </div>
-            </div>
-            <div class="col">
-                {{!-- recordNumber --}}
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">Collector Number</span>
-                    <input id="recordNumber" type="text" class="form-control">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                {{!-- stateProvince --}}
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">State</span>
-                    <input id="stateProvince" type="text" class="form-control">
-                </div>
-            </div>
-            <div class="col">
-                {{!-- county --}}
-                <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text">County</span>
-                    <input id="county" type="text" class="form-control">
-                </div>
-            </div>        
-        </div>
-        {{!-- SUBMIT BUTTON --}}
-        <button type="button" class="btn btn-primary">Submit</button>
+            {{!-- SUBMIT BUTTON --}}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
         <br>
         <br>
         <div id="searchMaterialSampleToTransferResults">

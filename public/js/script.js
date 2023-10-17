@@ -788,7 +788,45 @@ const submitNewGerminationTrial = () => {
 //SEARCH FOR SAMPLES TO TRANSFER
 //--------------------------------------------------------------------------------------------------
     //add user entries to searchSamplesToTransferFormEntries object
+    let projectSearchSampleForTransfer = $("#projectSearchSampleForTransfer")
+    let scientificNameSearchSampleForTransfer = $("#scientificNameSearchSampleForTransfer")
+    let sampleTypeSearchSampleForTransfer = $("#sampleTypeSearchSampleForTransfer")
+    let catalogNumberSearchSampleForTransfer = $("#catalogNumberSearchSampleForTransfer")
+    let earlyDateSearchSampleForTransfer = $("#earlyDateSearchSampleForTransfer")
+    let lateDateSearchSampleForTransfer = $("#lateDateSearchSampleForTransfer")
+    let recordedBySearchSampleForTransfer = $("#recordedBySearchSampleForTransfer")
+    let recordNumberSearchSampleForTransfer = $("#recordNumberSearchSampleForTransfer")
+    let stateProvinceSearchSampleForTransfer = $("#stateProvinceSearchSampleForTransfer")
+    let countySearchSampleForTransfer = $("#countySearchSampleForTransfer")
+    $(searchForSampleToTransfer).on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let newTransferSampleSearchEntries = {
+            project: projectSearchSampleForTransfer.val(),
+            scientificName: scientificNameSearchSampleForTransfer.val(),
+            materialSampleType: sampleTypeSearchSampleForTransfer.val(),
+            materialSample_catalogNumber: catalogNumberSearchSampleForTransfer.val(),
+            eventEarlyDate: earlyDateSearchSampleForTransfer.val(),
+            eventLateDate: lateDateSearchSampleForTransfer.val(),
+            recordedBy: recordedBySearchSampleForTransfer.val(),
+            materialSample_recordNumber: recordNumberSearchSampleForTransfer.val(),
+            stateProvince: stateProvinceSearchSampleForTransfer.val(),
+            county: countySearchSampleForTransfer.val()
+        }
+        searchSamplesToTransferFormEntries = newTransferSampleSearchEntries
+        console.log(searchSamplesToTransferFormEntries)
+        submitnewTransferSampleSearch()
+    })
     //send to backend via api
+    const submitnewTransferSampleSearch = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/searchMaterialSamplesForTransfer",
+            data: searchSamplesToTransferFormEntries
+        })
+        .then((samplesForTransferResults) => {
+            console.log(samplesForTransferResults)
+        })
+    }
     //return results
     //display results in list
 
