@@ -93,11 +93,25 @@
         <div id="searchMaterialSampleToTransferResults">
             {{!-- MATERIAL SAMPLE RESULTS LIST --}}
             <p>Material Samples</p>
-            <ul class="list-group" id="materialSamplesForTransferList"> 
-                <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
-                <button class="btn btn-sm btn-outline-primary">Transfer Sample</button> 
-                </li>
-            </ul>
+            <table class="table" id="sampleForTransferResultTable">
+                <thead>
+                <tr>
+                    <th scope="col">scientificName</th>
+                    <th scope="col">materialSample_catalogNumber</th>
+                    <th scope="col">eventDate</th>
+                    <th scope="col">numberCollected</th>
+                    <th scope="col">numberAvailable</th>
+                    <th scope="col">dateStored</th>
+                    <th scope="col">stateProvince</th>
+                    <th scope="col">county</th>
+                    <th scope="col">locality</th>
+                    <th scope="col">locationID</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="materialSamplesForTransferData">
+            </tbody>
+            </table>
         <br>
         </div>
         <div id="newTransferDataForm">

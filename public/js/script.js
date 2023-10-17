@@ -813,7 +813,7 @@ const submitNewGerminationTrial = () => {
             county: countySearchSampleForTransfer.val()
         }
         searchSamplesToTransferFormEntries = newTransferSampleSearchEntries
-        console.log(searchSamplesToTransferFormEntries)
+        //console.log(searchSamplesToTransferFormEntries)
         submitnewTransferSampleSearch()
     })
     //send to backend via api
@@ -823,12 +823,39 @@ const submitNewGerminationTrial = () => {
             url: "/api/searchMaterialSamplesForTransfer",
             data: searchSamplesToTransferFormEntries
         })
+        //return results
         .then((samplesForTransferResults) => {
             console.log(samplesForTransferResults)
+            samplesForTransferResultsList = []
+            //display results in list
+            $.each(samplesForTransferResults, function(i, sampleInResult) {
+                samplesForTransferResultsList.push(
+                    `<tr>
+                    <td>${sampleInResult.scientificName}</td>
+                    <td>${sampleInResult.materialSample_catalogNumber}</td>
+                    <td>${sampleInResult.eventDate}</td>
+                    <td>${sampleInResult.numberCollected}</td>
+                    <td>${sampleInResult.numberAvailable}</td>
+                    <td>${sampleInResult.dateStored}</td>
+                    <td>${sampleInResult.stateProvince}</td>
+                    <td>${sampleInResult.county}</td>
+                    <td>${sampleInResult.locality}</td>
+                    <td>${sampleInResult.locationID}</td>
+                    <td>
+                        <button class="sampleSelectedForTransfer btn btn-sm btn-outline-primary" data-id=${sampleInResult.id} data-catalognumber=${sampleInResult.materialSample_catalogNumber}>Transfer Sample</button>
+                    </td>`
+                )
+            })
+        })
+        .then(function(){
+            $('#materialSamplesForTransferData').empty()
+            $('#materialSamplesForTransferData').append(samplesForTransferResultsList.join(''))
+            $('#searchMaterialSampleToTransferResults').show()
+        })
+        .catch((error) => {
+            console.error(error);
         })
     }
-    //return results
-    //display results in list
 
 
     
