@@ -825,7 +825,7 @@ const submitNewGerminationTrial = () => {
         })
         //return results
         .then((samplesForTransferResults) => {
-            console.log(samplesForTransferResults)
+            //console.log(samplesForTransferResults)
             samplesForTransferResultsList = []
             //display results in list
             $.each(samplesForTransferResults, function(i, sampleInResult) {
@@ -842,7 +842,7 @@ const submitNewGerminationTrial = () => {
                     <td>${sampleInResult.locality}</td>
                     <td>${sampleInResult.locationID}</td>
                     <td>
-                        <button class="sampleSelectedForTransfer btn btn-sm btn-outline-primary" data-id=${sampleInResult.id} data-catalognumber=${sampleInResult.materialSample_catalogNumber}>Transfer Sample</button>
+                        <button class="sampleSelectedForTransfer btn btn-sm btn-outline-primary" data-id=${sampleInResult.materialSampleTableID} data-catalognumber=${sampleInResult.materialSample_catalogNumber}>Transfer Sample</button>
                     </td>`
                 )
             })
@@ -856,14 +856,61 @@ const submitNewGerminationTrial = () => {
             console.error(error);
         })
     }
-
-
     
-
+//--------------------------------------------------------------------------------------------------
 //Create a New Transfer
+//--------------------------------------------------------------------------------------------------
     //Event listener for button to capture ID of selected sample
+    $("#materialSamplesForTransferData").on('click','.sampleSelectedForTransfer', function(){
+        sampleSelectedForTransferID = $(this).data('id')
+        sampleSelectedForTransferCatalogNumber = $(this).data('catalognumber')
+        $('#newTransferDataForm').show()
+        $('#sampleSelectedForTransferTitle').text(`New Germination Trial for ${sampleSelectedForTransferCatalogNumber}`)
+        $(document).scrollTop($(document).height()); 
+    })
     //add user entries to newTransferFormEntries object
+    let newTransferNumbersamples = $("#newTransferNumbersamples")
+    let newTransferDate = $("#newTransferDate")
+    let newTransferReceivedDate = $("#newTransferReceivedDate")
+    let newTransferAgencyTransferredTo = $("#newTransferAgencyTransferredTo")
+    let newTransferPersonTransferredTo = $("#newTransferPersonTransferredTo")
+    let newTransferPurposeNotes = $("#newTransferPurposeNotes")
+    $("#newTransferDataForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        console.log("button pushed")
+        let newTransferDataFormEntries = {
+            materialSampleTableID: sampleSelectedForTransferID,
+            materialSample_catalogNumber: sampleSelectedForTransferCatalogNumber,
+            numberSamplesTransferred: newTransferNumbersamples.val(),
+            transferDate: newTransferDate.val(),
+            receivedDate: newTransferReceivedDate.val(),
+            agencyTransferredTo: newTransferAgencyTransferredTo.val(),
+            personTransferredTo: newTransferPersonTransferredTo.val(),
+            purposeNotes: newTransferPurposeNotes.val()
+        }
+        newTransferFormEntries = newTransferDataFormEntries
+        console.log(newTransferFormEntries)
+        submitNewTransfer()
+    })
     //send to backend via api
+    const submitNewTransfer = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/addTransfer",
+            data: newTransferFormEntries,
+            success: function(){
+                alert('Success! You have submitted a new transfer to the database. Have a fun journey, little sample!')
+            }
+        })
+            .then(function(){
+                //window.location.href = '/transfers'
+                console.log("did it")
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+    }
+
 
 //Search for Transfers
     //add user entries to searchTransfersFormEntries object

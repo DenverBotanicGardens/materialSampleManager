@@ -114,22 +114,23 @@
             </table>
         <br>
         </div>
-        <div id="newTransferDataForm">
-            {{!-- CREATE TRANFER FORM --}}
+            {{!-- CREATE TRASNFER FORM --}}
+        <form id="newTransferDataForm">
+            <p id="sampleSelectedForTransferTitle"></p>
             <p>Record Transfer Information Here</p>
             <div class="row">
                 <div class="col">
                     {{!-- numberSamplesTrasferred --}}
                     <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Number Samples Trasferred</span>
-                        <input id="numberSamplesTrasferred" type="text" class="form-control">
+                        <input id="newTransferNumbersamples" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="col">
                     {{!-- transferDate --}}
                     <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Transfer Date</span>
-                        <input id="transferDate" type="text" class="form-control">
+                        <input id="newTransferDate" type="text" class="form-control">
                     </div>
                 </div>
             </div>
@@ -138,14 +139,14 @@
                     {{!-- receivedDate --}}
                     <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Received Date</span>
-                        <input id="receivedDate" type="text" class="form-control">
+                        <input id="newTransferReceivedDate" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="col">
                     {{!-- agencyTransferredTo --}}
                     <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Agency Transferred To</span>
-                        <input id="agencyTransferredTo" type="text" class="form-control">
+                        <input id="newTransferAgencyTransferredTo" type="text" class="form-control">
                     </div>
                 </div>
             </div>
@@ -154,18 +155,18 @@
                     {{!-- persontransferredTo --}}
                     <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Person Transferred To</span>
-                        <input id="persontransferredTo" type="text" class="form-control">
+                        <input id="newTransferPersonTransferredTo" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="col">
                     {{!-- purposeNotes --}}
                     <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Purpose</span>
-                        <input id="purposeNotes" type="text" class="form-control">
+                        <input id="newTransferPurposeNotes" type="text" class="form-control">
                     </div>
                 </div>
             </div>
             {{!-- SUBMIT BUTTON --}}
-            <button type="button" class="btn btn-primary">Submit</button>
-        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
