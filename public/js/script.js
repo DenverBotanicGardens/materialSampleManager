@@ -53,7 +53,7 @@ $(document).ready(function() {
     
     //Transfers Result List
     //an array of objects to contain the transfer records returned based on the query submitted by the user
-    let transferSearchResults = []
+    let transferSearchResultsList = []
     
     //Search for Material Samples to Transfer Form
     //an object to contain the values entered byt he user in the seach for material sample to transfer form on the transfer material sample page
@@ -944,15 +944,44 @@ const submitNewGerminationTrial = () => {
             url: "/api/getTransfer",
             data: searchTransfersFormEntries
         })
+        //return results and add to data table
         .then((transferSearchResults) => {
             console.log(transferSearchResults)
+            transferSearchResultsList = []
+            $.each(transferSearchResults, function(i, transferInResult) {
+                transferSearchResultsList.push(
+                    `<tr>
+                    <td>${transferInResult.scientificName}</td>
+                    <td>${transferInResult.materialSample_catalogNumber}</td>
+                    <td>${transferInResult.agencyTransferredTo}</td>
+                    <td>${transferInResult.personTransferredTo}</td>
+                    <td>${transferInResult.numberSamplesTransferred}</td>
+                    <td>${transferInResult.numberSamplesReturned}</td>
+                    <td>${transferInResult.purposeNotes}</td>
+                    <td>${transferInResult.transferDate}</td>
+                    <td>${transferInResult.receivedDate}</td>
+                    <td>${transferInResult.numberCollected}</td>
+                    <td>${transferInResult.numberAvailable}</td>
+                    <td>${transferInResult.eventDate}</td>
+                    <td>${transferInResult.stateProvince}</td>
+                    <td>${transferInResult.county}</td>
+                    <td>${transferInResult.locality}</td>
+                    <td>
+                        <button class="stransferSelected btn btn-sm btn-outline-primary" data-id=${transferInResult.id} data-catalognumber=${transferInResult.materialSample_catalogNumber}>Update Transfer</button>
+                    </td>`
+                )
+            })
+        })
+        //display results in list
+        .then(function(){
+            $('#transfersData').empty()
+            $('#transfersData').append(transferSearchResultsList.join(''))
+            $('#searchTransfersResults').show()
         })
         .catch((error) => {
             console.error(error);
         })
     }
-    //return results
-    //display results in list
 
 //Update Tranfser
     //Event listener for button to capture ID of selected transfer

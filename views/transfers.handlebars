@@ -67,10 +67,34 @@
     {{!-- TRANSFERS LIST --}}
     <div id="searchTransfersResults">
         <p>Transfers</p>
-        <ul class="list-group"> 
+        <table class="table" id="transfersResultTable">
+            <thead>
+                <tr>
+                    <th scope="col">scientificName</th>
+                    <th scope="col">materialSample_catalogNumber</th>
+                    <th scope="col">agencyTransferredTo</th>
+                    <th scope="col">personTransferredTo</th>
+                    <th scope="col">numberSamplesTransferred</th>
+                    <th scope="col">numberSamplesReturned</th>
+                    <th scope="col">purposeNotes</th>
+                    <th scope="col">transferDate</th>
+                    <th scope="col">receivedDate</th>
+                    <th scope="col">numberCollected</th>
+                    <th scope="col">numberAvailable</th>
+                    <th scope="col">collectionDate</th>
+                    <th scope="col">stateProvince</th>
+                    <th scope="col">county</th>
+                    <th scope="col">locality</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="transfersData">
+            </tbody>
+        </table>
+        {{!-- <ul class="list-group"> 
                         <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
                         <button class="btn btn-sm btn-outline-primary">Update</button> 
                         </li>
-        </ul>
+        </ul> --}}
     </div>
 </div>
