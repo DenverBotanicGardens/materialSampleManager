@@ -91,10 +91,81 @@
             <tbody id="transfersData">
             </tbody>
         </table>
-        {{!-- <ul class="list-group"> 
-                        <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
-                        <button class="btn btn-sm btn-outline-primary">Update</button> 
-                        </li>
-        </ul> --}}
     </div>
+
+
+
+    {{!-- UPDATING MATERIAL SAMPLE TRANSFERS FORM --}}
+    <br>
+    <form id="sampleTransferUpdatesForm">
+        <p class="lead">Update Material Sample Transfer</p>
+        <p>Record transfer updates here. Existing values will be overwritten. Fields left blank will remain unchanged. There is no undo function so use caution.</p>
+        <p id="transferSelectedForUpdateTitle"></p>
+        <div class="row">
+            <div class="col">
+                {{!-- numberSamplesTransferred --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Number Samples Transferred</span>
+                    <input id="transferUpdateNumberSamplesTransferred" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- transferDate --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Transfer Date</span>
+                    <input id="transferUpdateTransferDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>    
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{!-- receivedDate --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Received Date</span>
+                    <input id="transferUpdateReceivedDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- agencyTransferredTo --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Agency Transferred To</span>
+                    <input id="transferUpdateAgencyTransferredTo" type="text" class="form-control">
+                </div>    
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{!-- personTransferredTo --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Person Transferred To</span>
+                    <input id="transferUpdatePersonTransferredTo" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- purposeNotes --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Purpose</span>
+                    <input id="transferUpdatePurposeNotes" type="text" class="form-control">
+                </div>    
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{!-- returnedDate --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Returned Date</span>
+                    <input id="transferUpdateReturnedDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- numberSamplesReturned --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Number Samples Returned</span>
+                    <input id="transferUpdateNumberSamplesReturned" type="text" class="form-control">
+                </div>    
+            </div>
+        </div>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>

@@ -69,7 +69,7 @@ $(document).ready(function() {
     
     //Update Transfer Form
     //an object to contain the values entered by the user in the update material sample transfer form on the update transfer page
-    let updatTransferFormEntries = {}
+    let updateTransferFormEntries = {}
     
     //Search for Material Sample to Update Form
     //an object to contain the values entered by the user in the search for material samples to update form on the update material sample page
@@ -121,6 +121,7 @@ $(document).ready(function() {
     
     //Transfers Page
     $('#searchTransfersResults').hide()
+    $('#sampleTransferUpdatesForm').hide()
 
     //New Transfer Page
     $('#searchMaterialSampleToTransferResults').hide()
@@ -865,7 +866,7 @@ const submitNewGerminationTrial = () => {
         sampleSelectedForTransferID = $(this).data('id')
         sampleSelectedForTransferCatalogNumber = $(this).data('catalognumber')
         $('#newTransferDataForm').show()
-        $('#sampleSelectedForTransferTitle').text(`New Germination Trial for ${sampleSelectedForTransferCatalogNumber}`)
+        $('#sampleSelectedForTransferTitle').text(`Sample to be transferred: ${sampleSelectedForTransferCatalogNumber}`)
         $(document).scrollTop($(document).height()); 
     })
     //add user entries to newTransferFormEntries object
@@ -967,7 +968,7 @@ const submitNewGerminationTrial = () => {
                     <td>${transferInResult.county}</td>
                     <td>${transferInResult.locality}</td>
                     <td>
-                        <button class="stransferSelected btn btn-sm btn-outline-primary" data-id=${transferInResult.id} data-catalognumber=${transferInResult.materialSample_catalogNumber}>Update Transfer</button>
+                        <button class="transferSelected btn btn-sm btn-outline-primary" data-id=${transferInResult.id} data-numbersamplestransferred=${transferInResult.numberSamplesTransferred} data-catalognumber=${transferInResult.materialSample_catalogNumber} data-transferredto=${transferInResult.agencyTransferredTo} data-scientificname=${transferInResult.scientificName} data-transferdate=${transferInResult.transferDate}>Update Transfer</button>
                     </td>`
                 )
             })
@@ -982,12 +983,64 @@ const submitNewGerminationTrial = () => {
             console.error(error);
         })
     }
-
+//--------------------------------------------------------------------------------------------------
 //Update Tranfser
-    //Event listener for button to capture ID of selected transfer
+//--------------------------------------------------------------------------------------------------
+    //Event listener for button to capture ID of selected transfer to be updated
+        $("#transfersData").on('click','.transferSelected', function(){
+            transferSelectedForUpdateID = $(this).data('id')
+            transferSelectedForUpdateCatalogNumber = $(this).data('catalognumber')
+            transferSelectedForUpdateScientificName = $(this).data('scientificname')
+            transferSelectedForUpdateTransferredTo = $(this).data('transferredto')
+            transferSelectedForUpdateTransferDate = $(this).data('transferdate')
+            transfersSelectedForUpdateNumberSamplesTransferred = $(this).data('numbersamplestransferred')
+            $('#sampleTransferUpdatesForm').show()
+            $('#transferSelectedForUpdateTitle').text(`Update Existing Transfer record for ${transferSelectedForUpdateScientificName} (${transferSelectedForUpdateCatalogNumber}). ${transfersSelectedForUpdateNumberSamplesTransferred} samples sent to ${transferSelectedForUpdateTransferredTo} on ${transferSelectedForUpdateTransferDate}.`)
+            $(document).scrollTop($(document).height());
+        })
     //add user entries to updateTransferFormEntries object
+    let transferUpdateNumberSamplesTransferred = $("#transferUpdateNumberSamplesTransferred")
+    let transferUpdateTransferDate = $("#transferUpdateTransferDate")
+    let transferUpdateReceivedDate = $("#transferUpdateReceivedDate")
+    let transferUpdateAgencyTransferredTo = $("#transferUpdateAgencyTransferredTo")
+    let transferUpdatePersonTransferredTo = $("#transferUpdatePersonTransferredTo")
+    let transferUpdatePurposeNotes = $("#transferUpdatePurposeNotes")
+    let transferUpdateReturnedDate = $("#transferUpdateReturnedDate")
+    let transferUpdateNumberSamplesReturned = $("#transferUpdateNumberSamplesReturned")
+    $("#sampleTransferUpdatesForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let transferUpdateFormUserEntries = {
+            id: transferSelectedForUpdateID,
+            agencyTransferredTo: transferUpdateAgencyTransferredTo.val(),
+            personTransferredTo: transferUpdatePersonTransferredTo.val(),
+            numberSamplesTransferred: transferUpdateNumberSamplesTransferred.val(),
+            transferDate: transferUpdateTransferDate.val(),
+            receivedDate: transferUpdateReceivedDate.val(),
+            purposeNotes: transferUpdatePurposeNotes.val(),
+            returnedDate: transferUpdateReturnedDate.val(),
+            numberSamplesReturned: transferUpdateNumberSamplesReturned.val()
+        }
+        updateTransferFormEntries = transferUpdateFormUserEntries
+        console.log(updateTransferFormEntries)
+        submitTransferUpdate()
+    })
     //send to backend via api
-
+    const submitTransferUpdate = () => {
+        $.ajax({
+            method: "PUT",
+            url: "/api/updateTransfer",
+            data: updateTransferFormEntries,
+            success: function(){
+                alert('Success! You have updated a transfer in the database. \n \n You may select a different transfer from this page and modify the Update Material Sample Transfer Form if more transfers need to be updated.')
+            }
+        })
+        .then(function(){
+            console.log("transfer update submitted")
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 
 
 //Search for Material Samples to Update
