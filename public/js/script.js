@@ -798,7 +798,7 @@ const submitNewGerminationTrial = () => {
     let recordNumberSearchSampleForTransfer = $("#recordNumberSearchSampleForTransfer")
     let stateProvinceSearchSampleForTransfer = $("#stateProvinceSearchSampleForTransfer")
     let countySearchSampleForTransfer = $("#countySearchSampleForTransfer")
-    $(searchForSampleToTransfer).on("submit", function handleFormSubmit(event){
+    $("#searchForSampleToTransfer").on("submit", function handleFormSubmit(event){
         event.preventDefault()
         let newTransferSampleSearchEntries = {
             project: projectSearchSampleForTransfer.val(),
@@ -899,22 +899,58 @@ const submitNewGerminationTrial = () => {
             url: "/api/addTransfer",
             data: newTransferFormEntries,
             success: function(){
-                alert('Success! You have submitted a new transfer to the database. Have a fun journey, little sample!')
+                alert('Success! You have submitted a new transfer to the database. Have a fun journey, little sample! \n \n You may select a different sample from this page and modify the Transfer Information Form if more samples are being transferred.')
             }
         })
             .then(function(){
                 //window.location.href = '/transfers'
-                console.log("did it")
+                console.log("new transfer submitted")
             })
             .catch((error) => {
                 console.error(error);
             })
     }
 
-
+//--------------------------------------------------------------------------------------------------
 //Search for Transfers
+//--------------------------------------------------------------------------------------------------
     //add user entries to searchTransfersFormEntries object
+    let searchTransfersScientificName = $("#searchTransfersScientificName")
+    let searchTransfersMaterialSampleType = $("#searchTransfersMaterialSampleType")
+    let searchTransfersCatalogNumber = $("#searchTransfersCatalogNumber")
+    let searchTransfersTransferEarlyDate = $("#searchTransfersTransferEarlyDate")
+    let searchTransfersTransferLateDate = $("#searchTransfersTransferLateDate")
+    let searchTransfersAgencyTransferredTo = $("#searchTransfersAgencyTransferredTo")
+    let searchTransfersPersonTransferredTo = $("#searchTransfersPersonTransferredTo")
+    $("#searchTransfersForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let searchTransfersFormUserEntries = {
+            scientificName: searchTransfersScientificName.val(),
+            materialSampleType: searchTransfersMaterialSampleType.val(),
+            materialSample_catalogNumber: searchTransfersCatalogNumber.val(),
+            earlyDate: searchTransfersTransferEarlyDate.val(),
+            lateDate: searchTransfersTransferLateDate.val(),
+            agencyTransferredTo: searchTransfersAgencyTransferredTo.val(),
+            personTransferredTo: searchTransfersPersonTransferredTo.val()
+        }
+        searchTransfersFormEntries = searchTransfersFormUserEntries
+        console.log(searchTransfersFormEntries)
+        submitTransferSearch()
+    })
     //send to backend via api
+    const submitTransferSearch = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/getTransfer",
+            data: searchTransfersFormEntries
+        })
+        .then((transferSearchResults) => {
+            console.log(transferSearchResults)
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
     //return results
     //display results in list
 

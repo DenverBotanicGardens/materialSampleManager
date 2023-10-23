@@ -96,8 +96,8 @@ let routes = (app) => {
   //PUT /api/updateTransfer
   router.put("/updateTransfer", updateTransfer.updateTransfer)
 
-  //GET /api/getTransfer
-  router.get("/getTransfer", getTransfer.getTransfer)
+  //POST /api/getTransfer
+  router.post("/getTransfer", getTransfer.getTransfer)
 
   //PUT /api/updateMaterialSample
   router.put("/updateMaterialSample", updateMaterialSample.updateMaterialSample)

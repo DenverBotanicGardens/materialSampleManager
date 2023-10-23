@@ -5,62 +5,63 @@
     <a href="/transferMaterialSample">Add a new transfer</a>
     <br><br>
     <p>Search for transfers</p>
-    <div class="row">
-        <div class="col">
-            {{!-- scientificName --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Scientific Name</span>
-                <input id="scientificName" type="text" class="form-control">
+    <form id="searchTransfersForm">
+        <div class="row">
+            <div class="col">
+                {{!-- scientificName --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Scientific Name</span>
+                    <input id="searchTransfersScientificName" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- materialSampleType --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Material Sample Type</span>
+                    <input id="searchTransfersMaterialSampleType" type="text" class="form-control">
+                </div>    
             </div>
         </div>
-        <div class="col">
-            {{!-- materialSampleType --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Material Sample Type</span>
-                <input id="catalogNumber" type="text" class="form-control">
-            </div>    
+        {{!-- catalogNumber --}}
+        <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Catalog Number</span>
+            <input id="searchTransfersCatalogNumber" type="text" class="form-control">
         </div>
-    </div>
-    {{!-- catalogNumber --}}
-    <div class="input-group input-group-sm mb-3">
-            <span class="input-group-text">Catalog Number</span>
-        <input id="catalogNumber" type="text" class="form-control">
-    </div>
-    {{!-- transferDate --}}
-    <label class="form-control-sm" for="transferDate">Transfer Date</label>
-    <div class="row">
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">After</span>
-                <input id="transferEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+        {{!-- transferDate --}}
+        <label class="form-control-sm" for="transferDate">Transfer Date</label>
+        <div class="row">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">After</span>
+                    <input id="searchTransfersTransferEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Before</span>
+                    <input id="searchTransfersTransferLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Before</span>
-                <input id="transferLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+        <div class="row">
+            <div class="col">
+                {{!-- agencyTransferredTo --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Agency Transferred To</span>
+                    <input id="searchTransfersAgencyTransferredTo" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- personTransferredTo --}}
+                <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Person Transferred To</span>
+                    <input id="searchTransfersPersonTransferredTo" type="text" class="form-control">
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- agencyTransferredTo --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Agency Transferred To</span>
-                <input id="agencyTransferredTo" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- personTransferredTo --}}
-            <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Person Transferred To</span>
-                <input id="personTransferredTo" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-
-    {{!-- SUBMIT BUTTON --}}
-    <button type="button" class="btn btn-primary">Search</button>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     <br>
     <br>
     {{!-- TRANSFERS LIST --}}
