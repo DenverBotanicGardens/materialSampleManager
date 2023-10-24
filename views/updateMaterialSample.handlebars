@@ -3,40 +3,42 @@
 <div class="container-fluid">
     <p class="lead">Update Material Sample Data</p>
     <p>Search for material samples to update.</p>
-    <div class="row">
-        <div class="col">
-            {{!-- catalogNumber --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Catalog Number</span>
-                <input id="catalogNumber" type="text" class="form-control">
+    <form id="sampleSearchForUpdateForm">
+        <div class="row">
+            <div class="col">
+                {{!-- catalogNumber --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Catalog Number</span>
+                    <input id="sampleSearchForUpdateCatalogNumber" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- scientificName --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Scientific Name</span>
+                    <input id="sampleSearchForUpdateScientificName" type="text" class="form-control">
+                </div>
             </div>
         </div>
-        <div class="col">
-            {{!-- scientificName --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Scientific Name</span>
-                <input id="scientificName" type="text" class="form-control">
+        <div class="row">
+            <div class="col">
+                {{!-- materialSampleType --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Material Sample Type</span>
+                    <input id="sampleSearchForUpdateMaterialSampleType" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- project --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Project</span>
+                    <input id="sampleSearchForUpdateProject" type="text" class="form-control">
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- materialSampleType --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Material Sample Type</span>
-                <input id="materialSampleType" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- project --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Project</span>
-                <input id="project" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    {{!-- SUBMIT BUTTON --}}
-    <button type="button" class="btn btn-primary">Search</button>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     <br><br>
     <div id="searchSamplesToUpdateResults">
         {{!-- MATERIAL SAMPLE RESULT LIST --}}
@@ -49,6 +51,9 @@
     </div>
     <br>
     <div id="sampleUpdatesForm">
+
+
+
         {{!-- UPDATE MATERIAL SAMPLE FORM --}}
         <p>Record sample updates here. Existing values will be overwritten. Fields left blank will remain unchanged. Contact Scientific Data Manager to make additional updates to sample records.</p>
         <div class="row">
