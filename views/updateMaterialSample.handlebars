@@ -43,11 +43,27 @@
     <div id="searchSamplesToUpdateResults">
         {{!-- MATERIAL SAMPLE RESULT LIST --}}
         <p>Search Results</p>
-        <ul class="list-group list-group-flush"> 
-            <li class="list-group-item d-flex"><p class="p-0 m-0 flex-grow-1">First item</p> 
-            <button class="btn btn-sm btn-outline-primary">Update Sample Data</button> 
-            </li>
-        </ul>
+        <table class="table" id="samplesForTransferResultsTable">
+            <thead>
+                <tr>
+                    <th scope="col">scientificName</th>
+                    <th scope="col">materialSample_catalogNumber</th>
+                    <th scope="col">recordedBy</th>
+                    <th scope="col">materialSampleType</th>
+                    <th scope="col">numberCollected</th>
+                    <th scope="col">numberAvailable</th>
+                    <th scope="col">collectionDate</th>
+                    <th scope="col">stateProvince</th>
+                    <th scope="col">county</th>
+                    <th scope="col">locality</th>
+                    <th scope="col">disposition</th>
+                    <th scope="col">storageLocation</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="searchTransfersResultsData">
+            </tbody>
+        </table>
     </div>
     <br>
     <div id="sampleUpdatesForm">

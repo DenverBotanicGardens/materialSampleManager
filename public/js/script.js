@@ -1043,11 +1043,69 @@ const submitNewGerminationTrial = () => {
         })
     }
 
-
+//--------------------------------------------------------------------------------------------------
 //Search for Material Samples to Update
+//--------------------------------------------------------------------------------------------------
     //add user entries to searchSamplesToTransferFormEntries object
+    let sampleSearchForUpdateCatalogNumber = $("#sampleSearchForUpdateCatalogNumber")
+    let sampleSearchForUpdateScientificName = $("#sampleSearchForUpdateScientificName")
+    let sampleSearchForUpdateMaterialSampleType = $("#sampleSearchForUpdateMaterialSampleType")
+    let sampleSearchForUpdateProject = $("#sampleSearchForUpdateProject")
+    $("#sampleSearchForUpdateForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let sampleSearchForUpdateFormEntries = {
+            materialSample_catalogNumber: sampleSearchForUpdateCatalogNumber.val().trim(),
+            scientificName: sampleSearchForUpdateScientificName.val().trim(),
+            materialSampleType: sampleSearchForUpdateMaterialSampleType.val().trim(),
+            project: sampleSearchForUpdateProject.val().trim(),
+        }
+        searchSamplesToUpdateFormEntries = sampleSearchForUpdateFormEntries
+        console.log(searchSamplesToUpdateFormEntries)
+        submitSearchSamplesForUpdate()
+    })
     //send to backend via api
-    //return results
+    const submitSearchSamplesForUpdate = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/searchMaterialSamplesForUpdate",
+            data: searchSamplesToUpdateFormEntries
+        })
+        //return results
+        .then((samplesToUpdateSearchResults) => {
+            console.log(samplesToUpdateSearchResults)
+            samplesToUpdateSearchResultsList = []
+            $.each(samplesToUpdateSearchResults, function(i, sampleInResult) {
+                samplesToUpdateSearchResultsList.push(
+                    `<tr>
+                    <td>${sampleInResult.scientificName}</td>
+                    <td>${sampleInResult.materialSample_catalogNumber}</td>
+                    <td>${sampleInResult.recordedBy}</td>
+                    <td>${sampleInResult.materialSampleType}</td>
+                    <td>${sampleInResult.numberCollected}</td>
+                    <td>${sampleInResult.numberAvailable}</td>
+                    <td>${sampleInResult.eventDate}</td>
+                    <td>${sampleInResult.stateProvince}</td>
+                    <td>${sampleInResult.county}</td>
+                    <td>${sampleInResult.locality}</td>
+                    <td>${sampleInResult.disposition}</td>
+                    <td>${sampleInResult.storageLocation}</td>
+
+                    <td>
+                        <button class="transferSelected btn btn-sm btn-outline-primary" data-id=${sampleInResult.materialSampleTableID} data-catalognumber=${sampleInResult.materialSample_catalogNumber} data-scientificname=${sampleInResult.scientificName}>Update Transfer</button>
+                    </td>`
+                )
+            })
+        })
+        //display results in list
+        .then(function(){
+            $('#searchTransfersResultsData').empty()
+            $('#searchTransfersResultsData').append(samplesToUpdateSearchResultsList.join(''))
+            $('#searchSamplesToUpdateResults').show()
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
     //display results in list
 
 //Update Material Sample
