@@ -416,6 +416,7 @@ $(document).ready(function() {
             })
         })
         .then(function(){
+            console.log(germinationTrialResultList)
             $('#germinationTrialResultTableData').empty()
             $('#germinationTrialResultTableData').append(germinationTrialResultList.join(''))
             $('#searchGermTrialResults').show()
