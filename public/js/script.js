@@ -53,7 +53,7 @@ $(document).ready(function() {
     
     //Transfers Result List
     //an array of objects to contain the transfer records returned based on the query submitted by the user
-    let transferSearchResults = []
+    let transferSearchResultsList = []
     
     //Search for Material Samples to Transfer Form
     //an object to contain the values entered byt he user in the seach for material sample to transfer form on the transfer material sample page
@@ -69,7 +69,7 @@ $(document).ready(function() {
     
     //Update Transfer Form
     //an object to contain the values entered by the user in the update material sample transfer form on the update transfer page
-    let updatTransferFormEntries = {}
+    let updateTransferFormEntries = {}
     
     //Search for Material Sample to Update Form
     //an object to contain the values entered by the user in the search for material samples to update form on the update material sample page
@@ -104,7 +104,7 @@ $(document).ready(function() {
 
 
     //--------------------------------------------------------------------------------------------------
-    // EVENT LISTENERS
+    // EVENT LISTENERS (more at bottom of script)
     //--------------------------------------------------------------------------------------------------
     //Hide Elements
     //Search Page
@@ -121,6 +121,7 @@ $(document).ready(function() {
     
     //Transfers Page
     $('#searchTransfersResults').hide()
+    $('#sampleTransferUpdatesForm').hide()
 
     //New Transfer Page
     $('#searchMaterialSampleToTransferResults').hide()
@@ -205,8 +206,9 @@ $(document).ready(function() {
 
 //Download Material Sample Records To CSV
 
-
-//Submit New Project
+//--------------------------------------------------------------------------------------------------
+//SUBMIT NEW PROJECT
+//--------------------------------------------------------------------------------------------------
     //add user entries to newProjectFormEntries object
     let projectInput = $("#project")
     let principalInvestigatorInput = $("#principalInvestigator")
@@ -233,7 +235,9 @@ $(document).ready(function() {
         })
     }     
 
-//Get Existing Projects to Display on Projects Page
+//--------------------------------------------------------------------------------------------------
+//DISPLAY EXISTING PROJECTS ON PROJECTS PAGE
+//--------------------------------------------------------------------------------------------------
     //retrieve all projects via api
     //add all results to a projectsList array
     //append each item in array to the list id = #projects
@@ -256,8 +260,9 @@ $(document).ready(function() {
         })
     }
 
-
-//Get Existing Projects to Display in Dropdown List on Upload Data Page
+//--------------------------------------------------------------------------------------------------
+//DISPLAY EXISTING PROJECTS IN DROPDOWN SELECT LIST ON UPLOAD DATA PAGE
+//--------------------------------------------------------------------------------------------------
     //retrieve all projects via api
     //add all results to projectSelection array
     const listProjectsForUpload = () => {
@@ -278,7 +283,9 @@ $(document).ready(function() {
             console.error(error);
         })
     }
-
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+//UPLOAD MATERIAL SAMPLES VIA CSV
+//--------------------------------------------------------------------------------------------------------------------------------------------------
 //Capture id For Selected Project
     // send to backend csvUplaod controller to be incorporated into data being uploaded
     const sendProjectID = () => {
@@ -297,7 +304,7 @@ $(document).ready(function() {
         })
     }
     
-    //Send projectID and csv to backend for upload to database
+//Send projectID and csv to backend for upload to database
     $('#uploadCSV').submit(function(e) {
         e.preventDefault()
         sendProjectID()
@@ -326,8 +333,9 @@ $(document).ready(function() {
         return false;
     });
 
-
-//Search Germination Trials
+//--------------------------------------------------------------------------------------------------
+//SEARCH GERMINATION TRIALS
+//--------------------------------------------------------------------------------------------------    
     //add user entries to searchGermTrialsFormEntries object
     let germSearchProjectInput = $("#germSearchProject")
     let germSearchScientificNameInput = $("#germSearchScientificName")
@@ -408,6 +416,7 @@ $(document).ready(function() {
             })
         })
         .then(function(){
+            console.log(germinationTrialResultList)
             $('#germinationTrialResultTableData').empty()
             $('#germinationTrialResultTableData').append(germinationTrialResultList.join(''))
             $('#searchGermTrialResults').show()
@@ -416,10 +425,10 @@ $(document).ready(function() {
             console.error(error);
         })
     }
-    //return results
-    //display results in list sorted by taxon and then date
 
-    
+//--------------------------------------------------------------------------------------------------
+//DOWNLOAD GERMINATION TRIAL SEARCH RESULTS TO CSV
+//--------------------------------------------------------------------------------------------------
     //create the csv of germination trial results on the back end
     const exportGermTrialResults = (req,res) => {
         $.ajax({
@@ -474,7 +483,9 @@ $(document).ready(function() {
           }
     }
 
-//Add Viability Tracking to Germination Trial Record
+//--------------------------------------------------------------------------------------------------
+//ADD VIABILITY TRACKING TO GERMINATION TRIAL RECORD
+//--------------------------------------------------------------------------------------------------
     //Event listener for button to capture ID of selected germination trial
     $(document).on('click','button[data-addViabilityTrackingButton="true"]',function(event){
         //event.preventDefault()
@@ -555,8 +566,9 @@ $(document).ready(function() {
         })
     }
 
-
-//Finish Germination Trial
+//--------------------------------------------------------------------------------------------------
+//FINSIH GERMINATION TRIAL
+//--------------------------------------------------------------------------------------------------
     //Event listener for button to capture ID of selected germination trial
     $(document).on('click','button[data-finishTrialButton="true"]',function(event){
         //event.preventDefault()
@@ -637,8 +649,9 @@ $(document).ready(function() {
     }
 
 
-
-//Search for Seed for Germination Trial
+//--------------------------------------------------------------------------------------------------
+//SEARCH FOR SEED TO USE IN GERMINATION TRIAL
+//--------------------------------------------------------------------------------------------------
     //add user entries to searchSeedForGermTrialFormEntries object
     //send to backend via api
     //return results
@@ -697,8 +710,9 @@ $(document).ready(function() {
             console.error(error);
         })
     }    
-
-//Create New Germination Trial
+//--------------------------------------------------------------------------------------------------
+//CREATE NEW GERMINATION TRIAL
+//--------------------------------------------------------------------------------------------------
     //event listener for button to capture ID of selected seed for new germination trial
     $("#seedResultTableData").on('click','.seedSampleSelected', function(){
         seedSampleSelectedID = $(this).data('id')
@@ -772,27 +786,263 @@ const submitNewGerminationTrial = () => {
     })
 }
 
-//Search for Transfers
-    //add user entries to searchTransfersFormEntries object
-    //send to backend via api
-    //return results
-    //display results in list
-
-//Update Tranfser
-    //Event listener for button to capture ID of selected transfer
-    //add user entries to updateTransferFormEntries object
-    //send to backend via api
-
-//Search for Samples to Transfer
+//--------------------------------------------------------------------------------------------------
+//SEARCH FOR SAMPLES TO TRANSFER
+//--------------------------------------------------------------------------------------------------
     //add user entries to searchSamplesToTransferFormEntries object
+    let projectSearchSampleForTransfer = $("#projectSearchSampleForTransfer")
+    let scientificNameSearchSampleForTransfer = $("#scientificNameSearchSampleForTransfer")
+    let sampleTypeSearchSampleForTransfer = $("#sampleTypeSearchSampleForTransfer")
+    let catalogNumberSearchSampleForTransfer = $("#catalogNumberSearchSampleForTransfer")
+    let earlyDateSearchSampleForTransfer = $("#earlyDateSearchSampleForTransfer")
+    let lateDateSearchSampleForTransfer = $("#lateDateSearchSampleForTransfer")
+    let recordedBySearchSampleForTransfer = $("#recordedBySearchSampleForTransfer")
+    let recordNumberSearchSampleForTransfer = $("#recordNumberSearchSampleForTransfer")
+    let stateProvinceSearchSampleForTransfer = $("#stateProvinceSearchSampleForTransfer")
+    let countySearchSampleForTransfer = $("#countySearchSampleForTransfer")
+    $("#searchForSampleToTransfer").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let newTransferSampleSearchEntries = {
+            project: projectSearchSampleForTransfer.val(),
+            scientificName: scientificNameSearchSampleForTransfer.val(),
+            materialSampleType: sampleTypeSearchSampleForTransfer.val(),
+            materialSample_catalogNumber: catalogNumberSearchSampleForTransfer.val(),
+            eventEarlyDate: earlyDateSearchSampleForTransfer.val(),
+            eventLateDate: lateDateSearchSampleForTransfer.val(),
+            recordedBy: recordedBySearchSampleForTransfer.val(),
+            materialSample_recordNumber: recordNumberSearchSampleForTransfer.val(),
+            stateProvince: stateProvinceSearchSampleForTransfer.val(),
+            county: countySearchSampleForTransfer.val()
+        }
+        searchSamplesToTransferFormEntries = newTransferSampleSearchEntries
+        //console.log(searchSamplesToTransferFormEntries)
+        submitnewTransferSampleSearch()
+    })
     //send to backend via api
-    //return results
-    //display results in list
-
+    const submitnewTransferSampleSearch = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/searchMaterialSamplesForTransfer",
+            data: searchSamplesToTransferFormEntries
+        })
+        //return results
+        .then((samplesForTransferResults) => {
+            //console.log(samplesForTransferResults)
+            samplesForTransferResultsList = []
+            //display results in list
+            $.each(samplesForTransferResults, function(i, sampleInResult) {
+                samplesForTransferResultsList.push(
+                    `<tr>
+                    <td>${sampleInResult.scientificName}</td>
+                    <td>${sampleInResult.materialSample_catalogNumber}</td>
+                    <td>${sampleInResult.eventDate}</td>
+                    <td>${sampleInResult.numberCollected}</td>
+                    <td>${sampleInResult.numberAvailable}</td>
+                    <td>${sampleInResult.dateStored}</td>
+                    <td>${sampleInResult.stateProvince}</td>
+                    <td>${sampleInResult.county}</td>
+                    <td>${sampleInResult.locality}</td>
+                    <td>${sampleInResult.locationID}</td>
+                    <td>
+                        <button class="sampleSelectedForTransfer btn btn-sm btn-outline-primary" data-id=${sampleInResult.materialSampleTableID} data-catalognumber=${sampleInResult.materialSample_catalogNumber}>Transfer Sample</button>
+                    </td>`
+                )
+            })
+        })
+        .then(function(){
+            $('#materialSamplesForTransferData').empty()
+            $('#materialSamplesForTransferData').append(samplesForTransferResultsList.join(''))
+            $('#searchMaterialSampleToTransferResults').show()
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+    
+//--------------------------------------------------------------------------------------------------
 //Create a New Transfer
+//--------------------------------------------------------------------------------------------------
     //Event listener for button to capture ID of selected sample
+    $("#materialSamplesForTransferData").on('click','.sampleSelectedForTransfer', function(){
+        sampleSelectedForTransferID = $(this).data('id')
+        sampleSelectedForTransferCatalogNumber = $(this).data('catalognumber')
+        $('#newTransferDataForm').show()
+        $('#sampleSelectedForTransferTitle').text(`Sample to be transferred: ${sampleSelectedForTransferCatalogNumber}`)
+        $(document).scrollTop($(document).height()); 
+    })
     //add user entries to newTransferFormEntries object
+    let newTransferNumbersamples = $("#newTransferNumbersamples")
+    let newTransferDate = $("#newTransferDate")
+    let newTransferReceivedDate = $("#newTransferReceivedDate")
+    let newTransferAgencyTransferredTo = $("#newTransferAgencyTransferredTo")
+    let newTransferPersonTransferredTo = $("#newTransferPersonTransferredTo")
+    let newTransferPurposeNotes = $("#newTransferPurposeNotes")
+    $("#newTransferDataForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        console.log("button pushed")
+        let newTransferDataFormEntries = {
+            materialSampleTableID: sampleSelectedForTransferID,
+            materialSample_catalogNumber: sampleSelectedForTransferCatalogNumber,
+            numberSamplesTransferred: newTransferNumbersamples.val(),
+            transferDate: newTransferDate.val(),
+            receivedDate: newTransferReceivedDate.val(),
+            agencyTransferredTo: newTransferAgencyTransferredTo.val(),
+            personTransferredTo: newTransferPersonTransferredTo.val(),
+            purposeNotes: newTransferPurposeNotes.val()
+        }
+        newTransferFormEntries = newTransferDataFormEntries
+        console.log(newTransferFormEntries)
+        submitNewTransfer()
+    })
     //send to backend via api
+    const submitNewTransfer = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/addTransfer",
+            data: newTransferFormEntries,
+            success: function(){
+                alert('Success! You have submitted a new transfer to the database. Have a fun journey, little sample! \n \n You may select a different sample from this page and modify the Transfer Information Form if more samples are being transferred.')
+            }
+        })
+            .then(function(){
+                //window.location.href = '/transfers'
+                console.log("new transfer submitted")
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+    }
+
+//--------------------------------------------------------------------------------------------------
+//Search for Transfers
+//--------------------------------------------------------------------------------------------------
+    //add user entries to searchTransfersFormEntries object
+    let searchTransfersScientificName = $("#searchTransfersScientificName")
+    let searchTransfersMaterialSampleType = $("#searchTransfersMaterialSampleType")
+    let searchTransfersCatalogNumber = $("#searchTransfersCatalogNumber")
+    let searchTransfersTransferEarlyDate = $("#searchTransfersTransferEarlyDate")
+    let searchTransfersTransferLateDate = $("#searchTransfersTransferLateDate")
+    let searchTransfersAgencyTransferredTo = $("#searchTransfersAgencyTransferredTo")
+    let searchTransfersPersonTransferredTo = $("#searchTransfersPersonTransferredTo")
+    $("#searchTransfersForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let searchTransfersFormUserEntries = {
+            scientificName: searchTransfersScientificName.val(),
+            materialSampleType: searchTransfersMaterialSampleType.val(),
+            materialSample_catalogNumber: searchTransfersCatalogNumber.val(),
+            earlyDate: searchTransfersTransferEarlyDate.val(),
+            lateDate: searchTransfersTransferLateDate.val(),
+            agencyTransferredTo: searchTransfersAgencyTransferredTo.val(),
+            personTransferredTo: searchTransfersPersonTransferredTo.val()
+        }
+        searchTransfersFormEntries = searchTransfersFormUserEntries
+        console.log(searchTransfersFormEntries)
+        submitTransferSearch()
+    })
+    //send to backend via api
+    const submitTransferSearch = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/getTransfer",
+            data: searchTransfersFormEntries
+        })
+        //return results and add to data table
+        .then((transferSearchResults) => {
+            console.log(transferSearchResults)
+            transferSearchResultsList = []
+            $.each(transferSearchResults, function(i, transferInResult) {
+                transferSearchResultsList.push(
+                    `<tr>
+                    <td>${transferInResult.scientificName}</td>
+                    <td>${transferInResult.materialSample_catalogNumber}</td>
+                    <td>${transferInResult.agencyTransferredTo}</td>
+                    <td>${transferInResult.personTransferredTo}</td>
+                    <td>${transferInResult.numberSamplesTransferred}</td>
+                    <td>${transferInResult.numberSamplesReturned}</td>
+                    <td>${transferInResult.purposeNotes}</td>
+                    <td>${transferInResult.transferDate}</td>
+                    <td>${transferInResult.receivedDate}</td>
+                    <td>${transferInResult.numberCollected}</td>
+                    <td>${transferInResult.numberAvailable}</td>
+                    <td>${transferInResult.eventDate}</td>
+                    <td>${transferInResult.stateProvince}</td>
+                    <td>${transferInResult.county}</td>
+                    <td>${transferInResult.locality}</td>
+                    <td>
+                        <button class="transferSelected btn btn-sm btn-outline-primary" data-id=${transferInResult.id} data-numbersamplestransferred=${transferInResult.numberSamplesTransferred} data-catalognumber=${transferInResult.materialSample_catalogNumber} data-transferredto=${transferInResult.agencyTransferredTo} data-scientificname=${transferInResult.scientificName} data-transferdate=${transferInResult.transferDate}>Update Transfer</button>
+                    </td>`
+                )
+            })
+        })
+        //display results in list
+        .then(function(){
+            $('#transfersData').empty()
+            $('#transfersData').append(transferSearchResultsList.join(''))
+            $('#searchTransfersResults').show()
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+//--------------------------------------------------------------------------------------------------
+//Update Tranfser
+//--------------------------------------------------------------------------------------------------
+    //Event listener for button to capture ID of selected transfer to be updated
+        $("#transfersData").on('click','.transferSelected', function(){
+            transferSelectedForUpdateID = $(this).data('id')
+            transferSelectedForUpdateCatalogNumber = $(this).data('catalognumber')
+            transferSelectedForUpdateScientificName = $(this).data('scientificname')
+            transferSelectedForUpdateTransferredTo = $(this).data('transferredto')
+            transferSelectedForUpdateTransferDate = $(this).data('transferdate')
+            transfersSelectedForUpdateNumberSamplesTransferred = $(this).data('numbersamplestransferred')
+            $('#sampleTransferUpdatesForm').show()
+            $('#transferSelectedForUpdateTitle').text(`Update Existing Transfer record for ${transferSelectedForUpdateScientificName} (${transferSelectedForUpdateCatalogNumber}). ${transfersSelectedForUpdateNumberSamplesTransferred} samples sent to ${transferSelectedForUpdateTransferredTo} on ${transferSelectedForUpdateTransferDate}.`)
+            $(document).scrollTop($(document).height());
+        })
+    //add user entries to updateTransferFormEntries object
+    let transferUpdateNumberSamplesTransferred = $("#transferUpdateNumberSamplesTransferred")
+    let transferUpdateTransferDate = $("#transferUpdateTransferDate")
+    let transferUpdateReceivedDate = $("#transferUpdateReceivedDate")
+    let transferUpdateAgencyTransferredTo = $("#transferUpdateAgencyTransferredTo")
+    let transferUpdatePersonTransferredTo = $("#transferUpdatePersonTransferredTo")
+    let transferUpdatePurposeNotes = $("#transferUpdatePurposeNotes")
+    let transferUpdateReturnedDate = $("#transferUpdateReturnedDate")
+    let transferUpdateNumberSamplesReturned = $("#transferUpdateNumberSamplesReturned")
+    $("#sampleTransferUpdatesForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let transferUpdateFormUserEntries = {
+            id: transferSelectedForUpdateID,
+            agencyTransferredTo: transferUpdateAgencyTransferredTo.val(),
+            personTransferredTo: transferUpdatePersonTransferredTo.val(),
+            numberSamplesTransferred: transferUpdateNumberSamplesTransferred.val(),
+            transferDate: transferUpdateTransferDate.val(),
+            receivedDate: transferUpdateReceivedDate.val(),
+            purposeNotes: transferUpdatePurposeNotes.val(),
+            returnedDate: transferUpdateReturnedDate.val(),
+            numberSamplesReturned: transferUpdateNumberSamplesReturned.val()
+        }
+        updateTransferFormEntries = transferUpdateFormUserEntries
+        console.log(updateTransferFormEntries)
+        submitTransferUpdate()
+    })
+    //send to backend via api
+    const submitTransferUpdate = () => {
+        $.ajax({
+            method: "PUT",
+            url: "/api/updateTransfer",
+            data: updateTransferFormEntries,
+            success: function(){
+                alert('Success! You have updated a transfer in the database. \n \n You may select a different transfer from this page and modify the Update Material Sample Transfer Form if more transfers need to be updated.')
+            }
+        })
+        .then(function(){
+            console.log("transfer update submitted")
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
 
 //Search for Material Samples to Update
     //add user entries to searchSamplesToTransferFormEntries object

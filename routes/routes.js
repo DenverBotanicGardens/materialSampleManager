@@ -15,7 +15,8 @@ const updateMaterialSample = require("../controllers/updateMaterialSample")
 const getGerminationTrials = require("../controllers/getGerminationTrials")
 const searchMaterialSamples = require("../controllers/searchMaterialSamples")
 const getGerminationTrialResults = require("../controllers/exportGerminationTrialResults")
-const csvUpload = require("../controllers/csvUpload")
+const csvUpload = require("../controllers/csvUpload");
+const searchMaterialSamplesForTransfer = require("../controllers/searchMaterialSamplesForTransfer")
 
 let routes = (app) => {
 
@@ -95,8 +96,8 @@ let routes = (app) => {
   //PUT /api/updateTransfer
   router.put("/updateTransfer", updateTransfer.updateTransfer)
 
-  //GET /api/getTransfer
-  router.get("/getTransfer", getTransfer.getTransfer)
+  //POST /api/getTransfer
+  router.post("/getTransfer", getTransfer.getTransfer)
 
   //PUT /api/updateMaterialSample
   router.put("/updateMaterialSample", updateMaterialSample.updateMaterialSample)
@@ -107,8 +108,11 @@ let routes = (app) => {
   //POST /api/getGermplasmViabilityTestByID
   router.post("/getGermplasmViabilityTestByID", getGerminationTrials.getGerminationTrialByID)
 
-  //GET /api/searchMaterialSamples
-  router.get("/searchMaterialSamples", searchMaterialSamples.searchMaterialSamples)
+  //POST /api/searchMaterialSamples
+  router.post("/searchMaterialSamples", searchMaterialSamples.searchMaterialSamples)
+
+  //POST /api/searchMaterialSamplesForTransfer
+  router.post("/searchMaterialSamplesForTransfer", searchMaterialSamplesForTransfer.searchMaterialSamplesForTransfer)
 
   //POST /api/exportSearchToCSV
   router.post("/exportSearchToCSV", searchMaterialSamples.exportSearchToCSV)
