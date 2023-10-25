@@ -969,15 +969,15 @@ const submitNewGerminationTrial = () => {
                     <td>${transferInResult.county}</td>
                     <td>${transferInResult.locality}</td>
                     <td>
-                        <button class="transferSelected btn btn-sm btn-outline-primary" data-id=${transferInResult.id} data-numbersamplestransferred=${transferInResult.numberSamplesTransferred} data-catalognumber=${transferInResult.materialSample_catalogNumber} data-transferredto=${transferInResult.agencyTransferredTo} data-scientificname=${transferInResult.scientificName} data-transferdate=${transferInResult.transferDate}>Update Transfer</button>
+                        <button class="transferSelected btn btn-sm btn-outline-primary" data-id=${transferInResult.id} data-numbersamplestransferred=${transferInResult.numberSamplesTransferred} data-catalognumber=${transferInResult.materialSample_catalogNumber.replace(" ","_")} data-transferredto=${transferInResult.agencyTransferredTo.replace(" ","_")} data-scientificname=${transferInResult.scientificName.replace(" ","_")} data-transferdate=${transferInResult.transferDate}>Update Transfer</button>
                     </td>`
                 )
             })
         })
         //display results in list
         .then(function(){
-            $('#transfersData').empty()
-            $('#transfersData').append(transferSearchResultsList.join(''))
+            $('#searchTransfersResultsData').empty()
+            $('#searchTransfersResultsData').append(transferSearchResultsList.join(''))
             $('#searchTransfersResults').show()
         })
         .catch((error) => {
@@ -988,11 +988,11 @@ const submitNewGerminationTrial = () => {
 //Update Tranfser
 //--------------------------------------------------------------------------------------------------
     //Event listener for button to capture ID of selected transfer to be updated
-        $("#transfersData").on('click','.transferSelected', function(){
+        $("#searchTransfersResultsData").on('click','.transferSelected', function(){
             transferSelectedForUpdateID = $(this).data('id')
-            transferSelectedForUpdateCatalogNumber = $(this).data('catalognumber')
-            transferSelectedForUpdateScientificName = $(this).data('scientificname')
-            transferSelectedForUpdateTransferredTo = $(this).data('transferredto')
+            transferSelectedForUpdateCatalogNumber = $(this).data('catalognumber').replace("_"," ")
+            transferSelectedForUpdateScientificName = $(this).data('scientificname').replace("_"," ")
+            transferSelectedForUpdateTransferredTo = $(this).data('transferredto').replace("_"," ")
             transferSelectedForUpdateTransferDate = $(this).data('transferdate')
             transfersSelectedForUpdateNumberSamplesTransferred = $(this).data('numbersamplestransferred')
             $('#sampleTransferUpdatesForm').show()
@@ -1043,20 +1043,118 @@ const submitNewGerminationTrial = () => {
         })
     }
 
-
+//--------------------------------------------------------------------------------------------------
 //Search for Material Samples to Update
+//--------------------------------------------------------------------------------------------------
     //add user entries to searchSamplesToTransferFormEntries object
+    let sampleSearchForUpdateCatalogNumber = $("#sampleSearchForUpdateCatalogNumber")
+    let sampleSearchForUpdateScientificName = $("#sampleSearchForUpdateScientificName")
+    let sampleSearchForUpdateMaterialSampleType = $("#sampleSearchForUpdateMaterialSampleType")
+    let sampleSearchForUpdateProject = $("#sampleSearchForUpdateProject")
+    $("#sampleSearchForUpdateForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let sampleSearchForUpdateFormEntries = {
+            materialSample_catalogNumber: sampleSearchForUpdateCatalogNumber.val().trim(),
+            scientificName: sampleSearchForUpdateScientificName.val().trim(),
+            materialSampleType: sampleSearchForUpdateMaterialSampleType.val().trim(),
+            project: sampleSearchForUpdateProject.val().trim(),
+        }
+        searchSamplesToUpdateFormEntries = sampleSearchForUpdateFormEntries
+        console.log(searchSamplesToUpdateFormEntries)
+        submitSearchSamplesForUpdate()
+    })
     //send to backend via api
-    //return results
-    //display results in list
+    const submitSearchSamplesForUpdate = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/searchMaterialSamplesForUpdate",
+            data: searchSamplesToUpdateFormEntries
+        })
+        //return results
+        .then((samplesToUpdateSearchResults) => {
+            console.log(samplesToUpdateSearchResults)
+            samplesToUpdateSearchResultsList = []
+            $.each(samplesToUpdateSearchResults, function(i, sampleInResult) {
+                samplesToUpdateSearchResultsList.push(
+                    `<tr>
+                    <td>${sampleInResult.scientificName}</td>
+                    <td>${sampleInResult.materialSample_catalogNumber}</td>
+                    <td>${sampleInResult.recordedBy}</td>
+                    <td>${sampleInResult.materialSampleType}</td>
+                    <td>${sampleInResult.numberCollected}</td>
+                    <td>${sampleInResult.numberAvailable}</td>
+                    <td>${sampleInResult.eventDate}</td>
+                    <td>${sampleInResult.stateProvince}</td>
+                    <td>${sampleInResult.county}</td>
+                    <td>${sampleInResult.locality}</td>
+                    <td>${sampleInResult.disposition}</td>
+                    <td>${sampleInResult.storageLocation}</td>
 
+                    <td>
+                        <button class="sampledSelectedForUpdate btn btn-sm btn-outline-primary" data-id=${sampleInResult.materialSampleTableID} data-catalognumber=${sampleInResult.materialSample_catalogNumber.replace(" ","_")} data-scientificname=${sampleInResult.scientificName.replace(" ","_")}>Update Sample</button>
+                    </td>`
+                )
+            })
+        })
+        //display results in list
+        .then(function(){
+            $('#searchTransfersResultsData').empty()
+            $('#searchTransfersResultsData').append(samplesToUpdateSearchResultsList.join(''))
+            $('#searchSamplesToUpdateResults').show()
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+//--------------------------------------------------------------------------------------------------
 //Update Material Sample
+//--------------------------------------------------------------------------------------------------
+
     //Event listener for button to capture ID of selected material sample
-    //add user entries to updatTransferFormEntries object
+    $("#searchSamplesToUpdateResults").on('click','.sampledSelectedForUpdate', function(){
+        sampledSelectedForUpdateID = $(this).data('id')
+        sampledSelectedForUpdateCatalogNumber = $(this).data('catalognumber').replace("_"," ")
+        sampledSelectedForUpdateScientificName = $(this).data('scientificname').replace("_"," ")
+        $('#sampleUpdatesForm').show()
+        $('#sampleSelectedForUpdateTitle').text(`Update Existing Sample record for ${sampledSelectedForUpdateScientificName} (${sampledSelectedForUpdateCatalogNumber}).`)
+        $(document).scrollTop($(document).height());
+    })
+    //add user entries to updateTransferFormEntries object
+    let sampleForUpdateDisposition = $("#sampleForUpdateDisposition")
+    let sampleForUpdateStorageLocation = $("#sampleForUpdateStorageLocation")
+    let sampleForUpdateNumberAvailable = $("#sampleForUpdateNumberAvailable")
+    $("#sampleUpdatesForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let sampleUpdatesFormEntries = {
+            id: sampledSelectedForUpdateID,
+            disposition: sampleForUpdateDisposition.val().trim(),
+            storageLocation: sampleForUpdateStorageLocation.val().trim(),
+            numberAvailable: sampleForUpdateNumberAvailable.val().trim(),
+        }
+        updateMaterialSampleFormEntries = sampleUpdatesFormEntries
+        console.log(updateMaterialSampleFormEntries)
+        submitSampleUpdates()
+    })
     //send to backend via api
+    const submitSampleUpdates = () => {
+        $.ajax({
+            method: "PUT",
+            url: "/api/updateMaterialSample",
+            data: updateMaterialSampleFormEntries,
+            success: function(){
+                alert('Success! You have updated a sample in the database. \n \n You may select a different sample from this page and modify the Update Material Sample Form if more samples need to be updated.')
+            }
+        })
+        .then(function(){
+            console.log("sample update submitted")
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 
 //--------------------------------------------------------------------------------------------------
-// EVENT LISTENERS
+// MORE EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------
 
     //Functions to Execute on Page Load by Page
