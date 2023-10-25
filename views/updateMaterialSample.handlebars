@@ -40,8 +40,8 @@
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
     <br><br>
+    {{!-- MATERIAL SAMPLE RESULT LIST --}}
     <div id="searchSamplesToUpdateResults">
-        {{!-- MATERIAL SAMPLE RESULT LIST --}}
         <p>Search Results</p>
         <table class="table" id="samplesForTransferResultsTable">
             <thead>
@@ -66,37 +66,35 @@
         </table>
     </div>
     <br>
-    <div id="sampleUpdatesForm">
-
-
-
-        {{!-- UPDATE MATERIAL SAMPLE FORM --}}
+    {{!-- UPDATE MATERIAL SAMPLE FORM --}}
+    <form id="sampleUpdatesForm">
         <p>Record sample updates here. Existing values will be overwritten. Fields left blank will remain unchanged. Contact Scientific Data Manager to make additional updates to sample records.</p>
+        <p id="sampleSelectedForUpdateTitle"></p>
         <div class="row">
             <div class="col">
                 {{!-- disposition --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Disposition</span>
-                    <input id="disposition" type="text" class="form-control">
+                    <input id="sampleForUpdateDisposition" type="text" class="form-control">
                 </div>
             </div>
             <div class="col">
                 {{!-- storageLocation --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Storage Location</span>
-                    <input id="storageLocation" type="text" class="form-control">
+                    <input id="sampleForUpdateStorageLocation" type="text" class="form-control">
                 </div>
             </div>
             <div class="col">
                 {{!-- numberAvailable --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Number Available</span>
-                    <input id="numberAvailable" type="text" class="form-control">
+                    <input id="sampleForUpdateNumberAvailable" type="text" class="form-control">
                 </div>
             </div>
         </div>
         {{!-- SUBMIT BUTTON --}}
-        <button type="button" class="btn btn-primary">Submit</button>   
-    </div>
+        <button type="submit" class="btn btn-primary">Submit</button>   
+    </form>
     <br><br>
 </div>
