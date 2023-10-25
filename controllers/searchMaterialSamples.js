@@ -65,10 +65,10 @@ async function searchMaterialSamples(req, res) {
         if (req.body.materialSample_catalogNumber !== '') {
             materialSampleQuery.push(` AND ms.materialSample_catalogNumber = '${req.body.materialSample_catalogNumber}'`);
         }
-        //recordNumber
-        if (req.body.recordNumber !== ''){
-            materialSampleQuery.push(` AND ps.recordNumber LIKE '%${req.body.recordNumber}%'`)
-        }
+        // //recordNumber
+        // if (req.body.recordNumber !== ''){
+        //     materialSampleQuery.push(` AND ps.recordNumber LIKE '%${req.body.recordNumber}%'`)
+        // }
         //catalogNumber
         if (req.body.catalogNumber !== '') {
             materialSampleQuery.push(` AND ps.catalogNumber = '${req.body.catalogNumber}'`);

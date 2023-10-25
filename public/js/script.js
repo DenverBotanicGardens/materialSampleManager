@@ -202,7 +202,60 @@ $(document).ready(function() {
 //--------------------------------------------------------------------------------------------------
 
     //add user entries to searchFormEntires object
-    
+    let searchProject = $("#searchProject")
+    let searchScientificName = $("#searchScientificName")
+    let searchMaterialSampleType = $("#searchMaterialSampleType")
+    let searchMaterialSampleCatalogNumber = $("#searchMaterialSampleCatalogNumber")
+    let searchSpecimenCatalogNumber = $("#searchSpecimenCatalogNumber")
+    let searchEventEarlyDate = $("#searchEventEarlyDate")
+    let searchEventLateDate = $("#searchEventLateDate")
+    let searchRecordedBy = $("#searchRecordedBy")
+    let searchRecordNumber = $("#searchRecordNumber")
+    let searchStateProvince = $("#searchStateProvince")
+    let searchCounty = $("#searchCounty")
+    let searchLocality = $("#searchLocality")
+    let selectedLocalityOption
+    let searchLocationRemarks = $("#searchLocationRemarks")
+    let searchLocationID = $("#searchLocationID")
+    $('input[name="localityRadio"]').click(function() {
+        selectedLocalityOption = $('input[name="localityRadio"]:checked').val();
+    })
+    $("#searchSamplesForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        console.log(selectedLocalityOption)
+        let optradio
+        if (selectedLocalityOption == "contains"){
+            optradio = "contains"
+        } else if (selectedLocalityOption == "startsWith"){
+            optradio = "startsWith"
+        } else if (selectedLocalityOption == "isExactly"){
+            optradio = "isExactly"
+        } else if (selectedLocalityOption === undefined){
+            optradio = ""
+        } else {
+            alert("Please the locality components of your query")
+        }
+        let newSearchSamplesEntries = {
+            project: searchProject.val(),
+            scientificName: searchScientificName.val(),
+            materialSampleType: searchMaterialSampleType.val(),
+            materialSample_catalogNumber: searchMaterialSampleCatalogNumber.val(),
+            catalogNumber: searchSpecimenCatalogNumber.val(),
+            eventEarlyDate: searchEventEarlyDate.val(),
+            eventLateDate: searchEventLateDate.val(),
+            recordedBy: searchRecordedBy.val(),
+            recordNumber: searchRecordNumber.val(),
+            stateProvince: searchStateProvince.val(),
+            county: searchCounty.val(),
+            locality: searchLocality.val(),
+            optradio: optradio,
+            locationRemarks: searchLocationRemarks.val(),
+            locationID: searchLocationID.val()
+        }
+        searchFormEntires = newSearchSamplesEntries
+        console.log(searchFormEntires)
+        //submitSampleSearch()
+    })
     //send to backend via api
     //return results
     //display results in list

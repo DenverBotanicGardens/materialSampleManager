@@ -2,137 +2,151 @@
 <br>
 <div class="container-fluid">
     <p class="lead">Search for Material Sample Data</p>
-    <div class="row">
-        <div class="col">
-            {{!-- project --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Project</span>
-                <input id="project" type="text" class="form-control">
+    <form id="searchSamplesForm">
+        <div class="row">
+            <div class="col">
+                {{!-- project --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Project</span>
+                    <input id="searchProject" type="text" class="form-control">
+                </div>
             </div>
-        </div>
-        <div class="col">
-            {{!-- scientificName --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Scientific Name</span>
-                <input id="scientificName" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- materialSampleType --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Material Sample Type</span>
-                <input id="materialSampleType" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- catalogNumber --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Catalog Number</span>
-                <input id="catalogNumber" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    {{!-- eventDate --}}
-    <label class="form-control-sm" for="eventDate">Collection Date</label>
-    <div class="row">
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">After</span>
-                <input id="eventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Before</span>
-                <input id="eventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- recordedBy --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Collector</span>
-                <input id="recordedBy" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            {{!-- recordNumber --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Collector Number</span>
-                <input id="recordNumber" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- stateProvince --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">State</span>
-                <input id="stateProvince" type="text" class="form-control">
-            </div>
-        </div>
-            {{!-- county --}}
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">County</span>
-                <input id="county" type="text" class="form-control">
-            </div>
-        </div>
-    </div>
-    {{!-- locality --}}
-    <div class="row">
-        <div class="col-7">
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Locality</span>
-                <input id="locality" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    <label class="form-check-label form-control-sm" for="exampleRadios1">Contains</label>
+            <div class="col">
+                {{!-- scientificName --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Scientific Name</span>
+                    <input id="searchScientificName" type="text" class="form-control">
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    <label class="form-check-label form-control-sm" for="exampleRadios1">Starts With</label>
+        <div class="row">
+            <div class="col">
+                {{!-- materialSampleType --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Material Sample Type</span>
+                    <input id="searchMaterialSampleType" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- materialSample_catalogNumber --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Sample Catalog Number</span>
+                    <input id="searchMaterialSampleCatalogNumber" type="text" class="form-control">
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    <label class="form-check-label form-control-sm" for="exampleRadios1">Is Exactly</label>
+        <div class="row">
+            <div class="col">
+                {{!-- specimen catalogNumber --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Associated Specimen Catalog Number</span>
+                    <input id="searchSpecimenCatalogNumber" type="text" class="form-control">
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {{!-- locationRemarks --}}
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Landowner or EO</span>
-                <input id="locationRemarks" type="text" class="form-control">
+        {{!-- eventDate --}}
+        <label class="form-control-sm" for="eventDate">Collection Date</label>
+        <div class="row">
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">After</span>
+                    <input id="searchEventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Before</span>
+                    <input id="searchEventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                </div>
             </div>
         </div>
-            {{!-- locationID --}}
-        <div class="col">
-            <div class="input-group input-group-sm mb-3">
-                <span class="input-group-text">Location ID</span>
-                <input id="locationID" type="text" class="form-control">
+        <div class="row">
+            <div class="col">
+                {{!-- recordedBy --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Collector</span>
+                    <input id="searchRecordedBy" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                {{!-- recordNumber --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Collector Number</span>
+                    <input id="searchRecordNumber" type="text" class="form-control">
+                </div>
             </div>
         </div>
-    </div>
-    {{!-- SUBMIT BUTTON --}}
-    <button type="button" class="btn btn-primary">Search</button>
+        <div class="row">
+            <div class="col">
+                {{!-- stateProvince --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">State</span>
+                    <input id="searchStateProvince" type="text" class="form-control">
+                </div>
+            </div>
+                {{!-- county --}}
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">County</span>
+                    <input id="searchCounty" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        {{!-- locality --}}
+        <div class="row">
+            <div class="col-7">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Locality</span>
+                    <input id="searchLocality" type="text" class="form-control" placeholder="Please select Contains, Starts With, or Is Exactly">
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="form-check">
+                        <label>
+                            <input class="form-check-input" type="radio" name="localityRadio" id="searchLocalityContains" value="contains">Contains
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="form-check">
+                        <label>
+                            <input class="form-check-input" type="radio" name="localityRadio" id="searchLocalityStartsWith" value="startsWith">Starts With
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="form-check">
+                        <label>
+                        <input class="form-check-input" type="radio" name="localityRadio" id="searchLocalityIsExactly" value="isExactly">Is Exactly
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{!-- locationRemarks --}}
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Landowner or EO</span>
+                    <input id="searchLocationRemarks" type="text" class="form-control">
+                </div>
+            </div>
+                {{!-- locationID --}}
+            <div class="col">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text">Location ID</span>
+                    <input id="searchLocationID" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+        {{!-- SUBMIT BUTTON --}}
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     <br>
     <br>
     {{!-- SEARCH RESULTS LIST --}}
