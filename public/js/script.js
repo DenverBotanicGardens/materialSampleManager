@@ -222,7 +222,6 @@ $(document).ready(function() {
     })
     $("#searchSamplesForm").on("submit", function handleFormSubmit(event){
         event.preventDefault()
-        console.log(selectedLocalityOption)
         let optradio
         if (selectedLocalityOption == "contains"){
             optradio = "contains"
@@ -244,7 +243,7 @@ $(document).ready(function() {
             eventEarlyDate: searchEventEarlyDate.val(),
             eventLateDate: searchEventLateDate.val(),
             recordedBy: searchRecordedBy.val(),
-            recordNumber: searchRecordNumber.val(),
+            materialSample_recordNumber: searchRecordNumber.val(),
             stateProvince: searchStateProvince.val(),
             county: searchCounty.val(),
             locality: searchLocality.val(),
@@ -254,10 +253,21 @@ $(document).ready(function() {
         }
         searchFormEntires = newSearchSamplesEntries
         console.log(searchFormEntires)
-        //submitSampleSearch()
+        submitSampleSearch()
     })
     //send to backend via api
-    //return results
+    const submitSampleSearch = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/searchMaterialSamples",
+            data: searchFormEntires
+        })
+        //return results
+        .then((searchSampleResults) => {
+            console.log(searchSampleResults)
+        })
+    }
+
     //display results in list
 
 
