@@ -5,6 +5,9 @@ $(document).ready(function() {
     //Search Form
     //an object to contain the values entered by the user into the form on the Search page
     let searchFormEntires = {}
+
+    //an array to contain the results from a search
+    let searchResultsList = []
     
     // //New Project Form
     // //an object to contain the values entered by the user into the form to create a new project
@@ -264,11 +267,37 @@ $(document).ready(function() {
         })
         //return results
         .then((searchSampleResults) => {
-            console.log(searchSampleResults)
+            searchResultsList = []
+            //display results in list
+            $.each(searchSampleResults, function(i, resultFromSearch) {
+                searchResultsList.push(
+                    `<tr>
+                    <td>${resultFromSearch.scientificName}</td>
+                    <td>${resultFromSearch.materialSample_catalogNumber}</td>
+                    <td>${resultFromSearch.materialSampleType}</td>
+                    <td>${resultFromSearch.eventDate}</td>
+                    <td>${resultFromSearch.recordedBy}</td>
+                    <td>${resultFromSearch.numberCollected}</td>
+                    <td>${resultFromSearch.numberAvailable}</td>
+                    <td>${resultFromSearch.stateProvince}</td>
+                    <td>${resultFromSearch.county}</td>
+                    <td>${resultFromSearch.locality}</td>
+                    <td>${resultFromSearch.locationID}</td>
+                    <td>${resultFromSearch.locationRemarks}</td>
+                    </tr>`
+                )
+            })
+        })
+        .then(function(){
+            $('#searchResultTableData').empty()
+            $('#searchResultTableData').append(searchResultsList.join(''))
+            $('#searchResults').show()
+        })
+        .catch((error) => {
+            console.error(error);
         })
     }
 
-    //display results in list
 
 
 //Download Material Sample Records To CSV

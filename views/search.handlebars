@@ -139,7 +139,7 @@
                 {{!-- locationID --}}
             <div class="col">
                 <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Location ID</span>
+                    <span class="input-group-text">Site Name / Location ID</span>
                     <input id="searchLocationID" type="text" class="form-control">
                 </div>
             </div>
@@ -150,13 +150,28 @@
     <br>
     <br>
     {{!-- SEARCH RESULTS LIST --}}
-    <form id="searchResults">
-        <label>Hold down the Ctrl (Windows) or Command (Mac) button to select/deselect multiple records.</label>
-        <br>
-        <button id="downloadRecords" type="button" class="btn btn-primary">Download Selected Records to CSV</button>
-        <br>
-        <br>
-        <select id="searchResult" class="form-select" multiple size="30" style="width: 100%;"></select>
-    </form>
+    <div id="searchResults">
+        <p>Material Samples</p>
+        <table class="table" id="searchResultTable">
+            <thead>
+                <tr>
+                    <th scope="col">Scientific Name</th>
+                    <th scope="col">Material Sample Catalog Number</th>
+                    <th scope="col">Sample Type</th>
+                    <th scope="col">Date Collected</th>
+                    <th scope="col">Collected By</th>
+                    <th scope="col">Number Collected</th>
+                    <th scope="col">Number Available</th>
+                    <th scope="col">State Province</th>
+                    <th scope="col">County</th>
+                    <th scope="col">Locality</th>
+                    <th scope="col">Site Name / LocationID</th>
+                    <th scope="col">Landowner</th>
+                </tr>
+            </thead>
+            <tbody id="searchResultTableData">
+            </tbody>
+        </table>
+    </div>
 
 </div>
