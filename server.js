@@ -4,6 +4,12 @@ var exhbs = require("express-handlebars")
 var path = require("path")
 var dotenv = require('dotenv').config()
 var fs = require("fs");
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+
+//Import User model from db
+const User = require('./models/User'); // Import your User model
 
 //create express server
 var app = express()

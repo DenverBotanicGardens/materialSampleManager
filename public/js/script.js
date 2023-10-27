@@ -1257,7 +1257,36 @@ const submitNewGerminationTrial = () => {
             console.error(error);
         })
     }
+//--------------------------------------------------------------------------------------------------
+// USER AUTH
+//--------------------------------------------------------------------------------------------------
+    let username = $("#username")
+    let password = $("#password")
+    let loginEntries
+    $("#loginForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        loginEntries = {
+            username: username.val(),
+            password: password.val()
+        }
+        authenticateUser()
+    })
 
+    //function to send user credentials to server
+    const authenticateUser = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/login",
+            data: loginEntries
+        })
+        .then(function(){
+            console.log("login credentials submitted")
+            loginEntries = ""
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 //--------------------------------------------------------------------------------------------------
 // MORE EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------

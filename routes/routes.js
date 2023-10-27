@@ -18,52 +18,72 @@ const getGerminationTrialResults = require("../controllers/exportGerminationTria
 const csvUpload = require("../controllers/csvUpload");
 const searchMaterialSamplesForTransfer = require("../controllers/searchMaterialSamplesForTransfer")
 const searchMaterialSamplesForUpdate = require("../controllers/searchMaterialSamplesForUpdate")
+const passport = require('passport');
 
 
 let routes = (app) => {
 
   //VIEW ROUTES-------------------------------------------------------------------------------------------------
     //index
-    app.get('/', (req, res) => {
+    app.get('/', ensureAuthenticated, (req, res) => {
       res.render("index");
     });
 
-    app.get('/createNewProject', (req, res) => {
+    app.get('/createNewProject', ensureAuthenticated, (req, res) => {
       res.render("createNewProject");
     });
 
-    app.get('/uploadMaterialSamples', (req, res) => {
+    app.get('/uploadMaterialSamples', ensureAuthenticated, (req, res) => {
       res.render("uploadMaterialSamples");
     });
 
-    app.get('/search', (req, res) => {
+    app.get('/search', ensureAuthenticated, (req, res) => {
       res.render("search");
     });
 
-    app.get('/updateMaterialSample', (req, res) => {
+    app.get('/updateMaterialSample', ensureAuthenticated, (req, res) => {
       res.render("updateMaterialSample");
     });
 
-    app.get('/germinationTrials', (req, res) => {
+    app.get('/germinationTrials', ensureAuthenticated, (req, res) => {
       res.render("germinationTrials");
     });
 
-    app.get('/createNewGerminationTrial', (req, res) => {
+    app.get('/createNewGerminationTrial', ensureAuthenticated, (req, res) => {
       res.render("createNewGerminationTrial");
     });
 
-    app.get('/transferMaterialSample', (req, res) => {
+    app.get('/transferMaterialSample', ensureAuthenticated, (req, res) => {
       res.render("transferMaterialSample");
     });
 
-    app.get('/transfers', (req, res) => {
+    app.get('/transfers', ensureAuthenticated, (req, res) => {
       res.render("transfers");
     });
 
-    app.get('/updateTransfer', (req, res) => {
+    app.get('/updateTransfer', ensureAuthenticated, (req, res) => {
       res.render("updateTransfers");
     });
-  
+
+  //USER AUTH ROUTES---------------------------------------------------------------------------------------
+    app.get('/login', (req, res) => {
+      res.render("login");
+    })
+    
+  //POST /api/upload
+    router.post("/login", passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true
+    }))
+
+    function ensureAuthenticated(req, res, next) {
+      if (req.isAuthenticated()) {
+        return next();
+      }
+      res.redirect('/login');
+    }
+
   //API ROUTES---------------------------------------------------------------------------------------------
   //POST /api/projects
   router.post("/project", projectController.addProject);

@@ -27,6 +27,7 @@ db.preservedSpecimen = require("./PreservedSpecimen.js")(sequelize, Sequelize);
 db.transfer = require("./Transfer.js")(sequelize, Sequelize);
 db.germplasmViabilityTest = require("./GermplasmViabilityTest.js")(sequelize, Sequelize);
 db.viabilityTracking = require("./ViabilityTracking.js")(sequelize, Sequelize);
+db.user = require("./User.js")(sequelize, Sequelize);
 
 
 //set up table associations
