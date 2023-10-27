@@ -65,10 +65,10 @@ async function searchMaterialSamples(req, res) {
         if (req.body.materialSample_catalogNumber !== '') {
             materialSampleQuery.push(` AND ms.materialSample_catalogNumber = '${req.body.materialSample_catalogNumber}'`);
         }
-        //recordNumber
-        if (req.body.recordNumber !== ''){
-            materialSampleQuery.push(` AND ps.recordNumber LIKE '%${req.body.recordNumber}%'`)
-        }
+        // //recordNumber
+        // if (req.body.recordNumber !== ''){
+        //     materialSampleQuery.push(` AND ps.recordNumber LIKE '%${req.body.recordNumber}%'`)
+        // }
         //catalogNumber
         if (req.body.catalogNumber !== '') {
             materialSampleQuery.push(` AND ps.catalogNumber = '${req.body.catalogNumber}'`);
@@ -120,10 +120,11 @@ async function exportSearchToCSV(req, res) {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
     const date = `${year}${month}${day}${hours}${minutes}${seconds}`;
+    let filename = `${date}_materialSampleSearchDataExport.csv`
     //set the path for the file
-    const ws = fs.createWriteStream(`./resources/static/assets/downloads/${date}_materialSampleSearchDataExport.csv`)
+    const ws = fs.createWriteStream(`./resources/static/assets/downloads/${filename}`)
     await new Promise(resolve => setTimeout(() => {
-        console.log(dataForExport)
+        //console.log(dataForExport)
         csv.write(dataForExport, { headers: true })
         .pipe(ws)
         .on("finish", function(){
@@ -132,14 +133,28 @@ async function exportSearchToCSV(req, res) {
         resolve()
     },1000))
     .then((data) => {
-        res.send(data)
+        res.send(filename)
     })
     .catch((err) => {
         console.log(err);
       })
 }
 
+//download the specified file
+const downloadSearchResultsFile = (req, res) => {
+    const fileName = req.params.name;
+    const directoryPath = __basedir + "/resources/static/assets/downloads/";
+    res.download(directoryPath + fileName, fileName, (err) => {
+      if (err) {
+        res.status(500).send({
+          message: "Could not download the file" + err,
+        })
+      }
+    })
+  }
+
 module.exports = {
     searchMaterialSamples,
-    exportSearchToCSV
+    exportSearchToCSV,
+    downloadSearchResultsFile
 }

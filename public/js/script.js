@@ -5,10 +5,13 @@ $(document).ready(function() {
     //Search Form
     //an object to contain the values entered by the user into the form on the Search page
     let searchFormEntires = {}
-    
-    // //New Project Form
-    // //an object to contain the values entered by the user into the form to create a new project
-    // let newProjectFormEntries = {}
+
+    //an array to contain the results from a search
+    let searchResultsList = []
+
+    //Filename for CSV containing Search Results Data that is to be downloaded by the client
+    let searchResultsCSVFileName
+
     
     //Projects List
     //an array that contains all projects from the database. to be displayed on the list on the projects page and in the dropdown selection on the upload data page.
@@ -138,59 +141,15 @@ $(document).ready(function() {
     //Execute Search
 
     //Download Search Results to CSV
-
-
-    //Submit New Project
-
-
-    //Upload CSV File
-
-
-    //Execute Search for Germination Trials
+    $("#downloadSearchResults").on("click", function(){
+        exportSearchResults()
+    })
 
 
     //Download Germinations Trials to CSV
     $("#downloadGerminationTrialRecordsResults").on("click", function(){
         exportGermTrialResults()
     })
-
-    //Select Germination Trial to Add Viability Tracking To
-    
-
-    //Submit Add Viability Tracking Data Form
-
-
-    //Select Germination Trial to Finish
-
-
-    //Submit Finish Germiation Trial Form
-
-
-    //Execute Search for seed to Use in Germination Trial
-
-    
-    //Select Seed to Create New Germinaiton Trial
-
-
-    //Submit New Germination Trial Form
-
-
-    //Execute Search for Transfers
-
-
-    //Select Transfer to Update
-
-
-    //Submit Transfer Update Form
-
-
-    //Execute Search for Samples to Transfer
-
-
-    //Select Sample to Transfer
-
-
-    //Submit New Transfer Form
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -202,13 +161,155 @@ $(document).ready(function() {
 //--------------------------------------------------------------------------------------------------
 
     //add user entries to searchFormEntires object
-    
+    let searchProject = $("#searchProject")
+    let searchScientificName = $("#searchScientificName")
+    let searchMaterialSampleType = $("#searchMaterialSampleType")
+    let searchMaterialSampleCatalogNumber = $("#searchMaterialSampleCatalogNumber")
+    let searchSpecimenCatalogNumber = $("#searchSpecimenCatalogNumber")
+    let searchEventEarlyDate = $("#searchEventEarlyDate")
+    let searchEventLateDate = $("#searchEventLateDate")
+    let searchRecordedBy = $("#searchRecordedBy")
+    let searchRecordNumber = $("#searchRecordNumber")
+    let searchStateProvince = $("#searchStateProvince")
+    let searchCounty = $("#searchCounty")
+    let searchLocality = $("#searchLocality")
+    let selectedLocalityOption
+    let searchLocationRemarks = $("#searchLocationRemarks")
+    let searchLocationID = $("#searchLocationID")
+    $('input[name="localityRadio"]').click(function() {
+        selectedLocalityOption = $('input[name="localityRadio"]:checked').val();
+    })
+    $("#searchSamplesForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let optradio
+        if (selectedLocalityOption == "contains"){
+            optradio = "contains"
+        } else if (selectedLocalityOption == "startsWith"){
+            optradio = "startsWith"
+        } else if (selectedLocalityOption == "isExactly"){
+            optradio = "isExactly"
+        } else if (selectedLocalityOption === undefined){
+            optradio = ""
+        } else {
+            alert("Please the locality components of your query")
+        }
+        let newSearchSamplesEntries = {
+            project: searchProject.val(),
+            scientificName: searchScientificName.val(),
+            materialSampleType: searchMaterialSampleType.val(),
+            materialSample_catalogNumber: searchMaterialSampleCatalogNumber.val(),
+            catalogNumber: searchSpecimenCatalogNumber.val(),
+            eventEarlyDate: searchEventEarlyDate.val(),
+            eventLateDate: searchEventLateDate.val(),
+            recordedBy: searchRecordedBy.val(),
+            materialSample_recordNumber: searchRecordNumber.val(),
+            stateProvince: searchStateProvince.val(),
+            county: searchCounty.val(),
+            locality: searchLocality.val(),
+            optradio: optradio,
+            locationRemarks: searchLocationRemarks.val(),
+            locationID: searchLocationID.val()
+        }
+        searchFormEntires = newSearchSamplesEntries
+        console.log(searchFormEntires)
+        submitSampleSearch()
+    })
     //send to backend via api
-    //return results
-    //display results in list
+    const submitSampleSearch = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/searchMaterialSamples",
+            data: searchFormEntires
+        })
+        //return results
+        .then((searchSampleResults) => {
+            searchResultsList = []
+            //display results in list
+            $.each(searchSampleResults, function(i, resultFromSearch) {
+                searchResultsList.push(
+                    `<tr>
+                    <td>${resultFromSearch.scientificName}</td>
+                    <td>${resultFromSearch.materialSample_catalogNumber}</td>
+                    <td>${resultFromSearch.materialSampleType}</td>
+                    <td>${resultFromSearch.eventDate}</td>
+                    <td>${resultFromSearch.recordedBy}</td>
+                    <td>${resultFromSearch.numberCollected}</td>
+                    <td>${resultFromSearch.numberAvailable}</td>
+                    <td>${resultFromSearch.stateProvince}</td>
+                    <td>${resultFromSearch.county}</td>
+                    <td>${resultFromSearch.locality}</td>
+                    <td>${resultFromSearch.locationID}</td>
+                    <td>${resultFromSearch.locationRemarks}</td>
+                    </tr>`
+                )
+            })
+        })
+        .then(function(){
+            $('#searchResultTableData').empty()
+            $('#searchResultTableData').append(searchResultsList.join(''))
+            $('#searchResults').show()
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 
 
+//--------------------------------------------------------------------------------------------------
 //Download Material Sample Records To CSV
+//--------------------------------------------------------------------------------------------------
+    //create the csv of germination trial results on the back end
+    const exportSearchResults = (req,res) => {
+        $.ajax({
+            url: "/api/exportSearchToCSV",
+            method: "POST",
+        })
+        .then((res) => {
+            searchResultsCSVFileName = res
+        })
+        .then(function(){
+            downloadSearchResultsFileFromBackend()
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
+    function downloadSearchResultsFileFromBackend() {
+        $.ajax({
+            url: "/api/downloadSearchResultsFile/"+searchResultsCSVFileName,
+            method: "GET"
+        })
+        .then(function() {
+            downloadBlobFromURLSearch('http://localhost:8080/api/downloadSearchResultsFile/'+searchResultsCSVFileName, searchResultsCSVFileName);
+        })
+        function downloadBlobFromURLSearch(url, fileName) {
+            fetch(url)
+              .then(response => response.blob())
+              .then(blob => {
+                // Create a URL for the Blob
+                const blobURL = URL.createObjectURL(blob);
+          
+                // Create an anchor element
+                const downloadLinkSearch = document.createElement('a');
+                downloadLinkSearch.href = blobURL;
+                downloadLinkSearch.download = fileName; // Set the desired filename
+          
+                // Append the anchor element to the document body
+                document.body.appendChild(downloadLinkSearch);
+          
+                // Simulate a click event on the anchor element
+                downloadLinkSearch.click();
+          
+                // Clean up the created URL and remove the anchor element
+                URL.revokeObjectURL(blobURL);
+                document.body.removeChild(downloadLinkSearch);
+              })
+              .catch(error => {
+                console.error('Error downloading blob:', error);
+              });
+          }
+    }
 
 //--------------------------------------------------------------------------------------------------
 //SUBMIT NEW PROJECT
@@ -440,7 +541,7 @@ $(document).ready(function() {
             method: "POST",
         })
         .then((res) => {
-            //console.log(res)
+            console.log(res)
             germinationTrialResultsCSVFileName = res
         })
         .then(function(){

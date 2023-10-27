@@ -131,6 +131,9 @@ let routes = (app) => {
   //GET /api/downloadGerminationTrialsFile
   router.get("/downloadGerminationTrialsFile/:name", getGerminationTrialResults.downloadGerminationTrialsFile);
 
+  //GET /api/downloadSearchResultsFile
+  router.get("/downloadSearchResultsFile/:name", searchMaterialSamples.downloadSearchResultsFile);
+
   app.use("/api", router);
 };
 
