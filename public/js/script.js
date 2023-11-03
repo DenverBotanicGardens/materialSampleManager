@@ -2,6 +2,9 @@ $(document).ready(function() {
     //--------------------------------------------------------------------------------------------------
     //GLOBAL VARIABLES
     //--------------------------------------------------------------------------------------------------
+    //login entries
+    let loginEntries = {}
+    
     //Search Form
     //an object to contain the values entered by the user into the form on the Search page
     let searchFormEntires = {}
@@ -1010,7 +1013,6 @@ const submitNewGerminationTrial = () => {
             }
         })
             .then(function(){
-                //window.location.href = '/transfers'
                 console.log("new transfer submitted")
             })
             .catch((error) => {
@@ -1262,31 +1264,32 @@ const submitNewGerminationTrial = () => {
 //--------------------------------------------------------------------------------------------------
     let username = $("#username")
     let password = $("#password")
-    let loginEntries
     $("#loginForm").on("submit", function handleFormSubmit(event){
         event.preventDefault()
         loginEntries = {
             username: username.val(),
             password: password.val()
         }
-        authenticateUser()
+        sendCredentials()
     })
 
-    //function to send user credentials to server
-    const authenticateUser = () => {
+    //function to send user credentials to backend
+    const sendCredentials = () => {
         $.ajax({
             method: "POST",
-            url: "/api/login",
+            url: "/api/signin",
             data: loginEntries
         })
-        .then(function(){
-            console.log("login credentials submitted")
-            loginEntries = ""
+        .then((res) => {
+            $("#password").val('')
         })
         .catch((error) => {
             console.error(error);
+            $("#password").val('')
+
         })
     }
+
 //--------------------------------------------------------------------------------------------------
 // MORE EVENT LISTENERS
 //--------------------------------------------------------------------------------------------------
