@@ -25,7 +25,7 @@ let routes = (app) => {
 
   //VIEW ROUTES-------------------------------------------------------------------------------------------------
     //index
-    app.get('/',  (req, res) => {
+    app.get('/', ensureAuthenticated, (req, res) => {
       res.render("index");
     });
 
@@ -33,35 +33,35 @@ let routes = (app) => {
       res.render("createNewProject");
     });
 
-    app.get('/uploadMaterialSamples', (req, res) => {
+    app.get('/uploadMaterialSamples', ensureAuthenticated, (req, res) => {
       res.render("uploadMaterialSamples");
     });
 
-    app.get('/search', (req, res) => {
+    app.get('/search', ensureAuthenticated, (req, res) => {
       res.render("search");
     });
 
-    app.get('/updateMaterialSample', (req, res) => {
+    app.get('/updateMaterialSample', ensureAuthenticated, (req, res) => {
       res.render("updateMaterialSample");
     });
 
-    app.get('/germinationTrials', (req, res) => {
+    app.get('/germinationTrials', ensureAuthenticated, (req, res) => {
       res.render("germinationTrials");
     });
 
-    app.get('/createNewGerminationTrial', (req, res) => {
+    app.get('/createNewGerminationTrial', ensureAuthenticated, (req, res) => {
       res.render("createNewGerminationTrial");
     });
 
-    app.get('/transferMaterialSample', (req, res) => {
+    app.get('/transferMaterialSample', ensureAuthenticated, (req, res) => {
       res.render("transferMaterialSample");
     });
 
-    app.get('/transfers', (req, res) => {
+    app.get('/transfers', ensureAuthenticated, (req, res) => {
       res.render("transfers");
     });
 
-    app.get('/updateTransfer', (req, res) => {
+    app.get('/updateTransfer', ensureAuthenticated, (req, res) => {
       res.render("updateTransfers");
     });
 
@@ -88,13 +88,10 @@ let routes = (app) => {
   }
 
   // Logout route
-  app.get('/logout', (req, res) => {
-    // req.logout(); // Passport.js function to logout the user
-    req.session.destroy((err) => {
-      if (err) {
-        console.log(err);
-      }
-      res.redirect('/login'); // Redirect to login or any other appropriate page
+  app.get('/logout', function(req, res, next) {
+    req.logout(function(err) {
+      if (err) { return next(err); }
+      res.redirect('/login');
     });
   });
     
