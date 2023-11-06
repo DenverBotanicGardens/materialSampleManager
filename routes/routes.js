@@ -76,8 +76,6 @@ let routes = (app) => {
     
   //POST /api/login
   router.post("/signin", passport.authenticate('local', {
-    failureRedirect: '/login',
-    // successRedirect: '/',
     }), (req,res) => {
       if (req.user) {
         res.status(200).json({message: "Login successful"})

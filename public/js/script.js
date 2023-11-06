@@ -1289,8 +1289,11 @@ const submitNewGerminationTrial = () => {
         })
         .catch((error) => {
             console.error(error);
+            console.log(error.status)
+            if (error.status == 401){
+                alert("Username and/or password not found or incorrect")
+            }
             $("#password").val('')
-
         })
     }
 
