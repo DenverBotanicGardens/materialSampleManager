@@ -2,6 +2,9 @@ $(document).ready(function() {
     //--------------------------------------------------------------------------------------------------
     //GLOBAL VARIABLES
     //--------------------------------------------------------------------------------------------------
+    //login entries
+    let loginEntries = {}
+    
     //Search Form
     //an object to contain the values entered by the user into the form on the Search page
     let searchFormEntires = {}
@@ -149,6 +152,11 @@ $(document).ready(function() {
     //Download Germinations Trials to CSV
     $("#downloadGerminationTrialRecordsResults").on("click", function(){
         exportGermTrialResults()
+    })
+
+    //Log Out
+    $("#logoutButton").on("click", function(){
+        logoutUser()
     })
 
 
@@ -1010,7 +1018,6 @@ const submitNewGerminationTrial = () => {
             }
         })
             .then(function(){
-                //window.location.href = '/transfers'
                 console.log("new transfer submitted")
             })
             .catch((error) => {
@@ -1257,6 +1264,61 @@ const submitNewGerminationTrial = () => {
             console.error(error);
         })
     }
+//--------------------------------------------------------------------------------------------------
+// USER AUTH
+//--------------------------------------------------------------------------------------------------
+    //LOGGING IN
+    let username = $("#username")
+    let password = $("#password")
+    $("#loginForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        loginEntries = {
+            username: username.val(),
+            password: password.val()
+        }
+        sendCredentials()
+    })
+
+    //function to send user credentials to backend
+    const sendCredentials = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/signin",
+            data: loginEntries
+        })
+        .then((res) => {
+            $("#password").val('')
+            console.log(res)
+            if (res.message == "Login successful"){
+               window.location.href = '/'
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            console.log(error.status)
+            if (error.status == 401){
+                alert("Username and/or password not found or incorrect")
+            }
+            $("#password").val('')
+        })
+    }
+
+    //LOGGING OUT
+    const logoutUser = () => {
+        $.ajax({
+            method: "POST",
+            url: "/logout"
+        })
+        .then(res => {
+            if (res.message == "Logout successful"){
+                console.log("user logged out")
+                window.location.href = '/'
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error)
+        })
+    } 
 
 //--------------------------------------------------------------------------------------------------
 // MORE EVENT LISTENERS
