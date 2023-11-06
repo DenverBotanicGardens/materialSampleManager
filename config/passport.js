@@ -33,7 +33,6 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (id, done) => {
     try {
         const user = await User.findByPk(id);
-        console.log('made it here')
         done(null, user);
   } catch (err) {
     done(err);

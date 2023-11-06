@@ -1282,6 +1282,10 @@ const submitNewGerminationTrial = () => {
         })
         .then((res) => {
             $("#password").val('')
+            console.log(res)
+            if (res.message == "Login successful"){
+               window.location.href = '/'
+            }
         })
         .catch((error) => {
             console.error(error);
