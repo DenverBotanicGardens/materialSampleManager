@@ -159,6 +159,11 @@ $(document).ready(function() {
         logoutUser()
     })
 
+    //Download Template CSV
+    $("#downloadTemplate").on("click", function(){
+        downloadTemplate()
+    })
+
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //FUNCTIONS-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -266,7 +271,7 @@ $(document).ready(function() {
 //--------------------------------------------------------------------------------------------------
 //Download Material Sample Records To CSV
 //--------------------------------------------------------------------------------------------------
-    //create the csv of germination trial results on the back end
+    //create the csv of materialSample results on the back end
     const exportSearchResults = (req,res) => {
         $.ajax({
             url: "/api/exportSearchToCSV",
@@ -1319,6 +1324,48 @@ const submitNewGerminationTrial = () => {
             console.error('Error:', error)
         })
     } 
+    
+//--------------------------------------------------------------------------------------------------
+// DOWNLOAD TEMPLATE CSV FILE TO CLIENT
+//--------------------------------------------------------------------------------------------------
+    //download the template file to the client
+    function downloadTemplate() {
+        $.ajax({
+            url: "/api/downloadTemplate/materialSampleManager_uploadTemplate.csv",
+            method: "GET"
+        })
+        .then(function() {
+            downloadBlobFromURLSearch('http://localhost:8080/api/downloadTemplate/materialSampleManager_uploadTemplate.csv', "materialSampleManager_uploadTemplate.csv");
+        })
+        function downloadBlobFromURLSearch(url, fileName) {
+            fetch(url)
+              .then(response => response.blob())
+              .then(blob => {
+                // Create a URL for the Blob
+                const blobURL = URL.createObjectURL(blob);
+          
+                // Create an anchor element
+                const downloadLinkSearch = document.createElement('a');
+                downloadLinkSearch.href = blobURL;
+                downloadLinkSearch.download = fileName; // Set the desired filename
+          
+                // Append the anchor element to the document body
+                document.body.appendChild(downloadLinkSearch);
+          
+                // Simulate a click event on the anchor element
+                downloadLinkSearch.click();
+          
+                // Clean up the created URL and remove the anchor element
+                URL.revokeObjectURL(blobURL);
+                document.body.removeChild(downloadLinkSearch);
+              })
+              .catch(error => {
+                console.error('Error downloading blob:', error);
+              });
+          }
+    }
+
+
 
 //--------------------------------------------------------------------------------------------------
 // MORE EVENT LISTENERS

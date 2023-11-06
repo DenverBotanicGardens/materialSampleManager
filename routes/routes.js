@@ -18,6 +18,7 @@ const getGerminationTrialResults = require("../controllers/exportGerminationTria
 const csvUpload = require("../controllers/csvUpload");
 const searchMaterialSamplesForTransfer = require("../controllers/searchMaterialSamplesForTransfer")
 const searchMaterialSamplesForUpdate = require("../controllers/searchMaterialSamplesForUpdate")
+const downloadTemplate = require("../controllers/downloadTemplate")
 const authController = require('../controllers/userAuth');
 const passport = require('../config/passport');
 
@@ -166,6 +167,9 @@ let routes = (app) => {
 
   //GET /api/downloadSearchResultsFile
   router.get("/downloadSearchResultsFile/:name", searchMaterialSamples.downloadSearchResultsFile);
+
+  //GET /api/downloadTemplate
+  router.get("/downloadTemplate/materialSampleManager_uploadTemplate.csv", downloadTemplate.downloadTemplate);
 
   app.use("/api", router);
 };
