@@ -11,8 +11,7 @@ const session = require('express-session');
 var app = express()
 
 //define PORT
-var PORT = 8080
-//var PORT = process.env.PORT
+var PORT = process.env.PORT || 8080
 
 //require models
 var db = require("./models")
@@ -20,7 +19,7 @@ var db = require("./models")
 //set up express app to handle data parsing
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
-app.use(session({ secret: 'your_secret_key', resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
