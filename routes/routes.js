@@ -90,13 +90,13 @@ let routes = (app) => {
   }
 
   // Logout route
-  app.get('/logout', function(req, res, next) {
+  app.post('/logout', function(req, res, next){
     req.logout(function(err) {
+      res.status(200).json({message: "Logout successful"})
       if (err) { return next(err); }
-      res.redirect('/login');
     });
   });
-    
+
   //API ROUTES---------------------------------------------------------------------------------------------
   //POST /api/projects
   router.post("/project", projectController.addProject);

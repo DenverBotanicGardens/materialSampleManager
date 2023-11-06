@@ -4,7 +4,6 @@ const User = db.user
 
 const authController = {
   login: (req, res) => {
-    console.log("here")
   },
   register: async (req, res) => {
     try {

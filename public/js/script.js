@@ -154,6 +154,11 @@ $(document).ready(function() {
         exportGermTrialResults()
     })
 
+    //Log Out
+    $("#logoutButton").on("click", function(){
+        logoutUser()
+    })
+
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //FUNCTIONS-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1262,6 +1267,7 @@ const submitNewGerminationTrial = () => {
 //--------------------------------------------------------------------------------------------------
 // USER AUTH
 //--------------------------------------------------------------------------------------------------
+    //LOGGING IN
     let username = $("#username")
     let password = $("#password")
     $("#loginForm").on("submit", function handleFormSubmit(event){
@@ -1296,6 +1302,23 @@ const submitNewGerminationTrial = () => {
             $("#password").val('')
         })
     }
+
+    //LOGGING OUT
+    const logoutUser = () => {
+        $.ajax({
+            method: "POST",
+            url: "/logout"
+        })
+        .then(res => {
+            if (res.message == "Logout successful"){
+                console.log("user logged out")
+                window.location.href = '/'
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error)
+        })
+    } 
 
 //--------------------------------------------------------------------------------------------------
 // MORE EVENT LISTENERS

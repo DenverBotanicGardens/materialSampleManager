@@ -39,4 +39,9 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+passport.logout =(req,res) => {
+  req.logout()
+  res.redirect('/login')
+}
+
 module.exports = passport;
