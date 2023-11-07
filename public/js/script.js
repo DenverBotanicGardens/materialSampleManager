@@ -1233,8 +1233,8 @@ const submitNewGerminationTrial = () => {
     //Event listener for button to capture ID of selected material sample
     $("#searchSamplesToUpdateResults").on('click','.sampledSelectedForUpdate', function(){
         sampledSelectedForUpdateID = $(this).data('id')
-        sampledSelectedForUpdateCatalogNumber = $(this).data('catalognumber').replace("_"," ")
-        sampledSelectedForUpdateScientificName = $(this).data('scientificname').replace("_"," ")
+        sampledSelectedForUpdateCatalogNumber = $(this).data('catalognumber').toString().replace("_"," ")
+        sampledSelectedForUpdateScientificName = $(this).data('scientificname').toString().replace("_"," ")
         $('#sampleUpdatesForm').show()
         $('#sampleSelectedForUpdateTitle').text(`Update Existing Sample record for ${sampledSelectedForUpdateScientificName} (${sampledSelectedForUpdateCatalogNumber}).`)
         $(document).scrollTop($(document).height());
