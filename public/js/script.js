@@ -764,7 +764,7 @@ $(document).ready(function() {
         .then(function(){
             window.location.href = '/germinationTrials'
         })
-        .cath((error) => {
+        .catch((error) => {
             console.log(error)
         })
     }
