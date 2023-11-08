@@ -35,6 +35,11 @@ app.engine("handlebars", exhbs.engine({
 }));
 app.set("view engine", "handlebars");
 
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // You can log more information or debug information here
+});
+
 //routes
 const initRoutes = require("./routes/routes");
 //api routes for handling data exchanges
