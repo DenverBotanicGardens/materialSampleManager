@@ -19,6 +19,7 @@ const csvUpload = require("../controllers/csvUpload");
 const searchMaterialSamplesForTransfer = require("../controllers/searchMaterialSamplesForTransfer")
 const searchMaterialSamplesForUpdate = require("../controllers/searchMaterialSamplesForUpdate")
 const downloadTemplate = require("../controllers/downloadTemplate")
+const trialsDue = require("../controllers/trialsDue")
 const authController = require('../controllers/userAuth');
 const passport = require('../config/passport');
 
@@ -174,6 +175,9 @@ let routes = (app) => {
 
   //GET /api/downloadTemplate
   router.get("/downloadTemplate/materialSampleManager_uploadTemplate.csv", downloadTemplate.downloadTemplate);
+
+  //GET /api/trialsDue5y
+  router.get("/getSeedSamplesDueForTrial_5y", trialsDue.getSeedSamplesDueForTrial_5y);
 
   app.use("/api", router);
 };
