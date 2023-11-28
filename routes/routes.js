@@ -66,6 +66,10 @@ let routes = (app) => {
       res.render("updateTransfers");
     });
 
+    app.get('/trialsDue', ensureAuthenticated, (req, res) => {
+      res.render("trialsDue");
+    });
+
   //USER AUTH ROUTES---------------------------------------------------------------------------------------
     //Log In Page
     app.get('/login', (req, res) => {
