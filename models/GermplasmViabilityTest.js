@@ -67,7 +67,11 @@ module.exports = (sequelize, Sequelize) => {
         materialSampleID : {
             type : Sequelize.STRING,
             allowNull : true
-        }
+        },
+        pretreatments : {
+            type: Sequelize.STRING,
+            allowNull : true
+        } 
     });
 
     GermplasmViabilityTest.associate = (models) => {

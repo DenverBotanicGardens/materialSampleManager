@@ -4,13 +4,19 @@
     <p class="lead">Seed Samples Due for Viability Testing</p>
     <div class="row">
         <div class="col">
-        <button id="trialsDue5y" type="button" class="btn btn-primary">List Seed Samples Not Tested in Past 5 Years</button>
+        <button id="trialsDue5y" type="button" class="btn btn-primary">List Seed Collections Not Tested in Past 5 Years</button>
         </div>
         <div class="col">
-        <button id="trialsDue3y" type="button" class="btn btn-primary">List Seed Samples Not Tested in Past 3 Years</button>
+        <button id="trialsDue3y" type="button" class="btn btn-primary">List Seed Collections Not Tested in Past 3 Years</button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+        <button id="trialsDue3y3350m" type="button" class="btn btn-primary">List Seed Collections Not Tested in Past 3 Years From Above 3350m</button>
         </div>
         <div class="col">
-        <button id="trialsDue3y3350M" type="button" class="btn btn-primary">List Seed Samples Not Tested in Past 3 Years From Above 3350m</button>
+        <button id="neverTested" type="button" class="btn btn-primary">List Seed Collections With No Recorded Trials</button>
         </div>
     </div>
     <br><br>
@@ -19,8 +25,6 @@
         <table class="table" id="trialsDueResultsTable">
             <thead>
                 <tr>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
                     <th scope="col">scientificName</th>
                     <th scope="col">materialSample_catalogNumber</th>
                     <th scope="col">Last Trial endDate</th>
@@ -31,11 +35,10 @@
                     <th scope="col">eventDate</th>
                     <th scope="col">stateProvince</th>
                     <th scope="col">county</th>
-                    <th scope="col">locality</th>
                     <th scope="col">minimumElevationInMeters</th>
                 </tr>
             </thead>
-            <tbody id="germinationTrialResultTableData">
+            <tbody id="seedSamplesDueResultTableData">
             </tbody>
         </table>
     </div>

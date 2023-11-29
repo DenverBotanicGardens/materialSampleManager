@@ -108,6 +108,9 @@ $(document).ready(function() {
     let germinationTrialIDForFinishingTrial
     let newFinishTrialFormEntries ={}
 
+    //Seed Samples Due for Viability Testing
+    let seedsDueForTrialResult
+
 
     //--------------------------------------------------------------------------------------------------
     // EVENT LISTENERS (more at bottom of script)
@@ -136,6 +139,10 @@ $(document).ready(function() {
     //Update Material Sample Page
     $('#searchSamplesToUpdateResults').hide()
     $('#sampleUpdatesForm').hide()
+
+    //Seed Samples Due for Viability Testing Page
+    //$('#trialsDueResults').hide()
+
 
 
 
@@ -614,6 +621,7 @@ $(document).ready(function() {
         $("#searchGermTrialsFormPage").hide()
         $("#searchGermTrialResults").hide()
         $("#createNewGerminationTrialHref").hide()
+        $("#listTrialsDueHref").hide()        
         $("#addViabilityTrackingFormAndMetadata").show()
         getGermTrialMetadataForAddTracking()
     })
@@ -697,6 +705,7 @@ $(document).ready(function() {
         $("#searchGermTrialsFormPage").hide()
         $("#searchGermTrialResults").hide()
         $("#createNewGerminationTrialHref").hide()
+        $("#listTrialsDueHref").hide()        
         $("#finishGerminationTrialFormAndMetadata").show()
         getGermTrialMetadataForFinish()
     })
@@ -1368,7 +1377,169 @@ const submitNewGerminationTrial = () => {
           }
     }
 
+//--------------------------------------------------------------------------------------------------
+// SEED SAMPLES DUE FOR VIABILITY TESTING
+//--------------------------------------------------------------------------------------------------
+//button event listeners
+$("#trialsDue5y").on("click", function(){
+    listSeedDueForTrial5y()
+})
 
+$("#trialsDue3y").on("click", function(){
+    listSeedDueForTrial3y()
+})
+
+$("#trialsDue3y3350m").on("click", function(){
+    listSeedDueForTrial3y3550m()
+})
+
+$("#neverTested").on("click", function(){
+    listSeedDueForTrialNever()
+})
+
+//function to list seed samples not tested in past 5 years
+const listSeedDueForTrial5y = () => {
+    $.ajax({
+        method: "GET",
+        url: "/api/getSeedSamplesDueForTrial_5y"
+    })
+    .then((seedSamples) => {
+        seedsDueForTrialResult = []
+        $.each(seedSamples, function(i, seedSample){
+            seedsDueForTrialResult.push(
+                `<tr>
+                    <td>${seedSample.scientificName}</td>
+                    <td>${seedSample.materialSample_catalogNumber}</td>
+                    <td>${seedSample.endDate}</td>
+                    <td>${seedSample.numberSeedsTested}</td>
+                    <td>${seedSample.viabilityAdjustedGermination}</td>
+                    <td>${seedSample.testConductedBy}</td>
+                    <td>${seedSample.numberAvailable}</td>
+                    <td>${seedSample.eventDate}</td>
+                    <td>${seedSample.stateProvince}</td>
+                    <td>${seedSample.county}</td>
+                    <td>${seedSample.minimumElevationInMeters}</td>
+                </tr>`
+            )
+        })
+    })
+    .then(function(){
+        $('#seedSamplesDueResultTableData').empty()
+        $('#seedSamplesDueResultTableData').append(seedsDueForTrialResult.join(''))
+        $('#trialsDueResults').show()
+    })
+    .catch((error) => {
+        console.error(error);
+    })
+}
+
+//function to list seed samples not tested in past 3 years
+const listSeedDueForTrial3y = () => {
+    $.ajax({
+        method: "GET",
+        url: "/api/getSeedSamplesDueForTrial_3y"
+    })
+    .then((seedSamples) => {
+        seedsDueForTrialResult = []
+        $.each(seedSamples, function(i, seedSample){
+            seedsDueForTrialResult.push(
+                `<tr>
+                    <td>${seedSample.scientificName}</td>
+                    <td>${seedSample.materialSample_catalogNumber}</td>
+                    <td>${seedSample.endDate}</td>
+                    <td>${seedSample.numberSeedsTested}</td>
+                    <td>${seedSample.viabilityAdjustedGermination}</td>
+                    <td>${seedSample.testConductedBy}</td>
+                    <td>${seedSample.numberAvailable}</td>
+                    <td>${seedSample.eventDate}</td>
+                    <td>${seedSample.stateProvince}</td>
+                    <td>${seedSample.county}</td>
+                    <td>${seedSample.minimumElevationInMeters}</td>
+                </tr>`
+            )
+        })
+    })
+    .then(function(){
+        $('#seedSamplesDueResultTableData').empty()
+        $('#seedSamplesDueResultTableData').append(seedsDueForTrialResult.join(''))
+        $('#trialsDueResults').show()
+    })
+    .catch((error) => {
+        console.error(error);
+    })
+}
+
+//function to list seed samples not tested in past 3 years for collections made above 3550m elevation
+const listSeedDueForTrial3y3550m = () => {
+    $.ajax({
+        method: "GET",
+        url: "/api/getSeedSamplesDueForTrial_3y_3550m"
+    })
+    .then((seedSamples) => {
+        seedsDueForTrialResult = []
+        $.each(seedSamples, function(i, seedSample){
+            seedsDueForTrialResult.push(
+                `<tr>
+                    <td>${seedSample.scientificName}</td>
+                    <td>${seedSample.materialSample_catalogNumber}</td>
+                    <td>${seedSample.endDate}</td>
+                    <td>${seedSample.numberSeedsTested}</td>
+                    <td>${seedSample.viabilityAdjustedGermination}</td>
+                    <td>${seedSample.testConductedBy}</td>
+                    <td>${seedSample.numberAvailable}</td>
+                    <td>${seedSample.eventDate}</td>
+                    <td>${seedSample.stateProvince}</td>
+                    <td>${seedSample.county}</td>
+                    <td>${seedSample.minimumElevationInMeters}</td>
+                </tr>`
+            )
+        })
+    })
+    .then(function(){
+        $('#seedSamplesDueResultTableData').empty()
+        $('#seedSamplesDueResultTableData').append(seedsDueForTrialResult.join(''))
+        $('#trialsDueResults').show()
+    })
+    .catch((error) => {
+        console.error(error);
+    })
+}
+
+//function to list seed samples with no germ trial records in the db
+const listSeedDueForTrialNever = () => {
+    $.ajax({
+        method: "GET",
+        url: "/api/getSeedSamplesDueForTrial_never"
+    })
+    .then((seedSamples) => {
+        seedsDueForTrialResult = []
+        $.each(seedSamples, function(i, seedSample){
+            seedsDueForTrialResult.push(
+                `<tr>
+                    <td>${seedSample.scientificName}</td>
+                    <td>${seedSample.materialSample_catalogNumber}</td>
+                    <td>${seedSample.endDate}</td>
+                    <td>${seedSample.numberSeedsTested}</td>
+                    <td>${seedSample.viabilityAdjustedGermination}</td>
+                    <td>${seedSample.testConductedBy}</td>
+                    <td>${seedSample.numberAvailable}</td>
+                    <td>${seedSample.eventDate}</td>
+                    <td>${seedSample.stateProvince}</td>
+                    <td>${seedSample.county}</td>
+                    <td>${seedSample.minimumElevationInMeters}</td>
+                </tr>`
+            )
+        })
+    })
+    .then(function(){
+        $('#seedSamplesDueResultTableData').empty()
+        $('#seedSamplesDueResultTableData').append(seedsDueForTrialResult.join(''))
+        $('#trialsDueResults').show()
+    })
+    .catch((error) => {
+        console.error(error);
+    })
+}
 
 //--------------------------------------------------------------------------------------------------
 // MORE EVENT LISTENERS

@@ -178,6 +178,15 @@ let routes = (app) => {
 
   //GET /api/trialsDue5y
   router.get("/getSeedSamplesDueForTrial_5y", trialsDue.getSeedSamplesDueForTrial_5y);
+  
+  //GET /api/trialsDue3y
+  router.get("/getSeedSamplesDueForTrial_3y", trialsDue.getSeedSamplesDueForTrial_3y);
+  
+  //GET /api/trialsDue3y3550m
+  router.get("/getSeedSamplesDueForTrial_3y_3550m", trialsDue.getSeedSamplesDueForTrial_3y_3550m);
+  
+  //GET /api/trialsDueNever
+  router.get("/getSeedSamplesDueForTrial_never", trialsDue.getSeedSamplesDueForTrial_never);
 
   app.use("/api", router);
 };
