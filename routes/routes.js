@@ -19,6 +19,7 @@ const csvUpload = require("../controllers/csvUpload");
 const searchMaterialSamplesForTransfer = require("../controllers/searchMaterialSamplesForTransfer")
 const searchMaterialSamplesForUpdate = require("../controllers/searchMaterialSamplesForUpdate")
 const downloadTemplate = require("../controllers/downloadTemplate")
+const trialsDue = require("../controllers/trialsDue")
 const authController = require('../controllers/userAuth');
 const passport = require('../config/passport');
 
@@ -64,6 +65,10 @@ let routes = (app) => {
 
     app.get('/updateTransfer', ensureAuthenticated, (req, res) => {
       res.render("updateTransfers");
+    });
+
+    app.get('/trialsDue', ensureAuthenticated, (req, res) => {
+      res.render("trialsDue");
     });
 
   //USER AUTH ROUTES---------------------------------------------------------------------------------------
@@ -170,6 +175,24 @@ let routes = (app) => {
 
   //GET /api/downloadTemplate
   router.get("/downloadTemplate/materialSampleManager_uploadTemplate.csv", downloadTemplate.downloadTemplate);
+
+  //GET /api/trialsDue5y
+  router.get("/getSeedSamplesDueForTrial_5y", trialsDue.getSeedSamplesDueForTrial_5y);
+  
+  //GET /api/trialsDue3y
+  router.get("/getSeedSamplesDueForTrial_3y", trialsDue.getSeedSamplesDueForTrial_3y);
+  
+  //GET /api/trialsDue3y3550m
+  router.get("/getSeedSamplesDueForTrial_3y_3550m", trialsDue.getSeedSamplesDueForTrial_3y_3550m);
+  
+  //GET /api/trialsDueNever
+  router.get("/getSeedSamplesDueForTrial_never", trialsDue.getSeedSamplesDueForTrial_never);
+  
+  //POST /api/exportTrialsDueResults
+  router.post("/exportTrialsDueResults", trialsDue.exportTrialsDueToCSV)
+  
+  //GET /api/downloadTrialsDueFile
+  router.get("/downloadTrialsDueFile/:name", trialsDue.downloadTrialsDueFile);
 
   app.use("/api", router);
 };
