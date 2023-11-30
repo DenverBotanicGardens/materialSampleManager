@@ -15,6 +15,15 @@ $(document).ready(function() {
     //Filename for CSV containing Search Results Data that is to be downloaded by the client
     let searchResultsCSVFileName
 
+    //Search Collections Form
+    //an object to contain the values entered by the user into the form on the Search page
+    let searchCollectionsFormEntires = {}
+
+    //an array to contain the results from a search collections search
+    let searchCollectionsResultsList = []
+
+    //Filename for CSV containing Collections Search Results Data that is to be downloaded by the client
+    let searchCollectionsResultsCSVFileName
     
     //Projects List
     //an array that contains all projects from the database. to be displayed on the list on the projects page and in the dropdown selection on the upload data page.
@@ -121,6 +130,9 @@ $(document).ready(function() {
     //Hide Elements
     //Search Page
     $('#searchResults').hide()
+
+    //Search Collections Page
+    $('#searchCollectionsResults').hide()
     
     //Germination Trials Page
     $('#searchGermTrialResults').hide()
@@ -1600,6 +1612,101 @@ function downloadTrialsDueFileFromBackend() {
           });
       }
 }
+
+//--------------------------------------------------------------------------------------------------
+// SEARCH COLLECTIONS
+//--------------------------------------------------------------------------------------------------
+    //add user entries to searchFormEntires object
+    let searchCollectionsProject = $("#searchCollectionsProject")
+    let searchCollectionsScientificName = $("#searchCollectionsScientificName")
+    let searchCollectionsMaterialSampleType = $("#searchCollectionsMaterialSampleType")
+    let searchCollectionsSpecimenCatalogNumber = $("#searchCollectionsSpecimenCatalogNumber")
+    let searchCollectionsEventEarlyDate = $("#searchCollectionsEventEarlyDate")
+    let searchCollectionsEventLateDate = $("#searchCollectionsEventLateDate")
+    let searchCollectionsRecordedBy = $("#searchCollectionsRecordedBy")
+    let searchCollectionsRecordNumber = $("#searchCollectionsRecordNumber")
+    let searchCollectionsStateProvince = $("#searchCollectionsStateProvince")
+    let searchCollectionsCounty = $("#searchCollectionsCounty")
+    let searchCollectionsLocality = $("#searchCollectionsLocality")
+    let selectedCollectionsLocalityOption
+    let searchCollectionsLocationRemarks = $("#searchCollectionsLocationRemarks")
+    let searchCollectionsLocationID = $("#searchCollectionsLocationID")
+    $('input[name="localityRadio"]').click(function() {
+        selectedCollectionsLocalityOption = $('input[name="localityRadio"]:checked').val();
+    })
+    $("#searchCollectionsForm").on("submit", function handleFormSubmit(event){
+        event.preventDefault()
+        let optradio
+        if (selectedCollectionsLocalityOption == "contains"){
+            optradio = "contains"
+        } else if (selectedCollectionsLocalityOption == "startsWith"){
+            optradio = "startsWith"
+        } else if (selectedCollectionsLocalityOption == "isExactly"){
+            optradio = "isExactly"
+        } else if (selectedCollectionsLocalityOption === undefined){
+            optradio = ""
+        } else {
+            alert("Please the locality components of your query")
+        }
+        let newSearchCollectionsEntries = {
+            project: searchCollectionsProject.val(),
+            scientificName: searchCollectionsScientificName.val(),
+            materialSampleType: searchCollectionsMaterialSampleType.val(),
+            catalogNumber: searchCollectionsSpecimenCatalogNumber.val(),
+            eventEarlyDate: searchCollectionsEventEarlyDate.val(),
+            eventLateDate: searchCollectionsEventLateDate.val(),
+            recordedBy: searchCollectionsRecordedBy.val(),
+            recordNumber: searchCollectionsRecordNumber.val(),
+            stateProvince: searchCollectionsStateProvince.val(),
+            county: searchCollectionsCounty.val(),
+            locality: searchCollectionsLocality.val(),
+            optradio: optradio,
+            locationRemarks: searchCollectionsLocationRemarks.val(),
+            locationID: searchCollectionsLocationID.val()
+        }
+        searchCollectionsFormEntires = newSearchCollectionsEntries
+        console.log(searchCollectionsFormEntires)
+        submitCollectionSearch()
+    })
+    //send to backend via api
+    const submitCollectionSearch = () => {
+        $.ajax({
+            method: "POST",
+            url: "/api/searchCollections",
+            data: searchCollectionsFormEntires
+        })
+        //return results
+        .then((searchCollectionsResults) => {
+            searchCollectionsResultsList = []
+            //display results in list
+            $.each(searchCollectionsResults, function(i, resultFromCollectionSearch) {
+                searchCollectionsResultsList.push(
+                    `<tr>
+                    <td>${resultFromCollectionSearch.scientificName}</td>
+                    <td>${resultFromCollectionSearch.materialSampleType}</td>
+                    <td>${resultFromCollectionSearch.eventDate}</td>
+                    <td>${resultFromCollectionSearch.recordedBy}</td>
+                    <td>${resultFromCollectionSearch.totalNumberCollected}</td>
+                    <td>${resultFromCollectionSearch.totalNumberAvailable}</td>
+                    <td>${resultFromCollectionSearch.stateProvince}</td>
+                    <td>${resultFromCollectionSearch.county}</td>
+                    <td>${resultFromCollectionSearch.locality}</td>
+                    <td>${resultFromCollectionSearch.locationID}</td>
+                    <td>${resultFromCollectionSearch.locationRemarks}</td>
+                    </tr>`
+                )
+            })
+        })
+        .then(function(){
+            console.log(searchCollectionsResultsList)
+            $('#searchCollectionsResultTableData').empty()
+            $('#searchCollectionsResultTableData').append(searchCollectionsResultsList.join(''))
+            $('#searchCollectionsResults').show()
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 
 //--------------------------------------------------------------------------------------------------
 // MORE EVENT LISTENERS

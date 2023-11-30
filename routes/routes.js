@@ -20,6 +20,7 @@ const searchMaterialSamplesForTransfer = require("../controllers/searchMaterialS
 const searchMaterialSamplesForUpdate = require("../controllers/searchMaterialSamplesForUpdate")
 const downloadTemplate = require("../controllers/downloadTemplate")
 const trialsDue = require("../controllers/trialsDue")
+const searchCollections = require("../controllers/searchCollections")
 const authController = require('../controllers/userAuth');
 const passport = require('../config/passport');
 
@@ -69,6 +70,10 @@ let routes = (app) => {
 
     app.get('/trialsDue', ensureAuthenticated, (req, res) => {
       res.render("trialsDue");
+    });
+
+    app.get('/searchCollections', ensureAuthenticated, (req, res) => {
+      res.render("searchCollections");
     });
 
   //USER AUTH ROUTES---------------------------------------------------------------------------------------
@@ -193,6 +198,16 @@ let routes = (app) => {
   
   //GET /api/downloadTrialsDueFile
   router.get("/downloadTrialsDueFile/:name", trialsDue.downloadTrialsDueFile);
+
+  //POST /api/searchCollections
+  router.post("/searchCollections", searchCollections.searchCollections)
+  
+  //POST /api/exportSearchCollectionsToCSV
+  router.post("/exportSearchCollectionsToCSV", searchCollections.exportSearchCollectionsToCSV)
+  
+  //GET /api/downloadSearchCollectionsResultsFile
+  router.post("/downloadSearchCollectionsResultsFile/:name", searchCollections.downloadSearchCollectionsResultsFile)
+
 
   app.use("/api", router);
 };
