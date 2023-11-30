@@ -187,6 +187,12 @@ let routes = (app) => {
   
   //GET /api/trialsDueNever
   router.get("/getSeedSamplesDueForTrial_never", trialsDue.getSeedSamplesDueForTrial_never);
+  
+  //POST /api/exportTrialsDueResults
+  router.post("/exportTrialsDueResults", trialsDue.exportTrialsDueToCSV)
+  
+  //GET /api/downloadTrialsDueFile
+  router.get("/downloadTrialsDueFile/:name", trialsDue.downloadTrialsDueFile);
 
   app.use("/api", router);
 };

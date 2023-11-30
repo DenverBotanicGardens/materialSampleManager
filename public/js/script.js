@@ -111,6 +111,9 @@ $(document).ready(function() {
     //Seed Samples Due for Viability Testing
     let seedsDueForTrialResult
 
+    //Filename for CSV containing Trials Due Results Data that is to be downloaded by the client
+    let trialsDueResultsCSVFileName
+
 
     //--------------------------------------------------------------------------------------------------
     // EVENT LISTENERS (more at bottom of script)
@@ -1539,6 +1542,63 @@ const listSeedDueForTrialNever = () => {
     .catch((error) => {
         console.error(error);
     })
+}
+
+$("#downloadTrialsDueFile").on("click", function() {
+    exportTrialsDueResults()
+})
+
+const exportTrialsDueResults = (req,res) => {
+    $.ajax({
+        url: "/api/exportTrialsDueResults",
+        method: "POST",
+    })
+    .then((res) => {
+        console.log(res)
+        trialsDueResultsCSVFileName = res
+    })
+    .then(function(){
+        downloadTrialsDueFileFromBackend()
+    })
+    .catch((error) => {
+        console.error(error);
+    })
+}
+
+function downloadTrialsDueFileFromBackend() {
+    $.ajax({
+        url: "/api/downloadTrialsDueFile/"+trialsDueResultsCSVFileName,
+        method: "GET"
+    })
+    .then(function() {
+        downloadBlobFromURL('http://localhost:8080/api/downloadTrialsDueFile/'+trialsDueResultsCSVFileName, trialsDueResultsCSVFileName);
+    })
+    function downloadBlobFromURL(url, fileName) {
+        fetch(url)
+          .then(response => response.blob())
+          .then(blob => {
+            // Create a URL for the Blob
+            const blobURL = URL.createObjectURL(blob);
+      
+            // Create an anchor element
+            const downloadLink = document.createElement('a');
+            downloadLink.href = blobURL;
+            downloadLink.download = fileName; // Set the desired filename
+      
+            // Append the anchor element to the document body
+            document.body.appendChild(downloadLink);
+      
+            // Simulate a click event on the anchor element
+            downloadLink.click();
+      
+            // Clean up the created URL and remove the anchor element
+            URL.revokeObjectURL(blobURL);
+            document.body.removeChild(downloadLink);
+          })
+          .catch(error => {
+            console.error('Error downloading blob:', error);
+          });
+      }
 }
 
 //--------------------------------------------------------------------------------------------------
