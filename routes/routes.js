@@ -206,7 +206,7 @@ let routes = (app) => {
   router.post("/exportSearchCollectionsToCSV", searchCollections.exportSearchCollectionsToCSV)
   
   //GET /api/downloadSearchCollectionsResultsFile
-  router.post("/downloadSearchCollectionsResultsFile/:name", searchCollections.downloadSearchCollectionsResultsFile)
+  router.get("/downloadSearchCollectionsResultsFile/:name", searchCollections.downloadSearchCollectionsResultsFile)
 
 
   app.use("/api", router);

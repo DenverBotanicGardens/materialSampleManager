@@ -1698,7 +1698,6 @@ function downloadTrialsDueFileFromBackend() {
             })
         })
         .then(function(){
-            console.log(searchCollectionsResultsList)
             $('#searchCollectionsResultTableData').empty()
             $('#searchCollectionsResultTableData').append(searchCollectionsResultsList.join(''))
             $('#searchCollectionsResults').show()
@@ -1706,6 +1705,67 @@ function downloadTrialsDueFileFromBackend() {
         .catch((error) => {
             console.error(error);
         })
+    }
+
+//--------------------------------------------------------------------------------------------------
+// DOWNLOAD SEARCH COLLECTIONS RESULTS TO CLIENT AS CSV
+//--------------------------------------------------------------------------------------------------
+    //event listener for download results button
+    $("#downloadCollectionsSearchResults").on("click", function(){
+        exportSearchCollectionsResults()
+    })
+
+    //create the csv of materialSample results on the back end
+    const exportSearchCollectionsResults = (req,res) => {
+        $.ajax({
+            url: "/api/exportSearchCollectionsToCSV",
+            method: "POST",
+        })
+        .then((res) => {
+            searchCollectionsResultsCSVFileName = res
+        })
+        .then(function(){
+            downloadSearchCollectionsResultsFileFromBackend()
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
+    function downloadSearchCollectionsResultsFileFromBackend() {
+        $.ajax({
+            url: "/api/downloadSearchCollectionsResultsFile/"+searchCollectionsResultsCSVFileName,
+            method: "GET"
+        })
+        .then(function() {
+            downloadBlobFromURL('http://localhost:8080/api/downloadSearchCollectionsResultsFile/'+searchCollectionsResultsCSVFileName, searchCollectionsResultsCSVFileName);
+        })
+        function downloadBlobFromURL(url, fileName) {
+            fetch(url)
+              .then(response => response.blob())
+              .then(blob => {
+                // Create a URL for the Blob
+                const blobURL = URL.createObjectURL(blob);
+          
+                // Create an anchor element
+                const downloadLink = document.createElement('a');
+                downloadLink.href = blobURL;
+                downloadLink.download = fileName; // Set the desired filename
+          
+                // Append the anchor element to the document body
+                document.body.appendChild(downloadLink);
+          
+                // Simulate a click event on the anchor element
+                downloadLink.click();
+          
+                // Clean up the created URL and remove the anchor element
+                URL.revokeObjectURL(blobURL);
+                document.body.removeChild(downloadLink);
+              })
+              .catch(error => {
+                console.error('Error downloading blob:', error);
+              });
+          }
     }
 
 //--------------------------------------------------------------------------------------------------
