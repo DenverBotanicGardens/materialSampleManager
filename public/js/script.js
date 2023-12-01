@@ -1616,7 +1616,9 @@ function downloadTrialsDueFileFromBackend() {
 //--------------------------------------------------------------------------------------------------
 // SEARCH COLLECTIONS
 //--------------------------------------------------------------------------------------------------
-    //add user entries to searchFormEntires object
+//these feature gives the user a simpler look at out holding by combining material samples in to collecitons, grouping by sample type, eventDate, scientificName, and locality
+
+//add user entries to searchFormEntires object
     let searchCollectionsProject = $("#searchCollectionsProject")
     let searchCollectionsScientificName = $("#searchCollectionsScientificName")
     let searchCollectionsMaterialSampleType = $("#searchCollectionsMaterialSampleType")
@@ -1732,6 +1734,7 @@ function downloadTrialsDueFileFromBackend() {
         })
     }
 
+    //function to send csv to client
     function downloadSearchCollectionsResultsFileFromBackend() {
         $.ajax({
             url: "/api/downloadSearchCollectionsResultsFile/"+searchCollectionsResultsCSVFileName,
