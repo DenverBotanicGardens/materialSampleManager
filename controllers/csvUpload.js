@@ -18,7 +18,6 @@ let projectTableID
 //function that gets the project id from the client and sets it to the global varaible projectTableID
 const getProjectID = (req,res) => {
   projectTableID = req.body.projectTableID
-  console.log(req.body)
   res.send("Recieved ID")
 }
 
@@ -26,6 +25,10 @@ const getProjectID = (req,res) => {
 async function importCollectionObjects() {
     for (let i = 0; i <records.length; i++){
       await new Promise(resolve => setTimeout(() => {
+        //turn empty date fields into null
+        let preparationDate = records[i].preparationDate !== "" ? new Date(records[i].preparationDate) : null;
+        let dateStored = records[i].dateStored !== "" ? new Date(records[i].dateStored) : null;
+
         let event = new OccurrenceObj(
           projectTableID,
           records[i].recordedBy,
@@ -56,8 +59,8 @@ async function importCollectionObjects() {
           records[i].numberCollected,
           records[i].numberAvailable,
           records[i].sourcePlantCount,
-          new Date(records[i].preparationDate),
-          new Date(records[i].dateStored),
+          preparationDate,
+          dateStored,
           records[i].catalogNumber,
           records[i].recordNumber
           )
@@ -65,27 +68,30 @@ async function importCollectionObjects() {
         resolve()
       }, 1000))
   }
-  console.log(collections)
+  console.log(collections.length)
   insertData(collections)
 }
 
-//function that inserts the data into the db 
-async function insertData(data) {
-  //use bulkCreate with include to insert the data
-  const result = await Occurrence.bulkCreate(data, {
-    include : [
-      {
-        model: MaterialSample
-      },
-      {
-        model: PreservedSpecimen
-      }
-    ]
-  })
-  .catch((err) => {
-    console.log(err);
-  })
 
+async function insertData(data) {
+  try {
+    const result = await Occurrence.bulkCreate(data, {
+      include: [
+        {
+          model: MaterialSample
+        },
+        {
+          model: PreservedSpecimen
+        }
+      ]
+    });
+    console.log(collections.length)
+    collections = []; // Empty the collections array after successful insertion
+    console.log('Data inserted successfully.');
+    console.log(collections.length)
+  } catch (err) {
+    console.error('Error inserting data:', err);
+  }
 }
 
 //function that takes in a csv and parses the data into an array of objects (by row)
