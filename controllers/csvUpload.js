@@ -22,7 +22,6 @@ const getProjectID = (req,res) => {
   res.send("Recieved ID")
 }
 
-
 //function that reformats data into array of nested Occurrence objects
 async function importCollectionObjects() {
     for (let i = 0; i <records.length; i++){
@@ -33,7 +32,7 @@ async function importCollectionObjects() {
           new Date(records[i].eventDate),
           records[i].scientificName,
           records[i].identifiedBy,
-          new Date(records[i].dateIdentified),
+          records[i].dateIdentified,
           records[i].associatedTaxa,
           records[i].reproductiveCondition,
           records[i].occurrenceRemarks,

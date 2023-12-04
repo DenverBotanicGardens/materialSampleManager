@@ -23,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull : true
             },
         dateIdentified : {
-            type : Sequelize.DATEONLY,
+            type : Sequelize.STRING,
             allowNull : true
             },
         associatedTaxa : {
