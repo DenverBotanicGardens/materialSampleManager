@@ -875,6 +875,7 @@ $(document).ready(function() {
     //let scarifiedYesInput = $("#scarifiedYes")
     //let scarifiedNoInput = $("#scarifiedNo")
     let scarifiedAnswer
+    let pretreatments = $("#pretreatments")
     let stratificationTemperatureInput = $("#stratificationTemperature")
     let stratificationStartDateInput = $("#stratificationStartDate")
     let incubationStartDateInput = $("#incubationStartDate")
@@ -903,6 +904,7 @@ $(document).ready(function() {
             sampleFrozen: sampleFrozenAnswer,
             medium: mediumInput.val().trim(),
             scarified: scarifiedAnswer,
+            pretreatments: pretreatments.val().trim(),
             stratificationTemperature: stratificationTemperatureInput.val().trim(),
             stratificationStartDate: stratificationStartDateInput.val().trim(),
             incubationStartDate: incubationStartDateInput.val().trim(),

@@ -18,6 +18,7 @@ async function addGerminationTest(req,res) {
         numberSeedsTested : req.body.numberSeedsTested,
         incubationTempDay : req.body.incubationTempDay,
         incubationTempNight : req.body.incubationTempNight,
+        pretreatments: req.body.pretreatments,
         materialSampleTableID : req.body.materialSampleTableID
     })
     .then((data) => {
