@@ -156,11 +156,7 @@ $(document).ready(function() {
     $('#sampleUpdatesForm').hide()
 
     //Seed Samples Due for Viability Testing Page
-    //$('#trialsDueResults').hide()
-
-
-
-
+    $('#trialsDueResults').hide()
 
 //Buttons to Execute Functions
     //Execute Search
@@ -169,7 +165,6 @@ $(document).ready(function() {
     $("#downloadSearchResults").on("click", function(){
         exportSearchResults()
     })
-
 
     //Download Germinations Trials to CSV
     $("#downloadGerminationTrialRecordsResults").on("click", function(){
@@ -186,7 +181,11 @@ $(document).ready(function() {
         downloadTemplate()
     })
 
-
+    //Hide all download buttons until a query has been perform
+    $("#downloadSearchResults").hide()
+    $("#downloadGerminationTrialRecordsResults").hide()
+    $("#downloadCollectionsSearchResults").hide()
+    $("#downloadTrialsDueFile").hide()
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //FUNCTIONS-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -283,6 +282,7 @@ $(document).ready(function() {
             $('#searchResultTableData').empty()
             $('#searchResultTableData').append(searchResultsList.join(''))
             $('#searchResults').show()
+            $("#downloadSearchResults").show()
         })
         .catch((error) => {
             console.error(error);
@@ -560,6 +560,7 @@ $(document).ready(function() {
             $('#germinationTrialResultTableData').empty()
             $('#germinationTrialResultTableData').append(germinationTrialResultList.join(''))
             $('#searchGermTrialResults').show()
+            $("#downloadGerminationTrialRecordsResults").show()
         })
         .catch((error) => {
             console.error(error);
@@ -1442,6 +1443,7 @@ const listSeedDueForTrial5y = () => {
         $('#seedSamplesDueResultTableData').empty()
         $('#seedSamplesDueResultTableData').append(seedsDueForTrialResult.join(''))
         $('#trialsDueResults').show()
+        $("#downloadTrialsDueFile").show()
     })
     .catch((error) => {
         console.error(error);
@@ -1478,6 +1480,8 @@ const listSeedDueForTrial3y = () => {
         $('#seedSamplesDueResultTableData').empty()
         $('#seedSamplesDueResultTableData').append(seedsDueForTrialResult.join(''))
         $('#trialsDueResults').show()
+        $("#downloadTrialsDueFile").show()
+
     })
     .catch((error) => {
         console.error(error);
@@ -1514,6 +1518,8 @@ const listSeedDueForTrial3y3550m = () => {
         $('#seedSamplesDueResultTableData').empty()
         $('#seedSamplesDueResultTableData').append(seedsDueForTrialResult.join(''))
         $('#trialsDueResults').show()
+        $("#downloadTrialsDueFile").show()
+
     })
     .catch((error) => {
         console.error(error);
@@ -1550,6 +1556,8 @@ const listSeedDueForTrialNever = () => {
         $('#seedSamplesDueResultTableData').empty()
         $('#seedSamplesDueResultTableData').append(seedsDueForTrialResult.join(''))
         $('#trialsDueResults').show()
+        $("#downloadTrialsDueFile").show()
+
     })
     .catch((error) => {
         console.error(error);
@@ -1703,6 +1711,7 @@ function downloadTrialsDueFileFromBackend() {
             $('#searchCollectionsResultTableData').empty()
             $('#searchCollectionsResultTableData').append(searchCollectionsResultsList.join(''))
             $('#searchCollectionsResults').show()
+            $("#downloadCollectionsSearchResults").show()
         })
         .catch((error) => {
             console.error(error);
