@@ -1,21 +1,22 @@
-{{!-- TEMPLATE FOR SEARCHING MATERIAL SAMPLE DATA PAGE --}}
+{{!-- TEMPLATE FOR SEARCHING MATERIAL SAMPLE COLLECTIONS PAGE --}}
 <br>
 <div class="container-fluid">
-    <p class="lead">Search for Material Samples</p>
-    <form id="searchSamplesForm">
+    <p class="lead">Search for Collections</p>
+    <p>This page is for searching for collection events, not individual samples. Results are drawn from sample records, then are grouped by identical values for scientific name, material sample type, collection date, and locality.</p>
+    <form id="searchCollectionsForm">
         <div class="row">
             <div class="col">
                 {{!-- project --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Project</span>
-                    <input id="searchProject" type="text" class="form-control">
+                    <input id="searchCollectionsProject" type="text" class="form-control">
                 </div>
             </div>
             <div class="col">
                 {{!-- scientificName --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Scientific Name</span>
-                    <input id="searchScientificName" type="text" class="form-control">
+                    <input id="searchCollectionsScientificName" type="text" class="form-control">
                 </div>
             </div>
         </div>
@@ -24,14 +25,7 @@
                 {{!-- materialSampleType --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Material Sample Type</span>
-                    <input id="searchMaterialSampleType" type="text" class="form-control">
-                </div>
-            </div>
-            <div class="col">
-                {{!-- materialSample_catalogNumber --}}
-                <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Sample Catalog Number</span>
-                    <input id="searchMaterialSampleCatalogNumber" type="text" class="form-control">
+                    <input id="searchCollectionsMaterialSampleType" type="text" class="form-control">
                 </div>
             </div>
         </div>
@@ -40,7 +34,7 @@
                 {{!-- specimen catalogNumber --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Associated Specimen Catalog Number</span>
-                    <input id="searchSpecimenCatalogNumber" type="text" class="form-control">
+                    <input id="searchCollectionsSpecimenCatalogNumber" type="text" class="form-control">
                 </div>
             </div>
         </div>
@@ -50,13 +44,13 @@
             <div class="col">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">After</span>
-                    <input id="searchEventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                    <input id="searchCollectionsEventEarlyDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
                 </div>
             </div>
             <div class="col">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Before</span>
-                    <input id="searchEventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
+                    <input id="searchCollectionsEventLateDate" type="text" class="form-control" placeholder="YYYY-MM-DD">
                 </div>
             </div>
         </div>
@@ -65,14 +59,14 @@
                 {{!-- recordedBy --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Collector</span>
-                    <input id="searchRecordedBy" type="text" class="form-control">
+                    <input id="searchCollectionsRecordedBy" type="text" class="form-control">
                 </div>
             </div>
             <div class="col">
                 {{!-- recordNumber --}}
                 <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Collector Number</span>
-                    <input id="searchRecordNumber" type="text" class="form-control">
+                    <span class="input-group-text">Collector Number (Specimen)</span>
+                    <input id="searchCollectionsRecordNumber" type="text" class="form-control">
                 </div>
             </div>
         </div>
@@ -81,14 +75,14 @@
                 {{!-- stateProvince --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">State</span>
-                    <input id="searchStateProvince" type="text" class="form-control">
+                    <input id="searchCollectionsStateProvince" type="text" class="form-control">
                 </div>
             </div>
                 {{!-- county --}}
             <div class="col">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">County</span>
-                    <input id="searchCounty" type="text" class="form-control">
+                    <input id="searchCollectionsCounty" type="text" class="form-control">
                 </div>
             </div>
         </div>
@@ -97,14 +91,14 @@
             <div class="col-7">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Locality</span>
-                    <input id="searchLocality" type="text" class="form-control" placeholder="Please select Contains, Starts With, or Is Exactly">
+                    <input id="searchCollectionsLocality" type="text" class="form-control" placeholder="Please select Contains, Starts With, or Is Exactly">
                 </div>
             </div>
             <div class="col">
                 <div class="input-group input-group-sm mb-3">
                     <div class="form-check">
                         <label>
-                            <input class="form-check-input" type="radio" name="localityRadio" id="searchLocalityContains" value="contains">Contains
+                            <input class="form-check-input" type="radio" name="localityRadio" id="searchCollectionsLocalityContains" value="contains">Contains
                         </label>
                     </div>
                 </div>
@@ -113,7 +107,7 @@
                 <div class="input-group input-group-sm mb-3">
                     <div class="form-check">
                         <label>
-                            <input class="form-check-input" type="radio" name="localityRadio" id="searchLocalityStartsWith" value="startsWith">Starts With
+                            <input class="form-check-input" type="radio" name="localityRadio" id="searchCollectionsLocalityStartsWith" value="startsWith">Starts With
                         </label>
                     </div>
                 </div>
@@ -122,7 +116,7 @@
                 <div class="input-group input-group-sm mb-3">
                     <div class="form-check">
                         <label>
-                        <input class="form-check-input" type="radio" name="localityRadio" id="searchLocalityIsExactly" value="isExactly">Is Exactly
+                        <input class="form-check-input" type="radio" name="localityRadio" id="searchCollectionsLocalityIsExactly" value="isExactly">Is Exactly
                         </label>
                     </div>
                 </div>
@@ -133,37 +127,36 @@
                 {{!-- locationRemarks --}}
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Landowner or EO</span>
-                    <input id="searchLocationRemarks" type="text" class="form-control">
+                    <input id="searchCollectionsLocationRemarks" type="text" class="form-control">
                 </div>
             </div>
                 {{!-- locationID --}}
             <div class="col">
                 <div class="input-group input-group-sm mb-3">
                     <span class="input-group-text">Site Name / Location ID</span>
-                    <input id="searchLocationID" type="text" class="form-control">
+                    <input id="searchCollectionsLocationID" type="text" class="form-control">
                 </div>
             </div>
         </div>
         {{!-- SUBMIT BUTTON --}}
         <button type="submit" class="btn btn-primary">Search</button>
         {{!-- Download Button --}}
-        <button id="downloadSearchResults" type="button" class="btn btn-secondary">Download Results to CSV</button>
+        <button id="downloadCollectionsSearchResults" type="button" class="btn btn-secondary">Download Results to CSV</button>
     </form>
     <br>
     <br>
     {{!-- SEARCH RESULTS LIST --}}
-    <div id="searchResults">
+    <div id="searchCollectionsResults">
         <p>Material Samples</p>
-        <table class="table" id="searchResultTable">
+        <table class="table" id="searchCollectionsResultTable">
             <thead>
                 <tr>
                     <th scope="col">Scientific Name</th>
-                    <th scope="col">Material Sample Catalog Number</th>
                     <th scope="col">Sample Type</th>
                     <th scope="col">Date Collected</th>
                     <th scope="col">Collected By</th>
-                    <th scope="col">Number Collected</th>
-                    <th scope="col">Number Available</th>
+                    <th scope="col">Total Number Collected</th>
+                    <th scope="col">Total Number Available</th>
                     <th scope="col">State Province</th>
                     <th scope="col">County</th>
                     <th scope="col">Locality</th>
@@ -171,7 +164,7 @@
                     <th scope="col">Landowner</th>
                 </tr>
             </thead>
-            <tbody id="searchResultTableData">
+            <tbody id="searchCollectionsResultTableData">
             </tbody>
         </table>
     </div>
