@@ -14,6 +14,10 @@ let collections = [];
 //variable to hold the project ID for the data being uploaded
 let projectTableID
 
+// Utility function to convert empty strings to null
+function convertEmptyToNull(value) {
+  return value !== "" ? value : null;
+}
 
 //function that gets the project id from the client and sets it to the global varaible projectTableID
 const getProjectID = (req,res) => {
@@ -25,40 +29,44 @@ const getProjectID = (req,res) => {
 async function importCollectionObjects() {
     for (let i = 0; i <records.length; i++){
       await new Promise(resolve => setTimeout(() => {
+        //convert date fields to null if empty
+        let eventDate = records[i].eventDate !== "" ? new Date(records[i].eventDate) : null;
+        let preparationDate = records[i].preparationDate !== "" ? new Date(records[i].preparationDate) : null;
+        let dateStored = records[i].dateStored !== "" ? new Date(records[i].dateStored) : null;
         let event = new OccurrenceObj(
           projectTableID,
           records[i].recordedBy,
-          new Date(records[i].eventDate),
-          records[i].scientificName,
-          records[i].identifiedBy,
-          records[i].dateIdentified,
-          records[i].associatedTaxa,
-          records[i].reproductiveCondition,
-          records[i].occurrenceRemarks,
-          records[i].habitat,
-          records[i].country,
-          records[i].stateProvince,
-          records[i].county,
-          records[i].locality,
-          records[i].locationRemarks,
-          records[i].locationID,
-          records[i].decimalLatitude,
-          records[i].decimalLongitude,
-          records[i].minimumElevationInMeters,
-          records[i].permitURI,
-          records[i].materialSampleID,
-          records[i].materialSampleType,
-          records[i].materialSample_catalogNumber,
-          records[i].materialSample_recordNumber,
-          records[i].storageLocation,
-          records[i].disposition,
-          records[i].numberCollected,
-          records[i].numberAvailable,
-          records[i].sourcePlantCount,
-          new Date(records[i].preparationDate),
-          new Date(records[i].dateStored),
-          records[i].catalogNumber,
-          records[i].recordNumber
+          eventDate,
+          convertEmptyToNull(records[i].scientificName),
+          convertEmptyToNull(records[i].identifiedBy),
+          convertEmptyToNull(records[i].dateIdentified),
+          convertEmptyToNull(records[i].associatedTaxa),
+          convertEmptyToNull(records[i].reproductiveCondition),
+          convertEmptyToNull(records[i].occurrenceRemarks),
+          convertEmptyToNull(records[i].habitat),
+          convertEmptyToNull(records[i].country),
+          convertEmptyToNull(records[i].stateProvince),
+          convertEmptyToNull(records[i].county),
+          convertEmptyToNull(records[i].locality),
+          convertEmptyToNull(records[i].locationRemarks),
+          convertEmptyToNull(records[i].locationID),
+          convertEmptyToNull(records[i].decimalLatitude),
+          convertEmptyToNull(records[i].decimalLongitude),
+          convertEmptyToNull(records[i].minimumElevationInMeters),
+          convertEmptyToNull(records[i].permitURI),
+          convertEmptyToNull(records[i].materialSampleID),
+          convertEmptyToNull(records[i].materialSampleType),
+          convertEmptyToNull(records[i].materialSample_catalogNumber),
+          convertEmptyToNull(records[i].materialSample_recordNumber),
+          convertEmptyToNull(records[i].storageLocation),
+          convertEmptyToNull(records[i].disposition),
+          convertEmptyToNull(records[i].numberCollected),
+          convertEmptyToNull(records[i].numberAvailable),
+          convertEmptyToNull(records[i].sourcePlantCount),
+          preparationDate,
+          dateStored,
+          convertEmptyToNull(records[i].catalogNumber),
+          convertEmptyToNull(records[i].recordNumber)
           )
         collections.push(event)
         resolve()
