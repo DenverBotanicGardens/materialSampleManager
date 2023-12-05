@@ -455,7 +455,13 @@ $(document).ready(function() {
         type: "POST",
         data: formdata,
         processData: false,
-        contentType: false
+        contentType: false,
+        beforeSend: function() {
+            showProcessingModal(); // Show processing modal before AJAX request
+          },
+          complete: function() {
+              hideProcessingModal(); // Hide processing modal after AJAX request completion
+            }
         })
         .then((data) => {
             if (data.success) {
@@ -471,6 +477,16 @@ $(document).ready(function() {
             alert("An error occurred while uploading this file. Please contact the Scientific Data Manager.")
         })
     });
+
+// Processing Modal
+// Function to show processing modal
+function showProcessingModal() {
+    $('#processingModal').modal('show');
+  }
+// Function to hide processing modal
+function hideProcessingModal() {
+    $('#processingModal').modal('hide');
+  }
 
 //--------------------------------------------------------------------------------------------------
 //SEARCH GERMINATION TRIALS
