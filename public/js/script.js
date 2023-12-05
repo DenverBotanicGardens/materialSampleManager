@@ -470,7 +470,6 @@ $(document).ready(function() {
             console.error(error);
             alert("An error occurred while uploading this file. Please contact the Scientific Data Manager.")
         })
-        return false;
     });
 
 //--------------------------------------------------------------------------------------------------
