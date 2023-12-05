@@ -25,10 +25,6 @@ const getProjectID = (req,res) => {
 async function importCollectionObjects() {
     for (let i = 0; i <records.length; i++){
       await new Promise(resolve => setTimeout(() => {
-        //turn empty date fields into null
-        let preparationDate = records[i].preparationDate !== "" ? new Date(records[i].preparationDate) : null;
-        let dateStored = records[i].dateStored !== "" ? new Date(records[i].dateStored) : null;
-
         let event = new OccurrenceObj(
           projectTableID,
           records[i].recordedBy,
@@ -59,8 +55,8 @@ async function importCollectionObjects() {
           records[i].numberCollected,
           records[i].numberAvailable,
           records[i].sourcePlantCount,
-          preparationDate,
-          dateStored,
+          new Date(records[i].preparationDate),
+          new Date(records[i].dateStored),
           records[i].catalogNumber,
           records[i].recordNumber
           )
@@ -69,34 +65,34 @@ async function importCollectionObjects() {
       }, 1000))
   }
   console.log(collections.length)
+  console.log(records.length)
   insertData(collections)
 }
 
 
+//function that inserts the data into the db 
 async function insertData(data) {
-  try {
-    const result = await Occurrence.bulkCreate(data, {
-      include: [
-        {
-          model: MaterialSample
-        },
-        {
-          model: PreservedSpecimen
-        }
-      ]
-    });
-    console.log(collections.length)
-    collections = []; // Empty the collections array after successful insertion
-    console.log('Data inserted successfully.');
-    console.log(collections.length)
-  } catch (err) {
-    console.error('Error inserting data:', err);
-  }
+  //use bulkCreate with include to insert the data
+  const result = await Occurrence.bulkCreate(data, {
+    include : [
+      {
+        model: MaterialSample
+      },
+      {
+        model: PreservedSpecimen
+      }
+    ]
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+
 }
 
 //function that takes in a csv and parses the data into an array of objects (by row)
 const csvUpload = async (req, res) => {
-  
+  records = [];
+  collections = []
   //define location where uploaded file will go
   let path = __basedir + "/resources/static/assets/uploads/" + req.file.filename;
   
