@@ -72,8 +72,6 @@ async function importCollectionObjects() {
         resolve()
       }, 1000))
   }
-  console.log(collections.length)
-  console.log(records.length)
   insertData(collections)
 }
 
@@ -99,6 +97,7 @@ async function insertData(data) {
 
 //function that takes in a csv and parses the data into an array of objects (by row)
 const csvUpload = async (req, res) => {
+  //clear arrays
   records = [];
   collections = []
   //define location where uploaded file will go
@@ -109,31 +108,38 @@ const csvUpload = async (req, res) => {
       if (req.file == undefined) {
         return res.status(400).send("Please upload a CSV file!");
       }
+      await new Promise((resolve, reject) => {
       //Use fs.createReadStream() method to read the file
       fs.createReadStream(path)
       //parse the csv using the fast-csv package
       .pipe(csv.parse({ headers: true }))
       .on("error", (error) => {
-        throw error.message;
+        reject(error.message);
       })
       //read the data from the file and add it to the records array
       .on("data", (csvData) => {
         records.push(csvData);
       })
       //complete the http request
-      .on("end", () => {
-        importCollectionObjects()
-        res.status(200).json({
-          success: true,
+      .on("end", async () => {
+        try {
+          await importCollectionObjects(); // Assuming this function is asynchronous and returns a promise
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      });
+  });
+      res.status(200).json({
+        success: true,
         message: "File successfully uploaded to database: " + req.file.originalname,
-        })
-      })
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({
         success: false,
-        message: "Could not upload the file: " + req.file.originalname + ". Please contact the Scientific Data Manager if this error persists."
-      })
+        message: "Could not upload the file: " + req.file.originalname + ". Please contact the Scientific Data Manager if this error persists.",
+      });
     }
   };
 
