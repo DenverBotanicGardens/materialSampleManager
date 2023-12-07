@@ -6,6 +6,9 @@ var dotenv = require('dotenv').config()
 var fs = require("fs");
 const passport = require('./config/passport');
 const session = require('express-session');
+const cronJobUploads = require('./controllers/removeUploadsCron.js')
+const cronJobDownloads = require('./controllers/removeDownloadsCron.js')
+
 
 //create express server
 var app = express()
