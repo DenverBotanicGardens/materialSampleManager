@@ -138,16 +138,21 @@ async function exportSearchCollectionsToCSV(req, res) {
 
 //download the specified file
 const downloadSearchCollectionsResultsFile = (req, res) => {
-    const fileName = req.params.name;
-    const directoryPath = __basedir + "/resources/static/assets/downloads/";
-    res.download(directoryPath + fileName, fileName, (err) => {
+    const fileName = path.basename(req.params.name); // strips any ../ or path separators
+    const directoryPath = path.join(__basedir, "/resources/static/assets/downloads/");
+    const filePath = path.join(directoryPath, fileName);
+
+    // extra safety: confirm the resolved path is still inside directoryPath
+    if (!filePath.startsWith(path.resolve(directoryPath))) {
+        return res.status(400).send({ message: "Invalid file name" });
+    }
+
+    res.download(filePath, fileName, (err) => {
       if (err) {
-        res.status(500).send({
-          message: "Could not download the file" + err,
-        })
+        res.status(500).send({ message: "Could not download the file" + err });
       }
-    })
-  }
+    });
+}
 
 module.exports = {
     searchCollections,
