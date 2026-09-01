@@ -4,105 +4,118 @@ const { sequelize } = require("../models");
 const { QueryTypes } = require('sequelize');
 const Op = Sequelize.Op;
 const fs = require("fs")
+const path = require("path")
 const csv = require("fast-csv")
 
 //variable to hold the data so that it can be exported after a search
 var dataForExport
 
-//empty array to populate with parameters that make up where clause
-var materialSampleQuery = []
-//standard query to return all records from transfers table. extra where params provided by user are concatted to the end of this string
+//standard query to return all records from transfers table. extra where params provided by user are added via named replacements
 var materialSampleSelect = `SELECT p.id AS projectTableID, p.project, p.principalInvestigator, p.dbgContact, p.PIemail, o.id AS occurrenceTableID, o.occurrenceID, o.recordedBy, o.eventDate, o.scientificName, o.identifiedBy, o.dateIdentified, o.associatedTaxa, o.reproductiveCondition, o.occurrenceRemarks, o.habitat, o.country, o.stateProvince, o.county, o.locality, o.locationRemarks, o.locationID, o.decimalLatitude, o.decimalLongitude, o.minimumElevationInMeters, o.permitURI, ms.id AS materialSampleTableID, ms.materialSampleID, ms.materialSampleType, ms.materialSample_catalogNumber, ms.materialSample_recordNumber, ms.storageLocation, ms.disposition, ms.numberCollected, ms.numberAvailable, ms.sourcePlantCount, ms.preparationDate, ms.dateStored, ps.id AS preservedSpecimenTableID, ps.catalogNumber, ps.recordNumber FROM occurrences AS o LEFT JOIN projects as p ON o.projectTableID = p.id LEFT JOIN materialSamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN preservedSpecimens as ps on o.id = ps.occurrenceTableID WHERE o.id IS NOT NULL`
 
 //function to define query and get materialSamples and associated metadata
 async function searchMaterialSamples(req, res) {
-    await new Promise(resolve => setTimeout(() => {
-        //project
-        if (req.body.project !== '') {
-            materialSampleQuery.push(` AND p.project = '${req.body.project}'`);
-        }
-        //scientificName
-        if (req.body.scientificName !== '') {
-            materialSampleQuery.push(` AND o.scientificName LIKE '%${req.body.scientificName}%'`);
-        }
-        //eventDate START DATE PROVIDED
-        if (req.body.eventEarlyDate !== '' && req.body.eventLateDate === '') {
-            materialSampleQuery.push(` AND o.eventDate BETWEEN '${req.body.eventEarlyDate}' AND '2300-01-01'`)
-        }
-        //eventDate START DATE AND END DATE PROVIDED
-        if (req.body.eventEarlyDate !== '' && req.body.eventLateDate !== '') {
-            materialSampleQuery.push(` AND o.eventDate BETWEEN '${req.body.eventEarlyDate}' AND '${req.body.eventLateDate}'`)
-        }
-        //eventDate END DATE PROVIDED
-        if (req.body.eventEarlyDate === '' && req.body.eventLateDate !== '') {
-            materialSampleQuery.push(` AND o.eventDate BETWEEN '1900-01-01' AND '${req.body.eventLateDate}'`)
-        }
-        //stateProvince
-        if (req.body.stateProvince !== ''){
-            materialSampleQuery.push(` AND o.stateProvince = '${req.body.stateProvince}'`)
-        }
-        //county
-        if (req.body.county !== ''){
-            materialSampleQuery.push(` AND o.county = '${req.body.county}'`)
-        }
-        //locationID
-        if (req.body.locationID !== ''){
-            materialSampleQuery.push(` AND o.locationID LIKE '%${req.body.locationID}%'`)
-        }
-        //locationRemarks
-        if (req.body.locationRemarks !== ''){
-            materialSampleQuery.push(` AND o.locationRemarks LIKE '%${req.body.locationRemarks}%'`)
-        }
-        //recordedBy
-        if (req.body.recordedBy !== ''){
-            materialSampleQuery.push(` AND o.recordedBy LIKE '%${req.body.recordedBy}%'`)
-        }
-        //materialSample_recordNumber
-        if (req.body.materialSample_recordNumber !== ''){
-            materialSampleQuery.push(` AND ms.materialSample_recordNumber LIKE '%${req.body.materialSample_recordNumber}%'`)
-        }
-        //materialSample_catalogNumber
-        if (req.body.materialSample_catalogNumber !== '') {
-            materialSampleQuery.push(` AND ms.materialSample_catalogNumber = '${req.body.materialSample_catalogNumber}'`);
-        }
-        // //recordNumber
-        // if (req.body.recordNumber !== ''){
-        //     materialSampleQuery.push(` AND ps.recordNumber LIKE '%${req.body.recordNumber}%'`)
-        // }
-        //catalogNumber
-        if (req.body.catalogNumber !== '') {
-            materialSampleQuery.push(` AND ps.catalogNumber = '${req.body.catalogNumber}'`);
-        }
-        //locality IS EXACTLY
-        if (req.body.locality !== '' && req.body.optradio === 'isExactly'){
-            materialSampleQuery.push(` AND o.locality = '${req.body.locality}'`)
-        }
-        //locality STARTS WITH
-        if (req.body.locality !== '' && req.body.optradio === 'startsWith'){
-            materialSampleQuery.push(` AND o.locality LIKE '${req.body.locality}%'`)
-        }
-        //locality CONTAINS
-        if (req.body.locality !== '' && req.body.optradio === 'contains'){
-            materialSampleQuery.push(` AND o.locality LIKE '%${req.body.locality}%'`)
-        }
-        //materialSampleType
-        if (req.body.materialSampleType !== ''){
-            materialSampleQuery.push(` AND ms.materialSampleType = '${req.body.materialSampleType}'`)
-        }
-        fullMaterialSampleQuery = materialSampleQuery.join()
-        queryParams = fullMaterialSampleQuery.replaceAll(',','')
-        finalQuery = materialSampleSelect.concat(queryParams)
-        materialSampleQuery = []
-        console.log(finalQuery)
-        resolve()
-    },1000))
-    sequelize.query(finalQuery, { type:QueryTypes.SELECT })
+    let whereClauses = [];
+    let replacements = {};
+
+    //project
+    if (req.body.project !== '') {
+        whereClauses.push(`AND p.project = :project`);
+        replacements.project = req.body.project;
+    }
+    //scientificName
+    if (req.body.scientificName !== '') {
+        whereClauses.push(`AND o.scientificName LIKE :scientificName`);
+        replacements.scientificName = `%${req.body.scientificName}%`;
+    }
+    //eventDate START DATE PROVIDED
+    if (req.body.eventEarlyDate !== '' && req.body.eventLateDate === '') {
+        whereClauses.push(`AND o.eventDate BETWEEN :eventEarlyDate AND '2300-01-01'`);
+        replacements.eventEarlyDate = req.body.eventEarlyDate;
+    }
+    //eventDate START DATE AND END DATE PROVIDED
+    if (req.body.eventEarlyDate !== '' && req.body.eventLateDate !== '') {
+        whereClauses.push(`AND o.eventDate BETWEEN :eventEarlyDate AND :eventLateDate`);
+        replacements.eventEarlyDate = req.body.eventEarlyDate;
+        replacements.eventLateDate = req.body.eventLateDate;
+    }
+    //eventDate END DATE PROVIDED
+    if (req.body.eventEarlyDate === '' && req.body.eventLateDate !== '') {
+        whereClauses.push(`AND o.eventDate BETWEEN '1900-01-01' AND :eventLateDate`);
+        replacements.eventLateDate = req.body.eventLateDate;
+    }
+    //stateProvince
+    if (req.body.stateProvince !== '') {
+        whereClauses.push(`AND o.stateProvince = :stateProvince`);
+        replacements.stateProvince = req.body.stateProvince;
+    }
+    //county
+    if (req.body.county !== '') {
+        whereClauses.push(`AND o.county = :county`);
+        replacements.county = req.body.county;
+    }
+    //locationID
+    if (req.body.locationID !== '') {
+        whereClauses.push(`AND o.locationID LIKE :locationID`);
+        replacements.locationID = `%${req.body.locationID}%`;
+    }
+    //locationRemarks
+    if (req.body.locationRemarks !== '') {
+        whereClauses.push(`AND o.locationRemarks LIKE :locationRemarks`);
+        replacements.locationRemarks = `%${req.body.locationRemarks}%`;
+    }
+    //recordedBy
+    if (req.body.recordedBy !== '') {
+        whereClauses.push(`AND o.recordedBy LIKE :recordedBy`);
+        replacements.recordedBy = `%${req.body.recordedBy}%`;
+    }
+    //materialSample_recordNumber
+    if (req.body.materialSample_recordNumber !== '') {
+        whereClauses.push(`AND ms.materialSample_recordNumber LIKE :materialSample_recordNumber`);
+        replacements.materialSample_recordNumber = `%${req.body.materialSample_recordNumber}%`;
+    }
+    //materialSample_catalogNumber
+    if (req.body.materialSample_catalogNumber !== '') {
+        whereClauses.push(`AND ms.materialSample_catalogNumber = :materialSample_catalogNumber`);
+        replacements.materialSample_catalogNumber = req.body.materialSample_catalogNumber;
+    }
+    //catalogNumber
+    if (req.body.catalogNumber !== '') {
+        whereClauses.push(`AND ps.catalogNumber = :catalogNumber`);
+        replacements.catalogNumber = req.body.catalogNumber;
+    }
+    //locality IS EXACTLY
+    if (req.body.locality !== '' && req.body.optradio === 'isExactly') {
+        whereClauses.push(`AND o.locality = :locality`);
+        replacements.locality = req.body.locality;
+    }
+    //locality STARTS WITH
+    if (req.body.locality !== '' && req.body.optradio === 'startsWith') {
+        whereClauses.push(`AND o.locality LIKE :localityStartsWith`);
+        replacements.localityStartsWith = `${req.body.locality}%`;
+    }
+    //locality CONTAINS
+    if (req.body.locality !== '' && req.body.optradio === 'contains') {
+        whereClauses.push(`AND o.locality LIKE :localityContains`);
+        replacements.localityContains = `%${req.body.locality}%`;
+    }
+    //materialSampleType
+    if (req.body.materialSampleType !== '') {
+        whereClauses.push(`AND ms.materialSampleType = :materialSampleType`);
+        replacements.materialSampleType = req.body.materialSampleType;
+    }
+
+    const finalQuery = materialSampleSelect.concat(' ', whereClauses.join(' '));
+    console.log(finalQuery, replacements)
+
+    sequelize.query(finalQuery, { replacements, type: QueryTypes.SELECT })
     .then((data) => {
         res.send(data)
         dataForExport = data
     })
     .catch((err) => {
         console.log(err);
+        res.status(500).send({ message: "Query failed" });
       })
 }
 
@@ -143,20 +156,20 @@ async function exportSearchToCSV(req, res) {
 //download the specified file
 const downloadSearchResultsFile = (req, res) => {
     const fileName = path.basename(req.params.name); // strips any ../ or path separators
-        const directoryPath = path.join(__basedir, "/resources/static/assets/downloads/");
-        const filePath = path.join(directoryPath, fileName);
+    const directoryPath = path.join(__basedir, "/resources/static/assets/downloads/");
+    const filePath = path.join(directoryPath, fileName);
 
-        // extra safety: confirm the resolved path is still inside directoryPath
-        if (!filePath.startsWith(path.resolve(directoryPath))) {
-            return res.status(400).send({ message: "Invalid file name" });
-        }
-
-        res.download(filePath, fileName, (err) => {
-        if (err) {
-            res.status(500).send({ message: "Could not download the file" + err });
-        }
-        });
+    // extra safety: confirm the resolved path is still inside directoryPath
+    if (!filePath.startsWith(path.resolve(directoryPath))) {
+        return res.status(400).send({ message: "Invalid file name" });
     }
+
+    res.download(filePath, fileName, (err) => {
+      if (err) {
+        res.status(500).send({ message: "Could not download the file" + err });
+      }
+    });
+}
 
 module.exports = {
     searchMaterialSamples,
