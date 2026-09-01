@@ -5,15 +5,13 @@ const { sequelize } = require("../models");
 const { QueryTypes } = require('sequelize');
 const Op = Sequelize.Op;
 const fs = require("fs")
+const path = require("path")
 const csv = require("fast-csv")
-const path = require("path");
 
 //variable to hold the data so that it can be exported after a search
 var dataForExport
 
-//empty array to populate with parameters that make up where clause
-var germplasmTrialQuery = []
-//standard query to return all records from germplasmviabilitytest table. extra where params provided by user are concatted to the end of this string
+//standard query to return all records from germplasmviabilitytest table. extra where params provided by user are appended via named replacements
 var germplasmTrialSelect = `SELECT
 o.scientificName,
 o.eventDate,
@@ -65,81 +63,99 @@ async function getGerminationTrialResults(req, res) {
     for (const key in dataForExport) {
         delete dataForExport[key];
       }
-    console.log(dataForExport)
-    await new Promise(resolve => setTimeout(() => {
-        //catalogNumber
-        if (req.body.materialSample_catalogNumber !== '') {
-            germplasmTrialQuery.push(` AND gvt.materialSample_catalogNumber = '${req.body.materialSample_catalogNumber}'`);
-        }
-        //scientificName
-        if (req.body.scientificName !== '') {
-            germplasmTrialQuery.push(` AND o.scientificName LIKE '%${req.body.scientificName}%'`);
-        }
-        //stratificationStartDate
-        if (req.body.stratStartEarlyDate !== '' && req.body.stratStartLateDate === '') {
-            germplasmTrialQuery.push(` AND gvt.stratificationStartDate BETWEEN '${req.body.stratStartEarlyDate}' AND '2300-01-01'`)
-        }
-        if (req.body.stratStartEarlyDate !== '' && req.body.stratStartLateDate !== '') {
-            germplasmTrialQuery.push(` AND gvt.stratificationStartDate BETWEEN '${req.body.stratStartEarlyDate}' AND '${req.body.stratStartLateDate}'`)
-        }
-        if (req.body.stratStartEarlyDate === '' && req.body.stratStartLateDate !== '') {
-            germplasmTrialQuery.push(` AND gvt.stratificationStartDate BETWEEN '1900-01-01' AND '${req.body.stratStartLateDate}'`)
-        }
-        //endDate
-        if (req.body.endEarlyDate !== '' && req.body.endLateDate === '') {
-            germplasmTrialQuery.push(` AND gvt.endDate BETWEEN '${req.body.endEarlyDate}' AND '2300-01-01'`)
-        }
-        if (req.body.endEarlyDate !== '' && req.body.endLateDate !== '') {
-            germplasmTrialQuery.push(` AND gvt.endDate BETWEEN '${req.body.endEarlyDate}' AND '${req.body.endLateDate}'`)
-        }
-        if (req.body.endEarlyDate === '' && req.body.endLateDate !== '') {
-            germplasmTrialQuery.push(` AND gvt.endDate BETWEEN '1900-01-01' AND '${req.body.endLateDate}'`)
-        }
-        //eventDate
-        if (req.body.eventEarlyDate !== '' && req.body.eventLateDate === '') {
-            germplasmTrialQuery.push(` AND o.eventDate BETWEEN '${req.body.eventEarlyDate}' AND '2300-01-01'`)
-        }
-        if (req.body.eventEarlyDate !== '' && req.body.eventLateDate !== '') {
-            germplasmTrialQuery.push(` AND o.eventDate BETWEEN '${req.body.eventEarlyDate}' AND '${req.body.eventLateDate}'`)
-        }
-        if (req.body.eventEarlyDate === '' && req.body.eventLateDate !== '') {
-            germplasmTrialQuery.push(` AND o.eventDate BETWEEN '1900-01-01' AND '${req.body.eventLateDate}'`)
-        }
-        //stateProvince
-        if (req.body.stateProvince !== ''){
-            germplasmTrialQuery.push(` AND o.stateProvince = '${req.body.stateProvince}'`)
-}
-        //county
-        if (req.body.county !== ''){
-            germplasmTrialQuery.push(` AND o.county = '${req.body.county}'`)
-        }
-        //locality
-        if (req.body.locality !== ''){
-            germplasmTrialQuery.push(` AND o.locality LIKE '%${req.body.locality}%'`)
-        }
-        //locationRemarks
-        if (req.body.locationRemarks !== ''){
-            germplasmTrialQuery.push(` AND o.locationRemarks LIKE '%${req.body.locationRemarks}%'`)
-        }
-        //recordedBy
-        if (req.body.recordedBy !== ''){
-            germplasmTrialQuery.push(` AND o.recordedBy LIKE '%${req.body.recordedBy}%'`)
-        }
 
-        fullGermplasmTrialQuery = germplasmTrialQuery.join()
-        queryParams = fullGermplasmTrialQuery.replaceAll(',','')
-        finalQuery = germplasmTrialSelect.concat(queryParams)
-        germplasmTrialQuery = []
-        console.log(finalQuery)
-        resolve()
-    },1000))
-    sequelize.query(finalQuery, { type:QueryTypes.SELECT })
+    let whereClauses = [];
+    let replacements = {};
+
+    //catalogNumber
+    if (req.body.materialSample_catalogNumber !== '') {
+        whereClauses.push(`AND gvt.materialSample_catalogNumber = :catalogNumber`);
+        replacements.catalogNumber = req.body.materialSample_catalogNumber;
+    }
+    //scientificName
+    if (req.body.scientificName !== '') {
+        whereClauses.push(`AND o.scientificName LIKE :scientificName`);
+        replacements.scientificName = `%${req.body.scientificName}%`;
+    }
+    //stratificationStartDate
+    if (req.body.stratStartEarlyDate !== '' && req.body.stratStartLateDate === '') {
+        whereClauses.push(`AND gvt.stratificationStartDate BETWEEN :stratStartEarlyDate AND '2300-01-01'`);
+        replacements.stratStartEarlyDate = req.body.stratStartEarlyDate;
+    }
+    if (req.body.stratStartEarlyDate !== '' && req.body.stratStartLateDate !== '') {
+        whereClauses.push(`AND gvt.stratificationStartDate BETWEEN :stratStartEarlyDate AND :stratStartLateDate`);
+        replacements.stratStartEarlyDate = req.body.stratStartEarlyDate;
+        replacements.stratStartLateDate = req.body.stratStartLateDate;
+    }
+    if (req.body.stratStartEarlyDate === '' && req.body.stratStartLateDate !== '') {
+        whereClauses.push(`AND gvt.stratificationStartDate BETWEEN '1900-01-01' AND :stratStartLateDate`);
+        replacements.stratStartLateDate = req.body.stratStartLateDate;
+    }
+    //endDate
+    if (req.body.endEarlyDate !== '' && req.body.endLateDate === '') {
+        whereClauses.push(`AND gvt.endDate BETWEEN :endEarlyDate AND '2300-01-01'`);
+        replacements.endEarlyDate = req.body.endEarlyDate;
+    }
+    if (req.body.endEarlyDate !== '' && req.body.endLateDate !== '') {
+        whereClauses.push(`AND gvt.endDate BETWEEN :endEarlyDate AND :endLateDate`);
+        replacements.endEarlyDate = req.body.endEarlyDate;
+        replacements.endLateDate = req.body.endLateDate;
+    }
+    if (req.body.endEarlyDate === '' && req.body.endLateDate !== '') {
+        whereClauses.push(`AND gvt.endDate BETWEEN '1900-01-01' AND :endLateDate`);
+        replacements.endLateDate = req.body.endLateDate;
+    }
+    //eventDate
+    if (req.body.eventEarlyDate !== '' && req.body.eventLateDate === '') {
+        whereClauses.push(`AND o.eventDate BETWEEN :eventEarlyDate AND '2300-01-01'`);
+        replacements.eventEarlyDate = req.body.eventEarlyDate;
+    }
+    if (req.body.eventEarlyDate !== '' && req.body.eventLateDate !== '') {
+        whereClauses.push(`AND o.eventDate BETWEEN :eventEarlyDate AND :eventLateDate`);
+        replacements.eventEarlyDate = req.body.eventEarlyDate;
+        replacements.eventLateDate = req.body.eventLateDate;
+    }
+    if (req.body.eventEarlyDate === '' && req.body.eventLateDate !== '') {
+        whereClauses.push(`AND o.eventDate BETWEEN '1900-01-01' AND :eventLateDate`);
+        replacements.eventLateDate = req.body.eventLateDate;
+    }
+    //stateProvince
+    if (req.body.stateProvince !== '') {
+        whereClauses.push(`AND o.stateProvince = :stateProvince`);
+        replacements.stateProvince = req.body.stateProvince;
+    }
+    //county
+    if (req.body.county !== '') {
+        whereClauses.push(`AND o.county = :county`);
+        replacements.county = req.body.county;
+    }
+    //locality
+    if (req.body.locality !== '') {
+        whereClauses.push(`AND o.locality LIKE :locality`);
+        replacements.locality = `%${req.body.locality}%`;
+    }
+    //locationRemarks
+    if (req.body.locationRemarks !== '') {
+        whereClauses.push(`AND o.locationRemarks LIKE :locationRemarks`);
+        replacements.locationRemarks = `%${req.body.locationRemarks}%`;
+    }
+    //recordedBy
+    if (req.body.recordedBy !== '') {
+        whereClauses.push(`AND o.recordedBy LIKE :recordedBy`);
+        replacements.recordedBy = `%${req.body.recordedBy}%`;
+    }
+
+    const finalQuery = germplasmTrialSelect.concat(' ', whereClauses.join(' '));
+    console.log(finalQuery, replacements)
+
+    sequelize.query(finalQuery, { replacements, type: QueryTypes.SELECT })
     .then((data) => {
         res.send(data)
         dataForExport = data
     })
     .catch((err) => {
         console.log(err);
+        res.status(500).send({ message: "Query failed" });
       })
 }
 
@@ -183,17 +199,19 @@ const downloadGerminationTrialsFile = (req, res) => {
     const directoryPath = path.join(__basedir, "/resources/static/assets/downloads/");
     const filePath = path.join(directoryPath, fileName);
 
-    // extra safety: confirm the resolved path is still inside directoryPath
+    // extra safety: confirm resolved path is still inside the intended directory
     if (!filePath.startsWith(path.resolve(directoryPath))) {
         return res.status(400).send({ message: "Invalid file name" });
     }
 
     res.download(filePath, fileName, (err) => {
       if (err) {
-        res.status(500).send({ message: "Could not download the file" + err });
+        res.status(500).send({
+          message: "Could not download the file" + err,
+        })
       }
-    });
-}
+    })
+  }
 
 module.exports = {
     getGerminationTrialResults,
