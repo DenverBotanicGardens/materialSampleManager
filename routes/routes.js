@@ -109,6 +109,7 @@ let routes = (app) => {
   });
 
   //API ROUTES---------------------------------------------------------------------------------------------
+  router.use(ensureAuthenticated);
   //POST /api/projects
   router.post("/project", projectController.addProject);
 

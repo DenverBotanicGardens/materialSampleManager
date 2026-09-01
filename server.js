@@ -6,6 +6,8 @@ var dotenv = require('dotenv').config()
 var fs = require("fs");
 const passport = require('./config/passport');
 const session = require('express-session');
+const MySQLStoreFactory = require('express-mysql-session')(session);
+const sessionStore = new MySQLStoreFactory({}, db.sequelize.connectionManager.pool);
 const cronJobUploads = require('./controllers/removeUploadsCron.js')
 const cronJobDownloads = require('./controllers/removeDownloadsCron.js')
 
@@ -22,7 +24,18 @@ var db = require("./models")
 //set up express app to handle data parsing
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
-app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: false }));
+app.use(session({
+  key: 'session_id',
+  secret: process.env.SECRET,
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true
+  }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -39,10 +52,9 @@ app.engine("handlebars", exhbs.engine({
 app.set("view engine", "handlebars");
 
 //routes
-const initRoutes = require("./routes/routes");
 //api routes for handling data exchanges
+const initRoutes = require("./routes/routes");
 initRoutes(app);
-require("./routes/routes.js")(app);
 
 // start the server. {force:true} drops the tables from exisiting db. {force:false} keeps the existing db and tables and data in place
 db.sequelize.sync({
