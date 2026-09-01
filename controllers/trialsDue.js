@@ -8,6 +8,7 @@ const { QueryTypes } = require('sequelize');
 const Op = Sequelize.Op;
 const fs = require("fs")
 const csv = require("fast-csv")
+const path = require("path")
 
 //variable to hold the data so that it can be exported after a search
 var dataForExport
