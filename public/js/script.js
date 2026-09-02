@@ -464,6 +464,26 @@ $(document).ready(function() {
             console.error(error);
         })
     }
+//--------------------------------------------------------------------------------------------------
+//POPULATE PROJECT DROPDOWN ON GERMINATION TRIALS PAGE
+//--------------------------------------------------------------------------------------------------
+    //retrieve all projects via api and populate the datalist on the search collections page
+    const listProjectsForGerminationTrialsSearchDropdown = () => {
+        $.ajax({
+            method: "GET",
+            url: "/api/project"
+        })
+        .then((projects) => {
+            let germinationTrialsProjectOptionsList = []
+            $.each(projects, function(i, projectItem) {
+                germinationTrialsProjectOptionsList.push('<option value="' + projectItem.project + '">')
+            });
+            $('#germinationTrialsProjectOptions').append(germinationTrialsProjectOptionsList.join(''))
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 //UPLOAD MATERIAL SAMPLES VIA CSV
 //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1850,6 +1870,7 @@ function downloadTrialsDueFileFromBackend() {
     let addViabilityTracking = "/addViabilityTracking"
     let searchPage = "/search"
     let searchCollectionsPage = "/searchCollections"
+    let germinationTrialsPage = "/germinationTrials"
 
     if (currentURL === creatProjectPage){
         fetchProjects()
@@ -1859,6 +1880,8 @@ function downloadTrialsDueFileFromBackend() {
         listProjectsForSearchDropdown()
     } else if (currentURL === searchCollectionsPage){
         listProjectsForCollectionsSearchDropdown()
+    } else if (currentURL === germinationTrialsPage){
+        listProjectsForGerminationTrialsSearchDropdown()
     }
 
 })
