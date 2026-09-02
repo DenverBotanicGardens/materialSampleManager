@@ -6,11 +6,12 @@
     <form id="searchCollectionsForm">
         <div class="row">
             <div class="col">
-                {{!-- project --}}
-                <div class="input-group input-group-sm mb-3">
-                    <span class="input-group-text">Project</span>
-                    <input id="searchCollectionsProject" type="text" class="form-control">
-                </div>
+            {{!-- project --}}
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Project</span>
+                <input id="searchCollectionsProject" type="text" class="form-control" list="collectionsProjectOptions" placeholder="Type or select a project...">
+                <datalist id="collectionsProjectOptions"></datalist>
+            </div>
             </div>
             <div class="col">
                 {{!-- scientificName --}}

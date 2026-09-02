@@ -423,6 +423,47 @@ $(document).ready(function() {
             console.error(error);
         })
     }
+//--------------------------------------------------------------------------------------------------
+//POPULATE PROJECT DROPDOWN ON SEARCH MATERIAL SAMPLES PAGE
+//--------------------------------------------------------------------------------------------------
+    //retrieve all projects via api and populate the datalist on the search page
+    const listProjectsForSearchDropdown = () => {
+        $.ajax({
+            method: "GET",
+            url: "/api/project"
+        })
+        .then((projects) => {
+            let projectOptionsList = []
+            $.each(projects, function(i, projectItem) {
+                projectOptionsList.push('<option value="' + projectItem.project + '">')
+            });
+            $('#projectOptions').append(projectOptionsList.join(''))
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
+//--------------------------------------------------------------------------------------------------
+//POPULATE PROJECT DROPDOWN ON SEARCH COLLECTIONS PAGE
+//--------------------------------------------------------------------------------------------------
+    //retrieve all projects via api and populate the datalist on the search collections page
+    const listProjectsForCollectionsSearchDropdown = () => {
+        $.ajax({
+            method: "GET",
+            url: "/api/project"
+        })
+        .then((projects) => {
+            let collectionsProjectOptionsList = []
+            $.each(projects, function(i, projectItem) {
+                collectionsProjectOptionsList.push('<option value="' + projectItem.project + '">')
+            });
+            $('#collectionsProjectOptions').append(collectionsProjectOptionsList.join(''))
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 //UPLOAD MATERIAL SAMPLES VIA CSV
 //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1807,11 +1848,17 @@ function downloadTrialsDueFileFromBackend() {
     let creatProjectPage = "/createNewProject"
     let uploadData = "/uploadMaterialSamples"
     let addViabilityTracking = "/addViabilityTracking"
+    let searchPage = "/search"
+    let searchCollectionsPage = "/searchCollections"
 
     if (currentURL === creatProjectPage){
         fetchProjects()
     } else if (currentURL === uploadData){
         listProjectsForUpload()
+    } else if (currentURL === searchPage){
+        listProjectsForSearchDropdown()
+    } else if (currentURL === searchCollectionsPage){
+        listProjectsForCollectionsSearchDropdown()
     }
 
 })

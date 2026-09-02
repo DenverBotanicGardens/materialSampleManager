@@ -24,6 +24,7 @@ const searchCollections = require("../controllers/searchCollections")
 const authController = require('../controllers/userAuth');
 const passport = require('../config/passport');
 
+
 let routes = (app) => {
 
   //VIEW ROUTES-------------------------------------------------------------------------------------------------
