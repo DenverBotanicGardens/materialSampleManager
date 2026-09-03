@@ -4,6 +4,7 @@ const projectController = require("../controllers/project");
 const insertDataController = require("../controllers/insertData")
 const csvController = require("../controllers/csvUpload")
 const upload = require("../middlewares/upload");
+const multer = require("multer");   // <-- add this
 const getSeedForTrial = require("../controllers/getSeedForTrial")
 const addGerminationTest = require("../controllers/addGerminationTest")
 const addViabilityTracking = require("../controllers/addViabilityTracking")
@@ -26,6 +27,36 @@ const passport = require('../config/passport');
 
 
 let routes = (app) => {
+
+  //wraps the upload middleware to catch multer errors (bad file type, file too large, etc.)
+  //and return a clean JSON response instead of letting them crash into a generic error page
+  const handleUpload = (req, res, next) => {
+    upload.single("file")(req, res, (err) => {
+      if (err) {
+        console.log(err);
+
+        if (err instanceof multer.MulterError) {
+          if (err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).json({
+              success: false,
+              message: "File is too large. Maximum size is 10MB."
+            });
+          }
+          return res.status(400).json({
+            success: false,
+            message: "File upload error: " + err.message
+          });
+        }
+
+        // errors thrown by our csvFilter (wrong file type)
+        return res.status(400).json({
+          success: false,
+          message: err.message || "Invalid file"
+        });
+      }
+      next();
+    });
+  };
 
   //VIEW ROUTES-------------------------------------------------------------------------------------------------
     //index
@@ -123,8 +154,8 @@ let routes = (app) => {
   router.get("/project", projectController.getAllProjects);
 
   //POST /api/upload
-  router.post("/upload", upload.single("file"), csvController.csvUpload);
-
+  router.post("/upload", handleUpload, csvController.csvUpload);
+  
   //POST /api/projectIDFromClient
   router.post("/projectIDFromClient", csvUpload.getProjectID);
 

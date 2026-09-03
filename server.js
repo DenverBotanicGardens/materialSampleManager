@@ -58,6 +58,19 @@ app.use(express.static("public"))
 //set the global root dir
 global.__basedir = __dirname + "/.";
 
+//ensure required directories exist (created automatically if missing, e.g. on a fresh clone or fresh server)
+const requiredDirs = [
+  path.join(__basedir, "resources/static/assets/uploads"),
+  path.join(__basedir, "resources/static/assets/downloads")
+];
+
+requiredDirs.forEach((dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+    console.log(`Created missing directory: ${dir}`);
+  }
+});
+
 // setup handelbars
 app.engine("handlebars", exhbs.engine({
     defaultLayout: "main"
