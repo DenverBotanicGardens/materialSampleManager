@@ -506,6 +506,26 @@ $(document).ready(function() {
         })
     }
 //--------------------------------------------------------------------------------------------------------------------------------------------------
+//POPULATE PROJECT DROPDOWN ON UPDATE MATERIAL SAMPLE PAGE
+//--------------------------------------------------------------------------------------------------
+    //retrieve all projects via api and populate the datalist on the search collections page
+    const listProjectsForUpdateSearchDropdown = () => {
+        $.ajax({
+            method: "GET",
+            url: "/api/project"
+        })
+        .then((projects) => {
+            let updateProjectOptionsList = []
+            $.each(projects, function(i, projectItem) {
+                updateProjectOptionsList.push('<option value="' + projectItem.project + '">')
+            });
+            $('#sampleSearchForUpdateProjectOptions').append(updateProjectOptionsList.join(''))
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+//--------------------------------------------------------------------------------------------------------------------------------------------------
 //UPLOAD MATERIAL SAMPLES VIA CSV
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 //Capture id For Selected Project
@@ -1895,6 +1915,7 @@ function downloadTrialsDueFileFromBackend() {
     let searchCollectionsPage = "/searchCollections"
     let germinationTrialsPage = "/germinationTrials"
     let transfersPage = "/transferMaterialSample"
+    let updatesPage = "/updateMaterialSample"
 
     if (currentURL === creatProjectPage){
         fetchProjects()
@@ -1908,5 +1929,8 @@ function downloadTrialsDueFileFromBackend() {
         listProjectsForGerminationTrialsSearchDropdown()
     } else if (currentURL === transfersPage){
         listProjectsForTransfersSearchDropdown()
+    } else if (currentURL === updatesPage){
+        listProjectsForUpdateSearchDropdown()
     }
+
 })
