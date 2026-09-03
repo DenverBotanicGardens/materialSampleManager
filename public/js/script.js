@@ -485,6 +485,27 @@ $(document).ready(function() {
         })
     }
 //--------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------
+//POPULATE PROJECT DROPDOWN ON TRANSFER MATERIAL SAMPLE PAGE
+//--------------------------------------------------------------------------------------------------
+    //retrieve all projects via api and populate the datalist on the search collections page
+    const listProjectsForTransfersSearchDropdown = () => {
+        $.ajax({
+            method: "GET",
+            url: "/api/project"
+        })
+        .then((projects) => {
+            let transfersProjectOptionsList = []
+            $.each(projects, function(i, projectItem) {
+                transfersProjectOptionsList.push('<option value="' + projectItem.project + '">')
+            });
+            $('#transfersProjectOptions').append(transfersProjectOptionsList.join(''))
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+//--------------------------------------------------------------------------------------------------------------------------------------------------
 //UPLOAD MATERIAL SAMPLES VIA CSV
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 //Capture id For Selected Project
@@ -1014,7 +1035,7 @@ const submitNewGerminationTrial = () => {
 //SEARCH FOR SAMPLES TO TRANSFER
 //--------------------------------------------------------------------------------------------------
     //add user entries to searchSamplesToTransferFormEntries object
-    let projectSearchSampleForTransfer = $("#projectSearchSampleForTransfer")
+    let projectSearchSampleForTransfer = $("#searchTransfersProject")
     let scientificNameSearchSampleForTransfer = $("#scientificNameSearchSampleForTransfer")
     let sampleTypeSearchSampleForTransfer = $("#sampleTypeSearchSampleForTransfer")
     let catalogNumberSearchSampleForTransfer = $("#catalogNumberSearchSampleForTransfer")
@@ -1871,6 +1892,7 @@ function downloadTrialsDueFileFromBackend() {
     let searchPage = "/search"
     let searchCollectionsPage = "/searchCollections"
     let germinationTrialsPage = "/germinationTrials"
+    let transfersPage = "/transferMaterialSample"
 
     if (currentURL === creatProjectPage){
         fetchProjects()
@@ -1882,6 +1904,7 @@ function downloadTrialsDueFileFromBackend() {
         listProjectsForCollectionsSearchDropdown()
     } else if (currentURL === germinationTrialsPage){
         listProjectsForGerminationTrialsSearchDropdown()
+    } else if (currentURL === transfersPage){
+        listProjectsForTransfersSearchDropdown()
     }
-
 })
