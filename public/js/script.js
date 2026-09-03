@@ -1144,17 +1144,19 @@ const submitNewGerminationTrial = () => {
         $.ajax({
             method: "POST",
             url: "/api/addTransfer",
-            data: newTransferFormEntries,
-            success: function(){
-                alert('Success! You have submitted a new transfer to the database. Have a fun journey, little sample! \n \n You may select a different sample from this page and modify the Transfer Information Form if more samples are being transferred.')
-            }
+            data: newTransferFormEntries
         })
-            .then(function(){
-                console.log("new transfer submitted")
-            })
-            .catch((error) => {
-                console.error(error);
-            })
+        .then(function(){
+            alert('Success! You have submitted a new transfer to the database. Have a fun journey, little sample! \n \n You may select a different sample from this page and modify the Transfer Information Form if more samples are being transferred.')
+            console.log("new transfer submitted")
+        })
+        .catch((error) => {
+            console.error(error);
+            const message = error.responseJSON && error.responseJSON.message
+                ? error.responseJSON.message
+                : "Something went wrong submitting this transfer. Please try again.";
+            alert(message);
+        })
     }
 
 //--------------------------------------------------------------------------------------------------
