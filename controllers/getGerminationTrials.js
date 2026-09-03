@@ -8,7 +8,7 @@ const { QueryTypes } = require('sequelize');
 const Op = Sequelize.Op;
 
 //standard query to return all records from germplasmviabilitytest table. extra where params provided by user are added via named replacements
-var germplasmTrialSelect = `SELECT gvt.id,gvt.materialSample_catalogNumber,gvt.stratificationStartDate,gvt.endDate,gvt.testConductedBy,gvt.sampleFrozen,gvt.medium,gvt.scarified,gvt.stratificationTemperature,gvt.incubationStartDate,gvt.numberSeedsTested,gvt.incubationTempDay,gvt.incubationTempNight,gvt.numberDead,gvt.numberViable,gvt.totalGerminants,gvt.viabilityAdjustedGermination,o.scientificName,o.eventDate,o.stateProvince,o.county,o.locality,o.locationRemarks,o.locationID,o.recordedBy FROM occurrences AS o LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN germplasmviabilitytests AS gvt ON ms.id = gvt.materialSampleTableID WHERE gvt.id IS NOT NULL`
+var germplasmTrialSelect = `SELECT gvt.id,gvt.materialSample_catalogNumber,gvt.stratificationStartDate,gvt.endDate,gvt.testConductedBy,gvt.sampleFrozen,gvt.medium,gvt.scarified,gvt.stratificationTemperature,gvt.incubationStartDate,gvt.numberSeedsTested,gvt.incubationTempDay,gvt.incubationTempNight,gvt.numberDead,gvt.numberViable,gvt.totalGerminants,gvt.viabilityAdjustedGermination,o.scientificName,o.eventDate,o.stateProvince,o.county,o.locality,o.locationRemarks,o.locationID,o.recordedBy FROM occurrences AS o LEFT JOIN projects AS p ON o.projectTableID = p.id LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN germplasmviabilitytests AS gvt ON ms.id = gvt.materialSampleTableID WHERE gvt.id IS NOT NULL`
 //query to return record from germplasmviabilitytest based on id
 var germplasmTrialSelectByID = `SELECT gvt.id,gvt.materialSample_catalogNumber,gvt.stratificationStartDate,gvt.endDate,gvt.testConductedBy,gvt.sampleFrozen,gvt.medium,gvt.scarified,gvt.stratificationTemperature,gvt.incubationStartDate,gvt.numberSeedsTested,gvt.incubationTempDay,gvt.incubationTempNight,gvt.numberDead,gvt.numberViable,gvt.totalGerminants,gvt.viabilityAdjustedGermination,o.scientificName,o.eventDate,o.stateProvince,o.county,o.locality,o.locationRemarks,o.locationID,o.recordedBy FROM occurrences AS o LEFT JOIN materialsamples AS ms ON o.id = ms.occurrenceTableID LEFT JOIN germplasmviabilitytests AS gvt ON ms.id = gvt.materialSampleTableID `
 
@@ -17,6 +17,11 @@ async function getGerminationTrials(req, res) {
     let whereClauses = [];
     let replacements = {};
 
+    //project
+    if (req.body.project !== '') {
+        whereClauses.push(`AND p.project = :project`);
+        replacements.project = req.body.project;
+    }
     //catalogNumber
     if (req.body.materialSample_catalogNumber !== '') {
         whereClauses.push(`AND gvt.materialSample_catalogNumber = :catalogNumber`);

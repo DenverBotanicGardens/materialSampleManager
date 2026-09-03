@@ -594,7 +594,7 @@ function hideProcessingModal() {
 //SEARCH GERMINATION TRIALS
 //--------------------------------------------------------------------------------------------------    
     //add user entries to searchGermTrialsFormEntries object
-    let germSearchProjectInput = $("#germSearchProject")
+    let germSearchProjectInput = $("#searchProject")
     let germSearchScientificNameInput = $("#germSearchScientificName")
     let germSearchCatalogNumberInput = $("#germSearchCatalogNumber")
     let germSearchStratificationEarlyDateInput = $("#germSearchStratificationEarlyDate")
