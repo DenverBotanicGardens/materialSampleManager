@@ -77,14 +77,15 @@ let routes = (app) => {
       res.render("searchCollections");
     });
 
+    app.get('/addUser', ensureAuthenticated, (req, res) => {
+      res.render("addUser");
+    });
+
   //USER AUTH ROUTES---------------------------------------------------------------------------------------
     //Log In Page
     app.get('/login', (req, res) => {
       res.render("login");
     })
-
-  //POST /api/register
-  router.post("/register", authController.register)
     
   //POST /api/login
   router.post("/signin", passport.authenticate('local', {
@@ -111,6 +112,10 @@ let routes = (app) => {
 
   //API ROUTES---------------------------------------------------------------------------------------------
   router.use(ensureAuthenticated);
+
+  //POST /api/register (only reachable by an already authenticated user)
+  router.post("/register", authController.register)
+
   //POST /api/projects
   router.post("/project", projectController.addProject);
 

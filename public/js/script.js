@@ -1473,7 +1473,56 @@ const submitNewGerminationTrial = () => {
             console.error('Error:', error)
         })
     } 
-    
+
+//--------------------------------------------------------------------------------------------------
+// ADD NEW USER (admin/logged-in only)
+//--------------------------------------------------------------------------------------------------
+    let newUserUsername = $("#newUserUsername")
+    let newUserPassword = $("#newUserPassword")
+    let newUserConfirmPassword = $("#newUserConfirmPassword")
+
+    $("#addUserForm").on("submit", function handleFormSubmit(event) {
+        event.preventDefault()
+
+        if (!newUserUsername.val().trim() || !newUserPassword.val()) {
+            alert("Please provide a username and password")
+            return
+        }
+
+        if (newUserPassword.val() !== newUserConfirmPassword.val()) {
+            alert("Passwords do not match")
+            return
+        }
+
+        let newUserEntries = {
+            username: newUserUsername.val().trim(),
+            password: newUserPassword.val()
+        }
+
+        submitNewUser(newUserEntries)
+    })
+
+    const submitNewUser = (newUser) => {
+        $.ajax({
+            method: "POST",
+            url: "/api/register",
+            data: newUser
+        })
+        .then(() => {
+            alert("Success! The new user account has been created.")
+            newUserUsername.val('')
+            newUserPassword.val('')
+            newUserConfirmPassword.val('')
+        })
+        .catch((error) => {
+            console.error(error);
+            const message = error.responseJSON && error.responseJSON.message
+                ? error.responseJSON.message
+                : "Something went wrong creating this user. Please try again.";
+            alert(message);
+        })
+    }
+
 //--------------------------------------------------------------------------------------------------
 // DOWNLOAD TEMPLATE CSV FILE TO CLIENT
 //--------------------------------------------------------------------------------------------------
