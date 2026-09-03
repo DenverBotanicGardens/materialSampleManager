@@ -13,7 +13,68 @@ const path = require("path")
 //variable to hold the data so that it can be exported after a search
 var dataForExport
 
-const seed5yquery = "SELECT ANY_VALUE(ms.id) AS id, ANY_VALUE(ms.materialSample_catalogNumber) AS materialSample_catalogNumber, ANY_VALUE(ms.materialSample_recordNumber) AS materialSample_recordNumber, ANY_VALUE(ms.storageLocation) AS storageLocation, ANY_VALUE(ms.disposition) AS disposition, ANY_VALUE(ms.numberCollected) AS numberCollected, ANY_VALUE(ms.numberAvailable) AS numberAvailable, ANY_VALUE(ms.sourcePlantCount) AS sourcePlantCount, ANY_VALUE(ms.preparationDate) AS preparationDate, ANY_VALUE(ms.dateStored) AS dateStored, ANY_VALUE(o.recordedBy) AS recordedBy, o.eventDate, o.scientificName, ANY_VALUE(o.stateProvince) AS stateProvince, ANY_VALUE(o.county) AS county, o.locality, ANY_VALUE(o.decimalLatitude) AS decimalLatitude, ANY_VALUE(o.decimalLongitude) AS decimalLongitude, ANY_VALUE(o.minimumElevationInMeters) AS minimumElevationInMeters, ANY_VALUE(o.permitURI) AS permitURI, ANY_VALUE(gvt.testConductedBy) AS testConductedBy, ANY_VALUE(gvt.endDate) AS endDate, ANY_VALUE(gvt.numberSeedsTested) AS numberSeedsTested, ANY_VALUE(gvt.pretreatments) AS pretreatments, ANY_VALUE(gvt.incubationTempDay) AS incubationTempDay, ANY_VALUE(gvt.incubationTempNight) AS incubationTempNight, ANY_VALUE(gvt.viabilityAdjustedGermination) AS viabilityAdjustedGermination, ANY_VALUE(gvt.sampleFrozen) AS sampleFrozen, ANY_VALUE(gvt.medium) AS medium, ANY_VALUE(gvt.scarified) AS scarified, ANY_VALUE(gvt.stratificationTemperature) AS stratificationTemperature, ANY_VALUE(gvt.stratificationStartDate) AS stratificationStartDate, ANY_VALUE(gvt.incubationStartDate) AS incubationStartDate, ANY_VALUE(gvt.numberDead) AS numberDead, ANY_VALUE(gvt.numberViable) AS numberViable, ANY_VALUE(gvt.totalGerminants) AS totalGerminants FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id LEFT JOIN ( SELECT *, ROW_NUMBER() OVER (PARTITION BY materialSampleTableID ORDER BY endDate DESC) AS rn FROM germplasmViabilityTests ) gvt ON ms.id = gvt.materialSampleTableID AND gvt.rn = 1 WHERE ms.materialSampleType = 'seed' AND (gvt.endDate IS NULL OR gvt.endDate < DATE_SUB(CURDATE(), INTERVAL 5 YEAR)) GROUP BY o.scientificName, o.eventDate, o.locality"
+const seed5yquery = `
+WITH per_sample_latest_test AS (
+    SELECT
+        ms.id AS materialSampleTableID,
+        ms.numberAvailable,
+        o.scientificName,
+        o.eventDate,
+        o.locality,
+        o.stateProvince,
+        o.county,
+        o.minimumElevationInMeters,
+        gvt.endDate,
+        gvt.testConductedBy,
+        gvt.numberSeedsTested,
+        gvt.viabilityAdjustedGermination
+    FROM materialSamples AS ms
+    LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id
+    LEFT JOIN (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY materialSampleTableID ORDER BY endDate DESC) AS rn
+        FROM germplasmViabilityTests
+    ) gvt ON ms.id = gvt.materialSampleTableID AND gvt.rn = 1
+    WHERE ms.materialSampleType = 'seed'
+),
+collection_latest_trial AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY scientificName, eventDate, locality
+            ORDER BY endDate DESC
+        ) AS collection_rn
+    FROM per_sample_latest_test
+),
+collection_totals AS (
+    SELECT
+        scientificName,
+        eventDate,
+        locality,
+        SUM(numberAvailable) AS totalNumberAvailable,
+        COUNT(*) AS numberOfSamples
+    FROM per_sample_latest_test
+    GROUP BY scientificName, eventDate, locality
+)
+SELECT
+    clt.scientificName,
+    clt.endDate,
+    clt.numberSeedsTested,
+    clt.viabilityAdjustedGermination,
+    clt.testConductedBy,
+    totals.totalNumberAvailable,
+    totals.numberOfSamples,
+    clt.eventDate,
+    clt.stateProvince,
+    clt.county,
+    clt.minimumElevationInMeters
+FROM collection_latest_trial clt
+JOIN collection_totals totals
+  ON clt.scientificName <=> totals.scientificName
+ AND clt.eventDate <=> totals.eventDate
+ AND clt.locality <=> totals.locality
+WHERE clt.collection_rn = 1
+  AND (clt.endDate IS NULL OR clt.endDate < DATE_SUB(CURDATE(), INTERVAL 5 YEAR))
+`;
 
 //get all seed samples that have never been tested, or not tested in the last 5 years
 const getSeedSamplesDueForTrial_5y = (req,res) => {
@@ -28,7 +89,68 @@ const getSeedSamplesDueForTrial_5y = (req,res) => {
     })
 }
 
-const seed3yquery = "SELECT ANY_VALUE(ms.id) AS id, ANY_VALUE(ms.materialSample_catalogNumber) AS materialSample_catalogNumber, ANY_VALUE(ms.materialSample_recordNumber) AS materialSample_recordNumber, ANY_VALUE(ms.storageLocation) AS storageLocation, ANY_VALUE(ms.disposition) AS disposition, ANY_VALUE(ms.numberCollected) AS numberCollected, ANY_VALUE(ms.numberAvailable) AS numberAvailable, ANY_VALUE(ms.sourcePlantCount) AS sourcePlantCount, ANY_VALUE(ms.preparationDate) AS preparationDate, ANY_VALUE(ms.dateStored) AS dateStored, ANY_VALUE(o.recordedBy) AS recordedBy, o.eventDate, o.scientificName, ANY_VALUE(o.stateProvince) AS stateProvince, ANY_VALUE(o.county) AS county, o.locality, ANY_VALUE(o.decimalLatitude) AS decimalLatitude, ANY_VALUE(o.decimalLongitude) AS decimalLongitude, ANY_VALUE(o.minimumElevationInMeters) AS minimumElevationInMeters, ANY_VALUE(o.permitURI) AS permitURI, ANY_VALUE(gvt.testConductedBy) AS testConductedBy, ANY_VALUE(gvt.endDate) AS endDate, ANY_VALUE(gvt.numberSeedsTested) AS numberSeedsTested, ANY_VALUE(gvt.pretreatments) AS pretreatments, ANY_VALUE(gvt.incubationTempDay) AS incubationTempDay, ANY_VALUE(gvt.incubationTempNight) AS incubationTempNight, ANY_VALUE(gvt.viabilityAdjustedGermination) AS viabilityAdjustedGermination, ANY_VALUE(gvt.sampleFrozen) AS sampleFrozen, ANY_VALUE(gvt.medium) AS medium, ANY_VALUE(gvt.scarified) AS scarified, ANY_VALUE(gvt.stratificationTemperature) AS stratificationTemperature, ANY_VALUE(gvt.stratificationStartDate) AS stratificationStartDate, ANY_VALUE(gvt.incubationStartDate) AS incubationStartDate, ANY_VALUE(gvt.numberDead) AS numberDead, ANY_VALUE(gvt.numberViable) AS numberViable, ANY_VALUE(gvt.totalGerminants) AS totalGerminants FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id LEFT JOIN ( SELECT *, ROW_NUMBER() OVER (PARTITION BY materialSampleTableID ORDER BY endDate DESC) AS rn FROM germplasmViabilityTests ) gvt ON ms.id = gvt.materialSampleTableID AND gvt.rn = 1 WHERE ms.materialSampleType = 'seed' AND (gvt.endDate IS NULL OR gvt.endDate < DATE_SUB(CURDATE(), INTERVAL 3 YEAR)) GROUP BY o.scientificName, o.eventDate, o.locality"
+const seed3yquery = `
+WITH per_sample_latest_test AS (
+    SELECT
+        ms.id AS materialSampleTableID,
+        ms.numberAvailable,
+        o.scientificName,
+        o.eventDate,
+        o.locality,
+        o.stateProvince,
+        o.county,
+        o.minimumElevationInMeters,
+        gvt.endDate,
+        gvt.testConductedBy,
+        gvt.numberSeedsTested,
+        gvt.viabilityAdjustedGermination
+    FROM materialSamples AS ms
+    LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id
+    LEFT JOIN (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY materialSampleTableID ORDER BY endDate DESC) AS rn
+        FROM germplasmViabilityTests
+    ) gvt ON ms.id = gvt.materialSampleTableID AND gvt.rn = 1
+    WHERE ms.materialSampleType = 'seed'
+),
+collection_latest_trial AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY scientificName, eventDate, locality
+            ORDER BY endDate DESC
+        ) AS collection_rn
+    FROM per_sample_latest_test
+),
+collection_totals AS (
+    SELECT
+        scientificName,
+        eventDate,
+        locality,
+        SUM(numberAvailable) AS totalNumberAvailable,
+        COUNT(*) AS numberOfSamples
+    FROM per_sample_latest_test
+    GROUP BY scientificName, eventDate, locality
+)
+SELECT
+    clt.scientificName,
+    clt.endDate,
+    clt.numberSeedsTested,
+    clt.viabilityAdjustedGermination,
+    clt.testConductedBy,
+    totals.totalNumberAvailable,
+    totals.numberOfSamples,
+    clt.eventDate,
+    clt.stateProvince,
+    clt.county,
+    clt.minimumElevationInMeters
+FROM collection_latest_trial clt
+JOIN collection_totals totals
+  ON clt.scientificName <=> totals.scientificName
+ AND clt.eventDate <=> totals.eventDate
+ AND clt.locality <=> totals.locality
+WHERE clt.collection_rn = 1
+  AND (clt.endDate IS NULL OR clt.endDate < DATE_SUB(CURDATE(), INTERVAL 3 YEAR))
+`;
 
 //get all seed samples that have never been tested, or not tested in the last 3 years
 const getSeedSamplesDueForTrial_3y = (req,res) => {
@@ -43,11 +165,73 @@ const getSeedSamplesDueForTrial_3y = (req,res) => {
     })
 }
 
-const seed3yquery3550m = "SELECT ANY_VALUE(ms.id) AS id, ANY_VALUE(ms.materialSample_catalogNumber) AS materialSample_catalogNumber, ANY_VALUE(ms.materialSample_recordNumber) AS materialSample_recordNumber, ANY_VALUE(ms.storageLocation) AS storageLocation, ANY_VALUE(ms.disposition) AS disposition, ANY_VALUE(ms.numberCollected) AS numberCollected, ANY_VALUE(ms.numberAvailable) AS numberAvailable, ANY_VALUE(ms.sourcePlantCount) AS sourcePlantCount, ANY_VALUE(ms.preparationDate) AS preparationDate, ANY_VALUE(ms.dateStored) AS dateStored, ANY_VALUE(o.recordedBy) AS recordedBy, o.eventDate, o.scientificName, ANY_VALUE(o.stateProvince) AS stateProvince, ANY_VALUE(o.county) AS county, o.locality, ANY_VALUE(o.decimalLatitude) AS decimalLatitude, ANY_VALUE(o.decimalLongitude) AS decimalLongitude, ANY_VALUE(o.minimumElevationInMeters) AS minimumElevationInMeters, ANY_VALUE(o.permitURI) AS permitURI, ANY_VALUE(gvt.testConductedBy) AS testConductedBy, ANY_VALUE(gvt.endDate) AS endDate, ANY_VALUE(gvt.numberSeedsTested) AS numberSeedsTested, ANY_VALUE(gvt.pretreatments) AS pretreatments, ANY_VALUE(gvt.incubationTempDay) AS incubationTempDay, ANY_VALUE(gvt.incubationTempNight) AS incubationTempNight, ANY_VALUE(gvt.viabilityAdjustedGermination) AS viabilityAdjustedGermination, ANY_VALUE(gvt.sampleFrozen) AS sampleFrozen, ANY_VALUE(gvt.medium) AS medium, ANY_VALUE(gvt.scarified) AS scarified, ANY_VALUE(gvt.stratificationTemperature) AS stratificationTemperature, ANY_VALUE(gvt.stratificationStartDate) AS stratificationStartDate, ANY_VALUE(gvt.incubationStartDate) AS incubationStartDate, ANY_VALUE(gvt.numberDead) AS numberDead, ANY_VALUE(gvt.numberViable) AS numberViable, ANY_VALUE(gvt.totalGerminants) AS totalGerminants FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id LEFT JOIN ( SELECT *, ROW_NUMBER() OVER (PARTITION BY materialSampleTableID ORDER BY endDate DESC) AS rn FROM germplasmViabilityTests ) gvt ON ms.id = gvt.materialSampleTableID AND gvt.rn = 1 WHERE o.minimumElevationInMeters > 3350 AND ms.materialSampleType = 'seed' AND (gvt.endDate IS NULL OR gvt.endDate < DATE_SUB(CURDATE(), INTERVAL 3 YEAR)) GROUP BY o.scientificName, o.eventDate, o.locality"
+const seed3yquery3350m = `
+WITH per_sample_latest_test AS (
+    SELECT
+        ms.id AS materialSampleTableID,
+        ms.numberAvailable,
+        o.scientificName,
+        o.eventDate,
+        o.locality,
+        o.stateProvince,
+        o.county,
+        o.minimumElevationInMeters,
+        gvt.endDate,
+        gvt.testConductedBy,
+        gvt.numberSeedsTested,
+        gvt.viabilityAdjustedGermination
+    FROM materialSamples AS ms
+    LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id
+    LEFT JOIN (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY materialSampleTableID ORDER BY endDate DESC) AS rn
+        FROM germplasmViabilityTests
+    ) gvt ON ms.id = gvt.materialSampleTableID AND gvt.rn = 1
+    WHERE ms.materialSampleType = 'seed'
+      AND o.minimumElevationInMeters > 3350
+),
+collection_latest_trial AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY scientificName, eventDate, locality
+            ORDER BY endDate DESC
+        ) AS collection_rn
+    FROM per_sample_latest_test
+),
+collection_totals AS (
+    SELECT
+        scientificName,
+        eventDate,
+        locality,
+        SUM(numberAvailable) AS totalNumberAvailable,
+        COUNT(*) AS numberOfSamples
+    FROM per_sample_latest_test
+    GROUP BY scientificName, eventDate, locality
+)
+SELECT
+    clt.scientificName,
+    clt.endDate,
+    clt.numberSeedsTested,
+    clt.viabilityAdjustedGermination,
+    clt.testConductedBy,
+    totals.totalNumberAvailable,
+    totals.numberOfSamples,
+    clt.eventDate,
+    clt.stateProvince,
+    clt.county,
+    clt.minimumElevationInMeters
+FROM collection_latest_trial clt
+JOIN collection_totals totals
+  ON clt.scientificName <=> totals.scientificName
+ AND clt.eventDate <=> totals.eventDate
+ AND clt.locality <=> totals.locality
+WHERE clt.collection_rn = 1
+  AND (clt.endDate IS NULL OR clt.endDate < DATE_SUB(CURDATE(), INTERVAL 3 YEAR))
+`;
 
 //get all seed samples above 3350m elevation that have never been tested, or not tested in the last 3 years
 const getSeedSamplesDueForTrial_3y_3550m = (req,res) => {
-    sequelize.query(seed3yquery3550m,{type: QueryTypes.SELECT})
+    sequelize.query(seed3yquery3350m,{type: QueryTypes.SELECT})
     .then((data) => {
         res.send(data)
         dataForExport = data
@@ -58,7 +242,68 @@ const getSeedSamplesDueForTrial_3y_3550m = (req,res) => {
     })
 }
 
-const seedNeverQuery = "SELECT ANY_VALUE(ms.id) AS id, ANY_VALUE(ms.materialSample_catalogNumber) AS materialSample_catalogNumber, ANY_VALUE(ms.materialSample_recordNumber) AS materialSample_recordNumber, ANY_VALUE(ms.storageLocation) AS storageLocation, ANY_VALUE(ms.disposition) AS disposition, ANY_VALUE(ms.numberCollected) AS numberCollected, ANY_VALUE(ms.numberAvailable) AS numberAvailable, ANY_VALUE(ms.sourcePlantCount) AS sourcePlantCount, ANY_VALUE(ms.preparationDate) AS preparationDate, ANY_VALUE(ms.dateStored) AS dateStored, ANY_VALUE(o.recordedBy) AS recordedBy, o.eventDate, o.scientificName, ANY_VALUE(o.stateProvince) AS stateProvince, ANY_VALUE(o.county) AS county, o.locality, ANY_VALUE(o.decimalLatitude) AS decimalLatitude, ANY_VALUE(o.decimalLongitude) AS decimalLongitude, ANY_VALUE(o.minimumElevationInMeters) AS minimumElevationInMeters, ANY_VALUE(o.permitURI) AS permitURI, ANY_VALUE(gvt.testConductedBy) AS testConductedBy, ANY_VALUE(gvt.endDate) AS endDate, ANY_VALUE(gvt.numberSeedsTested) AS numberSeedsTested, ANY_VALUE(gvt.pretreatments) AS pretreatments, ANY_VALUE(gvt.incubationTempDay) AS incubationTempDay, ANY_VALUE(gvt.incubationTempNight) AS incubationTempNight, ANY_VALUE(gvt.viabilityAdjustedGermination) AS viabilityAdjustedGermination, ANY_VALUE(gvt.sampleFrozen) AS sampleFrozen, ANY_VALUE(gvt.medium) AS medium, ANY_VALUE(gvt.scarified) AS scarified, ANY_VALUE(gvt.stratificationTemperature) AS stratificationTemperature, ANY_VALUE(gvt.stratificationStartDate) AS stratificationStartDate, ANY_VALUE(gvt.incubationStartDate) AS incubationStartDate, ANY_VALUE(gvt.numberDead) AS numberDead, ANY_VALUE(gvt.numberViable) AS numberViable, ANY_VALUE(gvt.totalGerminants) AS totalGerminants FROM materialSamples AS ms LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id LEFT JOIN germplasmViabilityTests AS gvt ON ms.id = gvt.materialSampleTableID WHERE ms.materialSampleType = 'seed' AND gvt.endDate IS NULL GROUP BY o.scientificName, o.eventDate, o.locality"
+const seedNeverQuery = `
+WITH per_sample_latest_test AS (
+    SELECT
+        ms.id AS materialSampleTableID,
+        ms.numberAvailable,
+        o.scientificName,
+        o.eventDate,
+        o.locality,
+        o.stateProvince,
+        o.county,
+        o.minimumElevationInMeters,
+        gvt.endDate,
+        gvt.testConductedBy,
+        gvt.numberSeedsTested,
+        gvt.viabilityAdjustedGermination
+    FROM materialSamples AS ms
+    LEFT JOIN occurrences AS o ON ms.occurrenceTableID = o.id
+    LEFT JOIN (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY materialSampleTableID ORDER BY endDate DESC) AS rn
+        FROM germplasmViabilityTests
+    ) gvt ON ms.id = gvt.materialSampleTableID AND gvt.rn = 1
+    WHERE ms.materialSampleType = 'seed'
+),
+collection_latest_trial AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY scientificName, eventDate, locality
+            ORDER BY endDate DESC
+        ) AS collection_rn
+    FROM per_sample_latest_test
+),
+collection_totals AS (
+    SELECT
+        scientificName,
+        eventDate,
+        locality,
+        SUM(numberAvailable) AS totalNumberAvailable,
+        COUNT(*) AS numberOfSamples
+    FROM per_sample_latest_test
+    GROUP BY scientificName, eventDate, locality
+)
+SELECT
+    clt.scientificName,
+    clt.endDate,
+    clt.numberSeedsTested,
+    clt.viabilityAdjustedGermination,
+    clt.testConductedBy,
+    totals.totalNumberAvailable,
+    totals.numberOfSamples,
+    clt.eventDate,
+    clt.stateProvince,
+    clt.county,
+    clt.minimumElevationInMeters
+FROM collection_latest_trial clt
+JOIN collection_totals totals
+  ON clt.scientificName <=> totals.scientificName
+ AND clt.eventDate <=> totals.eventDate
+ AND clt.locality <=> totals.locality
+WHERE clt.collection_rn = 1
+  AND clt.endDate IS NULL
+`;
 
 //get all seed samples with no germination trial records in the db
 const getSeedSamplesDueForTrial_never = (req,res) => {

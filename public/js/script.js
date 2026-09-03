@@ -1595,12 +1595,12 @@ const listSeedDueForTrial5y = () => {
             seedsDueForTrialResult.push(
                 `<tr>
                     <td>${seedSample.scientificName}</td>
-                    <td>${seedSample.materialSample_catalogNumber}</td>
                     <td>${seedSample.endDate}</td>
                     <td>${seedSample.numberSeedsTested}</td>
                     <td>${seedSample.viabilityAdjustedGermination}</td>
                     <td>${seedSample.testConductedBy}</td>
-                    <td>${seedSample.numberAvailable}</td>
+                    <td>${seedSample.totalNumberAvailable}</td>
+                    <td>${seedSample.numberOfSamples}</td>
                     <td>${seedSample.eventDate}</td>
                     <td>${seedSample.stateProvince}</td>
                     <td>${seedSample.county}</td>
@@ -1632,12 +1632,12 @@ const listSeedDueForTrial3y = () => {
             seedsDueForTrialResult.push(
                 `<tr>
                     <td>${seedSample.scientificName}</td>
-                    <td>${seedSample.materialSample_catalogNumber}</td>
                     <td>${seedSample.endDate}</td>
                     <td>${seedSample.numberSeedsTested}</td>
                     <td>${seedSample.viabilityAdjustedGermination}</td>
                     <td>${seedSample.testConductedBy}</td>
-                    <td>${seedSample.numberAvailable}</td>
+                    <td>${seedSample.totalNumberAvailable}</td>
+                    <td>${seedSample.numberOfSamples}</td>
                     <td>${seedSample.eventDate}</td>
                     <td>${seedSample.stateProvince}</td>
                     <td>${seedSample.county}</td>
@@ -1670,12 +1670,12 @@ const listSeedDueForTrial3y3550m = () => {
             seedsDueForTrialResult.push(
                 `<tr>
                     <td>${seedSample.scientificName}</td>
-                    <td>${seedSample.materialSample_catalogNumber}</td>
                     <td>${seedSample.endDate}</td>
                     <td>${seedSample.numberSeedsTested}</td>
                     <td>${seedSample.viabilityAdjustedGermination}</td>
                     <td>${seedSample.testConductedBy}</td>
-                    <td>${seedSample.numberAvailable}</td>
+                    <td>${seedSample.totalNumberAvailable}</td>
+                    <td>${seedSample.numberOfSamples}</td>
                     <td>${seedSample.eventDate}</td>
                     <td>${seedSample.stateProvince}</td>
                     <td>${seedSample.county}</td>
@@ -1708,12 +1708,12 @@ const listSeedDueForTrialNever = () => {
             seedsDueForTrialResult.push(
                 `<tr>
                     <td>${seedSample.scientificName}</td>
-                    <td>${seedSample.materialSample_catalogNumber}</td>
                     <td>${seedSample.endDate}</td>
                     <td>${seedSample.numberSeedsTested}</td>
                     <td>${seedSample.viabilityAdjustedGermination}</td>
                     <td>${seedSample.testConductedBy}</td>
-                    <td>${seedSample.numberAvailable}</td>
+                    <td>${seedSample.totalNumberAvailable}</td>
+                    <td>${seedSample.numberOfSamples}</td>
                     <td>${seedSample.eventDate}</td>
                     <td>${seedSample.stateProvince}</td>
                     <td>${seedSample.county}</td>
